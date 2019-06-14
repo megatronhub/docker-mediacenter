@@ -1,0 +1,4 @@
+.env
+ssh.*
+*.p12
+docker

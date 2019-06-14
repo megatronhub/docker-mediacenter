@@ -1,0 +1,513 @@
+version: '3.2'
+services:
+  nginx-web:
+    image: nginx
+    container_name: $STACK-nginx-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $APPDATA/$STACK/proxy/conf.d:/etc/nginx/conf.d
+      - $APPDATA/$STACK/proxy/vhost.d:/etc/nginx/vhost.d
+      - $APPDATA/$STACK/proxy/html:/usr/share/nginx/html
+      - $APPDATA/$STACK/proxy/certs:/etc/nginx/certs:ro
+    networks:
+      - net
+
+  nginx-gen:
+    image: jwilder/docker-gen
+    container_name: $STACK-nginx-gen
+    restart: unless-stopped
+    depends_on:
+      - nginx-web
+    command: -notify-sighup $STACK-nginx-web -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    volumes:
+      - $APPDATA/$STACK/proxy/conf.d:/etc/nginx/conf.d
+      - $APPDATA/$STACK/proxy/vhost.d:/etc/nginx/vhost.d
+      - $APPDATA/$STACK/proxy/html:/usr/share/nginx/html
+      - $APPDATA/$STACK/proxy/certs:/etc/nginx/certs
+      - ./config/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - net
+
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: $STACK-nginx-letsencrypt
+    restart: unless-stopped
+    depends_on:
+      - nginx-web
+      - nginx-gen
+    environment:
+      - NGINX_PROXY_CONTAINER=$STACK-nginx-web
+      - NGINX_DOCKER_GEN_CONTAINER=$STACK-nginx-gen
+    volumes:
+      - $APPDATA/$STACK/proxy/conf.d:/etc/nginx/conf.d
+      - $APPDATA/$STACK/proxy/vhost.d:/etc/nginx/vhost.d
+      - $APPDATA/$STACK/proxy/html:/usr/share/nginx/html
+      - $APPDATA/$STACK/proxy/certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - net
+
+# Streaming & Compainion apps
+  emby:
+    container_name: $STACK-$EMBY
+    image: emby/embyserver
+    restart: always
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - GIDLIST=$GROUPID
+      - VIRTUAL_HOST=$EMBY.$DOMAIN
+      - VIRTUAL_PORT=8096
+      - LETSENCRYPT_HOST=$EMBY.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$EMBY:/config
+      - $MEDIA:/data/media
+    networks:
+      - net
+
+  # jellyfin:
+  #   container_name: $STACK-$JELLYFIN
+  #   image: binhex/arch-jellyfin
+  #   restart: always
+  #   ports:
+  #     - "8097:8096"
+  #   environment:
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #     - UMASK=000
+  #     - VIRTUAL_HOST=$JELLYFIN.$DOMAIN
+  #     - VIRTUAL_PORT=8097
+  #     - LETSENCRYPT_HOST=$JELLYFIN.$DOMAIN
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - $APPDATA/$STACK/$JELLYFIN:/config
+  #     - $MEDIA:/data/media
+  #   networks:
+  #     - net
+
+  airsonic:
+    container_name: $STACK-$AIRSONIC
+    image: linuxserver/airsonic
+    restart: always
+    ports:
+      - "4040:4040"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
+      - VIRTUAL_PORT=4040
+      - LETSENCRYPT_HOST=$AIRSONIC.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$AIRSONIC:/config
+      - $MEDIA/music:/data/music
+      - $MEDIA/playlists:/data/playlists
+      - $MEDIA/podcasts:/data/podcasts
+    networks:
+      - net
+
+  ombi:
+    container_name: $STACK-$OMBI
+    image: linuxserver/ombi
+    restart: always
+    ports:
+      - "3579:3579"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$OMBI.$DOMAIN
+      - VIRTUAL_PORT=3579
+      - LETSENCRYPT_HOST=$OMBI.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$OMBI:/config
+    networks:
+      - net
+
+  organizr:
+    container_name: $STACK-$ORGANIZR
+    image: organizrtools/organizr-v2
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=$ORGANIZR.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$ORGANIZR:/config
+    networks:
+      - net
+
+  omv:
+    image: qoomon/docker-host
+    container_name: $STACK-$HOSTAPP
+    restart: always
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    expose:
+      - "$HOSTPORT"
+    environment:
+      - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
+      - LETSENCRYPT_HOST=$HOSTAPP.$DOMAIN
+    networks:
+      - net
+
+# Indexer apps
+  sonarr:
+    container_name: $STACK-$SONARR
+    image: linuxserver/sonarr:preview
+    restart: always
+    ports:
+      - "8989:8989"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$SONARR.$DOMAIN
+      - VIRTUAL_PORT=8989
+      - LETSENCRYPT_HOST=$SONARR.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$SONARR:/config
+      - $MEDIA/temp:/data/temp
+      - $MEDIA/tvshows:/data/tv
+      - $DOWNLOADS/torrent:/data/downloads/torrent
+      - $DOWNLOADS/usenet:/data/downloads/usenet
+    networks:
+      - net
+
+  radarr:
+    container_name: $STACK-$RADARR
+    image: linuxserver/radarr
+    restart: always
+    ports:
+      - "7878:7878"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$RADARR.$DOMAIN
+      - VIRTUAL_PORT=7878
+      - LETSENCRYPT_HOST=$RADARR.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$RADARR:/config
+      - $MEDIA/temp:/data/temp
+      - $MEDIA/movies:/data/movies
+      - $DOWNLOADS/torrent:/data/downloads/torrent
+      - $DOWNLOADS/usenet:/data/downloads/usenet
+    networks:
+      - net
+
+  # couchpotatoe:
+  #   container_name: $STACK-$COUCHPOTATO
+  #   image: linuxserver/couchpotato
+  #   restart: always
+  #   ports:
+  #     - "5050:5050"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #     - VIRTUAL_HOST=$COUCHPOTATO.$DOMAIN
+  #     - VIRTUAL_PORT=5050
+  #     - LETSENCRYPT_HOST=$COUCHPOTATO.$DOMAIN
+  #   volumes:
+  #     - $APPDATA/$STACK/$COUCHPOTATO:/config
+  #     - $MEDIA/temp:/data/temp
+  #     - $MEDIA/movies:/data/movies
+  #     - $DOWNLOADS/torrent:/data/downloads/torrent
+  #     - $DOWNLOADS/usenet:/data/downloads/usenet
+  #   networks:
+  #     - net
+
+  lidarr:
+    container_name: $STACK-$LIDARR
+    image: linuxserver/lidarr
+    restart: always
+    ports:
+      - "8686:8686"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$LIDARR.$DOMAIN
+      - VIRTUAL_PORT=8686
+      - LETSENCRYPT_HOST=$LIDARR.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$LIDARR:/config
+      - $MEDIA/temp:/data/temp
+      - $DOWNLOADS/torrent:/data/downloads/torrent
+      - $DOWNLOADS/usenet:/data/downloads/usenet
+      - $MEDIA/music:/data/music
+    networks:
+      - net
+
+  # headphones:
+  #   container_name: $STACK-$HEADPHONES
+  #   image: linuxserver/headphones
+  #   restart: always
+  #   ports:
+  #     - "8181:8181"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #     - VIRTUAL_HOST=$HEADPHONES.$DOMAIN
+  #     - VIRTUAL_PORT=8181
+  #     - LETSENCRYPT_HOST=$HEADPHONES.$DOMAIN
+  #   volumes:
+  #     - $APPDATA/$STACK/$HEADPHONES:/config
+  #     - $MEDIA/temp:/data/temp
+  #     - $DOWNLOADS/torrent:/data/downloads/torrent
+  #     - $DOWNLOADS/usenet:/data/downloads/usenet
+  #     - $MEDIA/music:/data/music
+  #   networks:
+  #     - net
+
+# Indexer source apps
+  jackett:
+    container_name: $STACK-$JACKETT
+    image: linuxserver/jackett:development
+    restart: always
+    ports:
+      - "9117:9117"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - VIRTUAL_HOST=$JACKETT.$DOMAIN
+      - VIRTUAL_PORT=9117
+      - LETSENCRYPT_HOST=$JACKETT.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$JACKETT:/config
+      - $DOWNLOADS/torrent:/data/downloads/torrent
+      - $DOWNLOADS/usenet:/data/downloads/usenet
+    networks:
+      - net
+
+# Download clients
+# Torrent download clients
+  # deluge:
+  #   container_name: $STACK-$DELUGE
+  #   image: binhex/arch-delugevpn
+  #   restart: always
+  #   cap_add:
+  #     - NET_ADMIN
+  #   ports:
+  #     - "8112:8112"
+  #     - "8118:8118"
+  #     - "58846:58846"
+  #     - "58946:58946"
+  #   environment:
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #     - VPN_ENABLED=$VPN_ENABLED
+  #     - VPN_USER=$VPN_USER
+  #     - VPN_PASS=$VPN_PASS
+  #     - VPN_PROV=$VPN_PROV
+  #     - VPN_OPTIONS=$VPN_OPTIONS
+  #     - STRICT_PORT_FORWARD=$STRICT_PORT_FORWARD
+  #     - ENABLE_PRIVOXY=$ENABLE_PRIVOXY
+  #     - LAN_NETWORK=$LAN_NETWORK
+  #     - NAME_SERVERS=$NAME_SERVERS
+  #     - DEBUG=$DEBUG
+  #     - UMASK=$UMASK
+  #     - VIRTUAL_HOST=$DELUGE.$DOMAIN
+  #     - VIRTUAL_PORT=8112
+  #     - LETSENCRYPT_HOST=$DELUGE.$DOMAIN
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ./config/ovpn/nordvpn/current:/config/openvpn
+  #     - $APPDATA/$STACK/$DELUGE:/config
+  #     - $DOWNLOADS/torrent:/data/downloads/torrent
+  #   networks:
+  #     - net
+
+  transmission:
+    container_name: $STACK-$TRANSMISSION
+    image: haugene/transmission-openvpn
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
+      - OPENVPN_PROVIDER=$OPENVPN_PROVIDER
+      - OPENVPN_CONFIG=$OPENVPN_CONFIG
+      - OPENVPN_USERNAME=$OPENVPN_USERNAME
+      - OPENVPN_PASSWORD=$OPENVPN_PASSWORD
+      - OPENVPN_OPTS=$OPENVPN_OPTS
+      - NORDVPN_PROTOCOL=$NORDVPN_PROTOCOL
+      - NORDVPN_CATEGORY=$NORDVPN_CATEGORY
+      - WEBPROXY_ENABLED=false
+      - LOCAL_NETWORK=$LOCAL_NETWORK
+      - TRANSMISSION_DOWNLOAD_DIR=$TRANSMISSION_DOWNLOAD_DIR
+      - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
+      - TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=$TRANSMISSION_RPC_AUTHENTICATION_REQUIRED
+      - TRANSMISSION_RPC_ENABLED=$TRANSMISSION_RPC_ENABLED
+      - TRANSMISSION_RPC_USERNAME=$TRANSMISSION_RPC_USERNAME
+      - TRANSMISSION_RPC_PASSWORD=$TRANSMISSION_RPC_PASSWORD
+      - TRANSMISSION_RATIO_LIMIT_ENABLED=$TRANSMISSION_RATIO_LIMIT_ENABLED
+      - TRANSMISSION_RATIO_LIMIT=$TRANSMISSION_RATIO_LIMIT
+      - TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=$TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED
+      - TRANSMISSION_IDLE_SEEDING_LIMIT=$TRANSMISSION_IDLE_SEEDING_LIMIT
+      - TRANSMISSION_DOWNLOAD_QUEUE_ENABLED=$TRANSMISSION_DOWNLOAD_QUEUE_ENABLED
+      - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=$TRANSMISSION_DOWNLOAD_QUEUE_SIZE
+      - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
+      - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
+      - VIRTUAL_PORT=9091
+      - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOWNLOADS/torrent:/data/downloads/torrent
+    networks:
+      - net
+
+# Usenet download clients
+  # nzbget:
+  #   container_name: $STACK-$NZBGET
+  #   image: jshridha/docker-nzbgetvpn:latest
+  #   restart: always
+  #   cap_add:
+  #     - NET_ADMIN
+  #   ports:
+  #       - "6789:6789"
+  #   environment:
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #     - VPN_ENABLED=$VPN_ENABLED
+  #     - VPN_USER=$VPN_USER
+  #     - VPN_PASS=$VPN_PASS
+  #     - VPN_PROV=$VPN_PROV
+  #     - VPN_OPTIONS=$VPN_OPTIONS
+  #     - STRICT_PORT_FORWARD=$STRICT_PORT_FORWARD
+  #     - ENABLE_PRIVOXY=$ENABLE_PRIVOXY
+  #     - LAN_NETWORK=$LAN_NETWORK
+  #     - NAME_SERVERS=$NAME_SERVERS
+  #     - DEBUG=$DEBUG
+  #     - UMASK=$UMASK
+  #     - VIRTUAL_HOST=$NZBGET.$DOMAIN
+  #     - VIRTUAL_PORT=6789
+  #     - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ./config/ovpn/nordvpn/current:/config/openvpn
+  #     - $APPDATA/$STACK/$NZBGET:/config
+  #     - $DOWNLOADS/usenet:/data/downloads/usenet
+  #   networks:
+  #     - net
+
+  nzbget:
+    image: "linuxserver/nzbget:testing"
+    container_name: $STACK-$NZBGET
+    restart: always
+    ports:
+        - "6789:6789"
+    environment:
+      - PUID=$USERID
+      - PGID=$GROUPID
+      - TZ=$TIMEZONE
+      - VIRTUAL_HOST=$NZBGET.$DOMAIN
+      - VIRTUAL_PORT=6789
+      - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
+    volumes:
+      - $APPDATA/$STACK/$NZBGET:/config
+      - $DOWNLOADS/usenet:/data/downloads/usenet
+    networks:
+      - net
+
+# Utility services
+  # duplicati:
+  #   image: "linuxserver/duplicati"
+  #   container_name: $STACK-$DUPLICATI
+  #   restart: always
+  #   ports:
+  #       - "8300:8200"
+  #   environment:
+  #     - PUID=$USERID
+  #     - PGID=$GROUPID
+  #     - VIRTUAL_HOST=$DUPLICATI.$DOMAIN
+  #     - VIRTUAL_PORT=8200
+  #     - LETSENCRYPT_HOST=$DUPLICATI.$DOMAIN
+  #   volumes:
+  #     - $APPDATA/$STACK/$DUPLICATI:/config
+  #     - $APPDATA/$STACK/$DUPLICATI/tmp:/tmp
+  #     - $APPDATA:/source:ro
+  #   networks:
+  #     - net
+
+  ddclient:
+    image: "linuxserver/ddclient"
+    container_name: $STACK-ddclient
+    restart: always
+    environment:
+      - PUID=$USERID
+      - PGID=$GROUPID
+      - TZ=$TIMEZONE
+    volumes:
+      - $APPDATA/$STACK/ddclient:/config
+    networks:
+      - net
+
+  portainer:
+    image: "portainer/portainer"
+    container_name: $STACK-$PORTAINER
+    restart: always
+    ports:
+        - "9000:9000"
+    environment:
+      - VIRTUAL_HOST=$PORTAINER.$DOMAIN
+      - VIRTUAL_PORT=9000
+      - LETSENCRYPT_HOST=$PORTAINER.$DOMAIN
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $APPDATA/$STACK/$PORTAINER:/data
+    networks:
+      - net
+
+# Monitoring & Analytic apps
+  # Container update manager
+  watchtower:
+    container_name: $STACK-watchtower
+    image: v2tec/watchtower
+    restart: unless-stopped
+    command: --schedule "0 0 4 * * *" --cleanup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - net
+
+  # grafana:
+  #   image: "grafana/grafana"
+  #   container_name: $STACK-$GRAFANA
+  #   restart: always
+  #   ports:
+  #       - "3000:3000"
+  #   user: $USERID
+  #   environment:
+  #     - VIRTUAL_HOST=$GRAFANA.$DOMAIN
+  #     - VIRTUAL_PORT=3000
+  #     - LETSENCRYPT_HOST=$GRAFANA.$DOMAIN
+  #   volumes:
+  #     - $APPDATA/$STACK/$GRAFANA:/var/lib/grafana
+  #   networks:
+  #     - net
+
+networks:
+  net:
+    internal: false
