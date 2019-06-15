@@ -24,6 +24,7 @@ services:
     container_name: $STACK-$LDAP
     ports:
       - "389:389"
+      - "639:639"
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_ORGANISATION: "$ORGANIZATION"
