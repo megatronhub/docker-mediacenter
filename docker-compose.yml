@@ -24,6 +24,8 @@ services:
     container_name: $STACK-$EMBY
     image: emby/embyserver
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
@@ -42,6 +44,8 @@ services:
   #   container_name: $STACK-$JELLYFIN
   #   image: linuxserver/jellyfin
   #   restart: always
+  #    depends_on:
+  #      - traefik
   #   ports:
   #     - 8097:8096
   #   environment:
@@ -58,6 +62,8 @@ services:
     container_name: $STACK-$AIRSONIC
     image: linuxserver/airsonic
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
@@ -79,6 +85,8 @@ services:
     container_name: $STACK-$OMBI
     image: linuxserver/ombi
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
@@ -97,6 +105,8 @@ services:
     container_name: $STACK-$ORGANIZR
     image: organizrtools/organizr-v2
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
@@ -115,6 +125,8 @@ services:
     container_name: $STACK-$HOSTAPP
     restart: always
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$HOSTAPP.$DOMAIN" # Domain name for the app
@@ -130,6 +142,8 @@ services:
     container_name: $STACK-$SONARR
     image: linuxserver/sonarr:preview
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$SONARR.$DOMAIN" # Domain name for the app
@@ -154,6 +168,8 @@ services:
     container_name: $STACK-$RADARR
     image: linuxserver/radarr
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$RADARR.$DOMAIN" # Domain name for the app
@@ -178,6 +194,8 @@ services:
     container_name: $STACK-$LIDARR
     image: linuxserver/lidarr
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$LIDARR.$DOMAIN" # Domain name for the app
@@ -203,6 +221,8 @@ services:
     container_name: $STACK-$JACKETT
     image: linuxserver/jackett:development
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$JACKETT.$DOMAIN" # Domain name for the app
@@ -231,6 +251,8 @@ services:
     dns:
       - 8.8.8.8
       - 8.8.4.4
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$TRANSMISSION.$DOMAIN" # Domain name for the app
@@ -271,6 +293,8 @@ services:
     image: "linuxserver/nzbget:testing"
     container_name: $STACK-$NZBGET
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$NZBGET.$DOMAIN" # Domain name for the app
@@ -293,6 +317,8 @@ services:
     image: "linuxserver/ddclient"
     container_name: $STACK-ddclient
     restart: always
+    depends_on:
+      - traefik
     environment:
       - PUID=$USERID
       - PGID=$GROUPID
@@ -306,6 +332,8 @@ services:
     image: "portainer/portainer"
     container_name: $STACK-$PORTAINER
     restart: always
+    depends_on:
+      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
