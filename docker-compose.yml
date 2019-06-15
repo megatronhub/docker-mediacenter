@@ -1,5 +1,6 @@
 version: '3.2'
 services:
+# Reverse proxy & Front end
   traefik:
     container_name: $STACK-$TRAEFIK
     image: traefik
@@ -16,88 +17,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./config/traefik.toml:/traefik.toml # Traefik configuration file
       - $APPDATA/$STACK/$TRAEFIK/traefik-acme:/acme # Tell Traefik to save SSL certs here
-    networks:
-      - net
-
-# Streaming & Compainion apps
-  emby:
-    container_name: $STACK-$EMBY
-    image: emby/embyserver
-    restart: always
-    depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
-      - "traefik.port=8096"
-    environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
-      - GIDLIST=$GROUPID
-    volumes:
-      - $APPDATA/$STACK/$EMBY:/config
-      - $MEDIA:/data/media
-    networks:
-      - net
-
-  # jellyfin:
-  #   container_name: $STACK-$JELLYFIN
-  #   image: linuxserver/jellyfin
-  #   restart: always
-  #    depends_on:
-  #      - traefik
-  #   ports:
-  #     - 8097:8096
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #   volumes:
-  #     - $APPDATA/$STACK/$JELLYFIN:/config
-  #     - $MEDIA:/data/media
-  #   networks:
-  #     - net
-
-  airsonic:
-    container_name: $STACK-$AIRSONIC
-    image: linuxserver/airsonic
-    restart: always
-    depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=4"
-      - "traefik.port=4040"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - $APPDATA/$STACK/$AIRSONIC:/config
-      - $MEDIA/music:/data/music
-      - $MEDIA/playlists:/data/playlists
-      - $MEDIA/podcasts:/data/podcasts
-    networks:
-      - net
-
-  ombi:
-    container_name: $STACK-$OMBI
-    image: linuxserver/ombi
-    restart: always
-    depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
-      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=5"
-      - "traefik.port=3579"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - $APPDATA/$STACK/$OMBI:/config
     networks:
       - net
 
@@ -122,6 +41,92 @@ services:
     networks:
       - net
 
+# Streaming & Compainion apps
+  emby:
+    container_name: $STACK-$EMBY
+    image: emby/embyserver
+    restart: always
+    depends_on:
+      - traefik
+      - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
+      - "traefik.port=8096"
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - GIDLIST=$GROUPID
+    volumes:
+      - $APPDATA/$STACK/$EMBY:/config
+      - $MEDIA:/data/media
+    networks:
+      - net
+
+  # jellyfin:
+  #   container_name: $STACK-$JELLYFIN
+  #   image: linuxserver/jellyfin
+  #   restart: always
+  #    depends_on:
+  #      - traefik
+  #      - organizr
+  #   ports:
+  #     - 8097:8096
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #   volumes:
+  #     - $APPDATA/$STACK/$JELLYFIN:/config
+  #     - $MEDIA:/data/media
+  #   networks:
+  #     - net
+
+  airsonic:
+    container_name: $STACK-$AIRSONIC
+    image: linuxserver/airsonic
+    restart: always
+    depends_on:
+      - traefik
+      - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=4"
+      - "traefik.port=4040"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+    volumes:
+      - $APPDATA/$STACK/$AIRSONIC:/config
+      - $MEDIA/music:/data/music
+      - $MEDIA/playlists:/data/playlists
+      - $MEDIA/podcasts:/data/podcasts
+    networks:
+      - net
+
+  ombi:
+    container_name: $STACK-$OMBI
+    image: linuxserver/ombi
+    restart: always
+    depends_on:
+      - traefik
+      - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
+      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=5"
+      - "traefik.port=3579"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+    volumes:
+      - $APPDATA/$STACK/$OMBI:/config
+    networks:
+      - net
+
   omv:
     image: qoomon/docker-host
     container_name: $STACK-$HOSTAPP
@@ -129,6 +134,7 @@ services:
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$HOSTAPP.$DOMAIN" # Domain name for the app
@@ -146,6 +152,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$SONARR.$DOMAIN" # Domain name for the app
@@ -172,6 +179,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$RADARR.$DOMAIN" # Domain name for the app
@@ -198,6 +206,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$LIDARR.$DOMAIN" # Domain name for the app
@@ -225,6 +234,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$JACKETT.$DOMAIN" # Domain name for the app
@@ -255,6 +265,7 @@ services:
       - 8.8.4.4
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$TRANSMISSION.$DOMAIN" # Domain name for the app
@@ -297,6 +308,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$NZBGET.$DOMAIN" # Domain name for the app
@@ -319,8 +331,6 @@ services:
     image: "linuxserver/ddclient"
     container_name: $STACK-ddclient
     restart: always
-    depends_on:
-      - traefik
     environment:
       - PUID=$USERID
       - PGID=$GROUPID
@@ -336,6 +346,7 @@ services:
     restart: always
     depends_on:
       - traefik
+      - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
