@@ -33,6 +33,18 @@ services:
     volumes:
       - $APPDATA/$STACK/$LDAP/config:/etc/ldap/slapd.d
       - $APPDATA/$STACK/$LDAP/data:/var/lib/ldap
+    networks:
+      - net
+
+  ldap-admin:
+    image: osixia/phpldapadmin:0.7.1
+    ports:
+      - "6080:80"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
+      - PHPLDAPADMIN_HTTPS=false
+    networks:
+      - net
 
 # Streaming & Compainion apps
   emby:
