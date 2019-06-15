@@ -45,6 +45,8 @@ services:
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=ldap
       - PHPLDAPADMIN_HTTPS=false
+    links:
+      - ldap
     networks:
       - net
 
