@@ -42,7 +42,7 @@ services:
     ports:
       - "6080:80"
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap
       - PHPLDAPADMIN_HTTPS=false
     networks:
       - net
