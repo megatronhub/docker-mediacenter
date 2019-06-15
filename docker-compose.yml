@@ -4,6 +4,8 @@ services:
     container_name: $STACK-$TRAEFIK
     image: traefik
     command: --api # Enables the web UI
+    depends_on:
+      - openldap
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$TRAEFIK.$DOMAIN" # Domain name for the app
@@ -342,6 +344,40 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
+    networks:
+      - net
+
+  openldap:
+    image: "hrektts/fusiondirectory-openldap:latest"
+    container_name: $STACK-$OPENLDAP
+    restart: always
+    ports:
+      - "389:389"
+    environment:
+      - LDAP_ORGANISATION=$LDAP_ORGANISATION
+      - LDAP_DOMAIN=$DOMAIN
+      - LDAP_ADMIN_PASSWORD=$LDAP_ADMIN_PASSWORD
+      - LDAP_CONFIG_PASSWORD=$LDAP_CONFIG_PASSWORD
+      - LDAP_READONLY_USER=$LDAP_READONLY_USER
+      - LDAP_READONLY_USER_USERNAME=$LDAP_READONLY_USER_USERNAME
+      - LDAP_READONLY_USER_PASSWORD=$LDAP_READONLY_USER_PASSWORD
+      - FD_ADMIN_PASSWORD=$FD_ADMIN_PASSWORD
+    networks:
+      - net
+
+  fusiondirectory:
+    image: "hrektts/fusiondirectory:latest"
+    container_name: $STACK-$FUSIONLDAP
+    restart: always
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$FUSIONLDAP.$DOMAIN" # Domain name for the app
+      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=80"
+    environment:
+      - LDAP_DOMAIN=$DOMAIN
+      - LDAP_HOST=openldap
+      - LDAP_ADMIN_PASSWORD=$LDAP_ADMIN_PASSWORD
     networks:
       - net
 
