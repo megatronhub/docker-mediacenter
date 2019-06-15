@@ -61,7 +61,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=3"
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=5"
       - "traefik.port=4040"
     environment:
       - TZ=$TIMEZONE
