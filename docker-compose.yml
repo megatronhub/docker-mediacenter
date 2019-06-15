@@ -27,7 +27,6 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=0"
       - "traefik.port=8096"
     environment:
       - PGID=$GROUPID
@@ -85,7 +84,6 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=0"
       - "traefik.port=80"
     environment:
       - PGID=$GROUPID
