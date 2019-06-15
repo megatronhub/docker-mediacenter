@@ -38,6 +38,26 @@ services:
     networks:
       - net
 
+  jellyfin:
+    container_name: $STACK-$JELLYFIN
+    image: linuxserver/jellyfin
+    restart: always
+    # labels:
+    #   - "traefik.enable=true" # Enable reverse-proxy for this service
+    #   - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
+    #   - "traefik.port=8096"
+    ports:
+      - 8097:8096
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+    volumes:
+      - $APPDATA/$STACK/$JELLYFIN:/config
+      - $MEDIA:/data/media
+    networks:
+      - net
+
   airsonic:
     container_name: $STACK-$AIRSONIC
     image: linuxserver/airsonic
