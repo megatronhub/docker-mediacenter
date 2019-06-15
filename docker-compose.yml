@@ -44,7 +44,7 @@ services:
     ports:
       - "6080:80"
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=ldap
+      - PHPLDAPADMIN_LDAP_HOSTS=$LDAP.$DOMAIN
       - PHPLDAPADMIN_HTTPS=false
     links:
       - ldap
