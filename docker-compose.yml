@@ -17,9 +17,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./config/traefik.toml:/traefik.toml # Traefik configuration file
       - $APPDATA/$STACK/$TRAEFIK/traefik-acme:/acme # Tell Traefik to save SSL certs here
-    network_mode: "host"
-    # networks:
-    #   - net
+    networks:
+      - net
 
   organizr:
     container_name: $STACK-$ORGANIZR
@@ -38,9 +37,8 @@ services:
       - PUID=$USERID
     volumes:
       - $APPDATA/$STACK/$ORGANIZR:/config
-    network_mode: "host"
-    # networks:
-    #   - net
+    networks:
+      - net
 
 # Streaming & Compainion apps
   emby:
@@ -62,9 +60,8 @@ services:
     volumes:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
-    network_mode: "host"
-    # networks:
-    #   - net
+    networks:
+      - net
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
