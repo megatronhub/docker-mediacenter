@@ -60,9 +60,9 @@ services:
     volumes:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
+    network_mode: "host"
     networks:
       - net
-      - host
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
@@ -374,5 +374,3 @@ services:
 networks:
   net:
     internal: false
-  host:
-    network_mode: "host"
