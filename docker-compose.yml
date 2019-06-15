@@ -134,6 +134,8 @@ services:
       - "traefik.frontend.rule=Host:$SONARR.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8989"
+    ports:
+      - "8989:8989"
     environment:
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -156,6 +158,8 @@ services:
       - "traefik.frontend.rule=Host:$RADARR.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=7878"
+    ports:
+      - "7878:7878"
     environment:
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -178,6 +182,8 @@ services:
       - "traefik.frontend.rule=Host:$LIDARR.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8686"
+    ports:
+      - "8686:8686"
     environment:
       - TZ=$TIMEZONE
       - PGID=$GROUPID
