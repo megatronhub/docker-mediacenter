@@ -4,10 +4,14 @@ services:
     container_name: $STACK-$TRAEFIK
     image: traefik
     command: --api # Enables the web UI
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$TRAEFIK.$DOMAIN" # Domain name for the app
+      - "traefik.port=8080"
     ports:
       - "80:80" # The HTTP port
       - "443:443" # The HTTPS port
-      - "8080:8080" # The web UI
+      # - "8080:8080" # The web UI
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./config/traefik.toml:/traefik.toml # Traefik configuration file
