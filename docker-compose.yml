@@ -38,6 +38,7 @@ services:
 
   ldap-admin:
     image: osixia/phpldapadmin:0.7.1
+    container_name: $STACK-$LDAP-admin
     ports:
       - "6080:80"
     environment:
