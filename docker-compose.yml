@@ -19,6 +19,21 @@ services:
     networks:
       - net
 
+  ldap:
+    image: osixia/openldap
+    container_name: $STACK-$LDAP
+    ports:
+      - "389:389"
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "$ORGANIZATION"
+      LDAP_DOMAIN: "$DOMAIN"
+      LDAP_ADMIN_PASSWORD: "LDAPADMINPASS"
+      LDAP_CONFIG_PASSWORD: "LDAPCONFIGPASS"
+    volumes:
+      - $APPDATA/$STACK/$LDAP:/etc/ldap/slapd.d
+      - $APPDATA/$STACK/$LDAP/data:/var/lib/ldap
+
 # Streaming & Compainion apps
   emby:
     container_name: $STACK-$EMBY
