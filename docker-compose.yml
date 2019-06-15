@@ -60,6 +60,8 @@ services:
     volumes:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
+    network:
+      - host
     networks:
       - net
 
