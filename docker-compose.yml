@@ -12,7 +12,6 @@ services:
     ports:
       - "80:80" # The HTTP port
       - "443:443" # The HTTPS port
-      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./config/traefik.toml:/traefik.toml # Traefik configuration file
