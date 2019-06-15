@@ -19,25 +19,6 @@ services:
     networks:
       - net
 
-  ldap:
-    image : sealeo/openldap
-    container_name: $STACK-$LDAP
-    # labels:
-    #   - "traefik.enable=true" # Enable reverse-proxy for this service
-    #   - "traefik.frontend.rule=Host:$LDAP.$DOMAIN" # Domain name for the app
-    #   - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-    #   - "traefik.port=8888"
-    ports:
-      - 389:389
-      - 8888:80
-    environment:
-      - LDAP_PASSWORD=$LDAPADMINPASS
-      - LDAP_ORGANISATION=$ORGANIZATION
-      - LDAP_DOMAIN=$DOMAIN
-      - LDAP_SERVERNAME=$STACK-$LDAP
-    volumes:
-      - /path/ldap/data:/var/lib/ldap
-
 # Streaming & Compainion apps
   emby:
     container_name: $STACK-$EMBY
