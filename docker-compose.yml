@@ -31,7 +31,7 @@ services:
       LDAP_ADMIN_PASSWORD: "LDAPADMINPASS"
       LDAP_CONFIG_PASSWORD: "LDAPCONFIGPASS"
     volumes:
-      - $APPDATA/$STACK/$LDAP:/etc/ldap/slapd.d
+      - $APPDATA/$STACK/$LDAP/config:/etc/ldap/slapd.d
       - $APPDATA/$STACK/$LDAP/data:/var/lib/ldap
 
 # Streaming & Compainion apps
