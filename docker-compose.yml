@@ -62,6 +62,7 @@ services:
       - $MEDIA:/data/media
     networks:
       - net
+      - host
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
@@ -373,3 +374,5 @@ services:
 networks:
   net:
     internal: false
+  host:
+    network_mode: "host"
