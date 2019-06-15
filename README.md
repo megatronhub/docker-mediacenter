@@ -97,6 +97,16 @@ Shoutout to everyone envolved in making & maintaining these containers
     ```
     - Once your done changing the variables press ctrl+o enter ctrl+x to save and exit file
 
+- Make a copy of sample.traefik.toml in the repository directory
+    ```sh
+    $ cp sample.traefik.toml config/traefik.toml
+    ```
+- Change the environment variables in traefik.toml to fit your needs
+    ```sh
+    $ nano config/traefik.toml
+    ```
+    - Once your done changing the variables press ctrl+o enter ctrl+x to save and exit file
+
 - Create a user & group for your mediacenter apps to use, I made one without a home directory as it's not needed
     - The -M creates user without the home directory 
     - The -S specifies what shell the user will use, in this case the user mediacenter does not have ssh permission
