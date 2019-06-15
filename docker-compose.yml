@@ -37,26 +37,6 @@ services:
     networks:
       - net
 
-  # jellyfin:
-  #   container_name: $STACK-$JELLYFIN
-  #   image: binhex/arch-jellyfin
-  #   restart: always
-  #   ports:
-  #     - "8097:8096"
-  #   environment:
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #     - UMASK=000
-  #     - VIRTUAL_HOST=$JELLYFIN.$DOMAIN
-  #     - VIRTUAL_PORT=8097
-  #     - LETSENCRYPT_HOST=$JELLYFIN.$DOMAIN
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - $APPDATA/$STACK/$JELLYFIN:/config
-  #     - $MEDIA:/data/media
-  #   networks:
-  #     - net
-
   airsonic:
     container_name: $STACK-$AIRSONIC
     image: linuxserver/airsonic
@@ -167,28 +147,6 @@ services:
     networks:
       - net
 
-  # couchpotatoe:
-  #   container_name: $STACK-$COUCHPOTATO
-  #   image: linuxserver/couchpotato
-  #   restart: always
-  #   ports:
-  #     - "5050:5050"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #     - VIRTUAL_HOST=$COUCHPOTATO.$DOMAIN
-  #     - VIRTUAL_PORT=5050
-  #     - LETSENCRYPT_HOST=$COUCHPOTATO.$DOMAIN
-  #   volumes:
-  #     - $APPDATA/$STACK/$COUCHPOTATO:/config
-  #     - $MEDIA/temp:/data/temp
-  #     - $MEDIA/movies:/data/movies
-  #     - $DOWNLOADS/torrent:/data/downloads/torrent
-  #     - $DOWNLOADS/usenet:/data/downloads/usenet
-  #   networks:
-  #     - net
-
   lidarr:
     container_name: $STACK-$LIDARR
     image: linuxserver/lidarr
@@ -210,28 +168,6 @@ services:
     networks:
       - net
 
-  # headphones:
-  #   container_name: $STACK-$HEADPHONES
-  #   image: linuxserver/headphones
-  #   restart: always
-  #   ports:
-  #     - "8181:8181"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #     - VIRTUAL_HOST=$HEADPHONES.$DOMAIN
-  #     - VIRTUAL_PORT=8181
-  #     - LETSENCRYPT_HOST=$HEADPHONES.$DOMAIN
-  #   volumes:
-  #     - $APPDATA/$STACK/$HEADPHONES:/config
-  #     - $MEDIA/temp:/data/temp
-  #     - $DOWNLOADS/torrent:/data/downloads/torrent
-  #     - $DOWNLOADS/usenet:/data/downloads/usenet
-  #     - $MEDIA/music:/data/music
-  #   networks:
-  #     - net
-
 # Indexer source apps
   jackett:
     container_name: $STACK-$JACKETT
@@ -252,44 +188,7 @@ services:
     networks:
       - net
 
-# Download clients
 # Torrent download clients
-  # deluge:
-  #   container_name: $STACK-$DELUGE
-  #   image: binhex/arch-delugevpn
-  #   restart: always
-  #   cap_add:
-  #     - NET_ADMIN
-  #   ports:
-  #     - "8112:8112"
-  #     - "8118:8118"
-  #     - "58846:58846"
-  #     - "58946:58946"
-  #   environment:
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #     - VPN_ENABLED=$VPN_ENABLED
-  #     - VPN_USER=$VPN_USER
-  #     - VPN_PASS=$VPN_PASS
-  #     - VPN_PROV=$VPN_PROV
-  #     - VPN_OPTIONS=$VPN_OPTIONS
-  #     - STRICT_PORT_FORWARD=$STRICT_PORT_FORWARD
-  #     - ENABLE_PRIVOXY=$ENABLE_PRIVOXY
-  #     - LAN_NETWORK=$LAN_NETWORK
-  #     - NAME_SERVERS=$NAME_SERVERS
-  #     - DEBUG=$DEBUG
-  #     - UMASK=$UMASK
-  #     - VIRTUAL_HOST=$DELUGE.$DOMAIN
-  #     - VIRTUAL_PORT=8112
-  #     - LETSENCRYPT_HOST=$DELUGE.$DOMAIN
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - ./config/ovpn/nordvpn/current:/config/openvpn
-  #     - $APPDATA/$STACK/$DELUGE:/config
-  #     - $DOWNLOADS/torrent:/data/downloads/torrent
-  #   networks:
-  #     - net
-
   transmission:
     container_name: $STACK-$TRANSMISSION
     image: haugene/transmission-openvpn
@@ -336,39 +235,6 @@ services:
       - net
 
 # Usenet download clients
-  # nzbget:
-  #   container_name: $STACK-$NZBGET
-  #   image: jshridha/docker-nzbgetvpn:latest
-  #   restart: always
-  #   cap_add:
-  #     - NET_ADMIN
-  #   ports:
-  #       - "6789:6789"
-  #   environment:
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #     - VPN_ENABLED=$VPN_ENABLED
-  #     - VPN_USER=$VPN_USER
-  #     - VPN_PASS=$VPN_PASS
-  #     - VPN_PROV=$VPN_PROV
-  #     - VPN_OPTIONS=$VPN_OPTIONS
-  #     - STRICT_PORT_FORWARD=$STRICT_PORT_FORWARD
-  #     - ENABLE_PRIVOXY=$ENABLE_PRIVOXY
-  #     - LAN_NETWORK=$LAN_NETWORK
-  #     - NAME_SERVERS=$NAME_SERVERS
-  #     - DEBUG=$DEBUG
-  #     - UMASK=$UMASK
-  #     - VIRTUAL_HOST=$NZBGET.$DOMAIN
-  #     - VIRTUAL_PORT=6789
-  #     - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - ./config/ovpn/nordvpn/current:/config/openvpn
-  #     - $APPDATA/$STACK/$NZBGET:/config
-  #     - $DOWNLOADS/usenet:/data/downloads/usenet
-  #   networks:
-  #     - net
-
   nzbget:
     image: "linuxserver/nzbget:testing"
     container_name: $STACK-$NZBGET
@@ -388,25 +254,6 @@ services:
       - net
 
 # Utility services
-  # duplicati:
-  #   image: "linuxserver/duplicati"
-  #   container_name: $STACK-$DUPLICATI
-  #   restart: always
-  #   ports:
-  #       - "8300:8200"
-  #   environment:
-  #     - PUID=$USERID
-  #     - PGID=$GROUPID
-  #     - VIRTUAL_HOST=$DUPLICATI.$DOMAIN
-  #     - VIRTUAL_PORT=8200
-  #     - LETSENCRYPT_HOST=$DUPLICATI.$DOMAIN
-  #   volumes:
-  #     - $APPDATA/$STACK/$DUPLICATI:/config
-  #     - $APPDATA/$STACK/$DUPLICATI/tmp:/tmp
-  #     - $APPDATA:/source:ro
-  #   networks:
-  #     - net
-
   ddclient:
     image: "linuxserver/ddclient"
     container_name: $STACK-ddclient
@@ -445,22 +292,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
-
-  # grafana:
-  #   image: "grafana/grafana"
-  #   container_name: $STACK-$GRAFANA
-  #   restart: always
-  #   ports:
-  #       - "3000:3000"
-  #   user: $USERID
-  #   environment:
-  #     - VIRTUAL_HOST=$GRAFANA.$DOMAIN
-  #     - VIRTUAL_PORT=3000
-  #     - LETSENCRYPT_HOST=$GRAFANA.$DOMAIN
-  #   volumes:
-  #     - $APPDATA/$STACK/$GRAFANA:/var/lib/grafana
-  #   networks:
-  #     - net
 
 networks:
   net:
