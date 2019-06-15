@@ -61,8 +61,8 @@ services:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
     network_mode: "host"
-    networks:
-      - net
+    # networks:
+    #   - net
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
