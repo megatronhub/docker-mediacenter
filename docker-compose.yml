@@ -112,6 +112,8 @@ services:
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
       - "traefik.port=80"
+    ports:
+      - "8888:80"
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
