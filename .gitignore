@@ -2,3 +2,4 @@
 ssh.*
 *.p12
 docker
+config/traefik.toml
