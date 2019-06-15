@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.4'
 services:
 # Reverse proxy & Front end
   traefik:
@@ -60,9 +60,9 @@ services:
     volumes:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
+    network: host
     networks:
       - net
-      - host
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
