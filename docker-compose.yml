@@ -7,6 +7,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$TRAEFIK.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8080"
     ports:
       - "80:80" # The HTTP port
@@ -26,6 +27,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=0"
       - "traefik.port=8096"
     environment:
       - PGID=$GROUPID
@@ -44,6 +46,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=3"
       - "traefik.port=4040"
     environment:
       - TZ=$TIMEZONE
@@ -64,6 +67,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=3"
       - "traefik.port=3579"
     environment:
       - TZ=$TIMEZONE
@@ -81,6 +85,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=0"
       - "traefik.port=80"
     environment:
       - PGID=$GROUPID
@@ -98,6 +103,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$HOSTAPP.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=$HOSTPORT"
     expose:
       - "$HOSTPORT"
@@ -112,6 +118,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$SONARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8989"
     environment:
       - TZ=$TIMEZONE
@@ -133,6 +140,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$RADARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=7878"
     environment:
       - TZ=$TIMEZONE
@@ -154,6 +162,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$LIDARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8686"
     environment:
       - TZ=$TIMEZONE
@@ -176,6 +185,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$JACKETT.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=9117"
     environment:
       - TZ=$TIMEZONE
@@ -201,6 +211,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$TRANSMISSION.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=9091"
     environment:
       - PGID=$GROUPID
@@ -242,6 +253,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$NZBGET.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=6789"
     environment:
       - PUID=$USERID
