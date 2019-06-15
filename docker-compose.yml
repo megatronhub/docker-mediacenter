@@ -19,37 +19,37 @@ services:
     networks:
       - net
 
-  ldap:
-    image: osixia/openldap
-    container_name: $STACK-$LDAP
-    ports:
-      - "389:389"
-      - "639:639"
-    environment:
-      - LDAP_LOG_LEVEL="256"
-      - LDAP_ORGANISATION="$ORGANIZATION"
-      - LDAP_DOMAIN="$DOMAIN"
-      # - LDAP_ADMIN_PASSWORD="LDAPADMINPASS"
-      # - LDAP_CONFIG_PASSWORD="LDAPCONFIGPASS"
-      - LDAP_TLS=false
-    volumes:
-      - $APPDATA/$STACK/$LDAP/config:/etc/ldap/slapd.d
-      - $APPDATA/$STACK/$LDAP/data:/var/lib/ldap
-    networks:
-      - net
+  # ldap:
+  #   image: osixia/openldap
+  #   container_name: $STACK-$LDAP
+  #   ports:
+  #     - "389:389"
+  #     - "639:639"
+  #   environment:
+  #     - LDAP_LOG_LEVEL="256"
+  #     - LDAP_ORGANISATION="$ORGANIZATION"
+  #     - LDAP_DOMAIN="$DOMAIN"
+  #     # - LDAP_ADMIN_PASSWORD="LDAPADMINPASS"
+  #     # - LDAP_CONFIG_PASSWORD="LDAPCONFIGPASS"
+  #     - LDAP_TLS=false
+  #   volumes:
+  #     - $APPDATA/$STACK/$LDAP/config:/etc/ldap/slapd.d
+  #     - $APPDATA/$STACK/$LDAP/data:/var/lib/ldap
+  #   networks:
+  #     - net
 
-  ldap-admin:
-    image: osixia/phpldapadmin:0.7.1
-    container_name: $STACK-$LDAP-admin
-    ports:
-      - "6080:80"
-    environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=192.168.0.10
-      - PHPLDAPADMIN_HTTPS=false
-    links:
-      - ldap
-    networks:
-      - net
+  # ldap-admin:
+  #   image: osixia/phpldapadmin:0.7.1
+  #   container_name: $STACK-$LDAP-admin
+  #   ports:
+  #     - "6080:80"
+  #   environment:
+  #     - PHPLDAPADMIN_LDAP_HOSTS=192.168.0.10
+  #     - PHPLDAPADMIN_HTTPS=false
+  #   links:
+  #     - ldap
+  #   networks:
+  #     - net
 
 # Streaming & Compainion apps
   emby:
