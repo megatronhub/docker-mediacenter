@@ -202,6 +202,28 @@ services:
     networks:
       - net
 
+  radarr-collection:
+    container_name: $STACK-$RADARRCOLLECTION
+    image: si0972/radarr-collections
+    restart: always
+    depends_on:
+      - traefik
+    # labels:
+    #   - "traefik.enable=true" # Enable reverse-proxy for this service
+    #   - "traefik.frontend.rule=Host:$RADARRCOLLECTION.$DOMAIN" # Domain name for the app
+    #   - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+    #   - "traefik.port=7878"
+    ports:
+      - "7878:7878"
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+      - args=$ARGS
+    volumes:
+      - $APPDATA/$STACK/$RADARRCOLLECTION:/config
+    networks:
+      - net
+
   lidarr:
     container_name: $STACK-$LIDARR
     image: linuxserver/lidarr
