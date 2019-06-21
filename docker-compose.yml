@@ -177,7 +177,7 @@ services:
 
   radarr:
     container_name: $STACK-$RADARR
-    image: linuxserver/radarr:nigtly
+    image: linuxserver/radarr:nightly
     restart: always
     depends_on:
       - traefik
