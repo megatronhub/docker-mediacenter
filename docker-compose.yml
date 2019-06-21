@@ -53,6 +53,8 @@ services:
       - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
       - "traefik.port=8096"
+    ports:
+      -  "8096:8096"
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
