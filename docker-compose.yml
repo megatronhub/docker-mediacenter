@@ -213,8 +213,6 @@ services:
     #   - "traefik.frontend.rule=Host:$RADARRCOLLECTION.$DOMAIN" # Domain name for the app
     #   - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
     #   - "traefik.port=7878"
-    ports:
-      - "7878:7878"
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
