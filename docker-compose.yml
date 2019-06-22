@@ -400,7 +400,7 @@ services:
     depends_on:
       - traefik
       - organizr
-      - postgres
+      - mariadb
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$GOGS.$DOMAIN" # Domain name for the app
@@ -411,18 +411,22 @@ services:
     networks:
       - net
 
-  postgres:
-    image: "postgres:9.5"
-    container_name: $STACK-$POSTGRES
+  mariadb:
+    image: "linuxserver/mariadb"
+    container_name: $STACK-$MARIADB
     restart: always
     environment:
-      - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - POSTGRES_DB=gogs
+      - PUID=$USERID
+      - PGID=$GROUPID
+      - TZ=$TIMEZONE
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
     ports:
-      - 5432:5432
+      - 3306:3306
     volumes:
-      - $APPDATA/$STACK/$POSTGRES:/var/lib/postgresql/data
+      - $APPDATA/$STACK/$MARIADB:/config
     networks:
       - net
 
