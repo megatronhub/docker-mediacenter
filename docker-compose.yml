@@ -408,9 +408,9 @@ services:
       - "traefik.port=80"
     ports:
       - "22:22"
-    environment:
-      - GITLAB_OMNIBUS_CONFIG: |
-          external_url 'https://$GITLAB.$DOMAIN'
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'https://$GITLAB.$DOMAIN'
     volumes:
       - $APPDATA/$STACK/$GITLAB/config:/etc/gitlab
       - $APPDATA/$STACK/$GITLAB/logs:/var/log/gitlab
