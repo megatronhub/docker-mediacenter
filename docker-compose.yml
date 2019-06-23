@@ -400,7 +400,7 @@ services:
     depends_on:
       - traefik
       - organizr
-      - mariadb
+      - postgres
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$GOGS.$DOMAIN" # Domain name for the app
@@ -416,9 +416,6 @@ services:
     container_name: $STACK-$POSTGRES
     restart: always
     environment:
-      - PUID=$USERID
-      - PGID=$GROUPID
-      - TZ=$TIMEZONE
       - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
       - POSTGRESQL_DATABASE=$POSTGRESQL_DATABASE
       - POSTGRESQL_USERNAME=$POSTGRESQL_USERNAME
