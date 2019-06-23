@@ -441,16 +441,21 @@ services:
       - net
 
 # LDAP account manager
-  lam:
-    image: "ldapaccountmanager/lam:stable"
-    container_name: $STACK-$LAM
+  phpldapadmin:
+    image: "osixia/phpldapadmin"
+    container_name: $STACK-$PHPLDAPADMIN
+    depends_on:
+      - traefik
+      - organizr
+      - openldap
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$LAM.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.rule=Host:$PHPLDAPADMIN.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-      - "traefik.port=8080"
-    ports:
-      - 8088:8080
+      - "traefik.port=80"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=$OPENLDAP.$DOMAIN
+      - PHPLDAPADMIN_HTTPS=false
     networks:
       - net
 
