@@ -395,7 +395,7 @@ services:
 # Self hosted gitlab complete ci pipeline
   gitlab:
     image: "gitlab/gitlab-ce:latest"
-    container_name: $STACK-$GITLAB'
+    container_name: $STACK-$GITLAB
     hostname: $GITLAB.$DOMAIN
     restart: always
     depends_on:
