@@ -440,6 +440,20 @@ services:
     networks:
       - net
 
+# LDAP account manager
+  lam:
+    image: "ldapaccountmanager/lam:stable"
+    container_name: $STACK-$LAM
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$LAM.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=8080"
+    ports:
+      - 8080:8080
+    networks:
+      - net
+
 networks:
   net:
     internal: false
