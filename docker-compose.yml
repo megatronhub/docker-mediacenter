@@ -411,22 +411,21 @@ services:
     networks:
       - net
 
-  mariadb:
-    image: "linuxserver/mariadb"
-    container_name: $STACK-$MARIADB
+  postgres:
+    image: "bitnami/postgresql:latest"
+    container_name: $STACK-$POSTGRES
     restart: always
     environment:
       - PUID=$USERID
       - PGID=$GROUPID
       - TZ=$TIMEZONE
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
+      - POSTGRESQL_DATABASE=$POSTGRESQL_DATABASE
+      - POSTGRESQL_USERNAME=$POSTGRESQL_USERNAME
     ports:
-      - 3306:3306
+      - 5432:5432
     volumes:
-      - $APPDATA/$STACK/$MARIADB:/config
+      - $APPDATA/$STACK/$POSTGRES:/bitnami
     networks:
       - net
 
