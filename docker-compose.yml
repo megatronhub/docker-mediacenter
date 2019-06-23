@@ -404,7 +404,7 @@ services:
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$GOGS.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=3000"
     volumes:
       - $APPDATA/$STACK/$GOGS:/data
