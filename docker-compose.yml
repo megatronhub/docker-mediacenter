@@ -147,6 +147,38 @@ services:
     networks:
       - net
 
+  pterodactyl_panel:
+    image: ccarney16/pterodactyl-panel:latest
+    container_name: $STACK-$PTERO_PANEL
+    restart: always
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$PTERO_PANEL.$DOMAIN" # Domain name for the app
+      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=80"
+    volumes:
+      - $APPDATA/$STACK/$PTERO_PANEL:/data
+    networks:
+      - net
+
+  pterodactyl_panel:
+    image: ccarney16/pterodactyl-panel:latest
+    container_name: $STACK-$PTERO_PANEL
+    restart: always
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$PTERO_PANEL.$DOMAIN" # Domain name for the app
+      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=80"
+    volumes:
+      - $APPDATA/$STACK/$PTERO_PANEL:/data
+    networks:
+      - net
+
 # Indexer apps
   sonarr:
     container_name: $STACK-$SONARR
