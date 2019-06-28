@@ -179,6 +179,30 @@ services:
     networks:
       - net
 
+  pterodactyl_db:
+    image: "mariadb:latest"
+    container_name: $STACK-$PTERO_DB
+    restart: always
+    environment:
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_RANDOM_ROOT_PASSWORD=$MYSQL_RANDOM_ROOT_PASSWORD
+    ports:
+      - 3306:3306
+    volumes:
+      - $APPDATA/$STACK/$PTERO_DB:/var/lib/mysql
+    networks:
+      - net
+
+  pterodactyl_cache:
+    image: "redis:alpine"
+    container_name: $STACK-$PTERO_CACHE
+    volumes:
+      - APPDATA/$STACK/$PTERO_CACHE:/data
+    networks:
+      - net
+
 # Indexer apps
   sonarr:
     container_name: $STACK-$SONARR
