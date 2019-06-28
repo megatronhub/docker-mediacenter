@@ -202,7 +202,6 @@ services:
   pterodactyl_cache:
     image: "redis:alpine"
     container_name: $STACK-$PTERO_CACHE
-    environment:
     ports:
       - $REDIS_PORT:6379
     volumes:
