@@ -158,22 +158,26 @@ services:
       - "traefik.frontend.rule=Host:$PTERO_PANEL.$DOMAIN" # Domain name for the app
       # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=80"
-    volumes:
-      - $APPDATA/$STACK/$PTERO_PANEL:/data
-    networks:
-      - net
-
-  pterodactyl_panel:
-    image: ccarney16/pterodactyl-panel:latest
-    container_name: $STACK-$PTERO_PANEL
-    restart: always
-    depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$PTERO_PANEL.$DOMAIN" # Domain name for the app
-      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-      - "traefik.port=80"
+    environment:
+      - SSL=$PTERO_SSL
+      - SSL_CERT=$PTERO_SSL_CERT
+      - SSL_CERT_KEY=$SSL_CERT_KEY
+      - DISABLE_WORKERS=$DISABLE_WORKERS
+      - APP_URL=$PTERO_PANEL.$DOMAIN
+      - TIMEZONE=$TIMEZONE
+      - CACHE_DRIVER=$CACHE_DRIVER
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - DB_HOST=pterodactyl_db
+      - DB_PORT=$PANEL_DB_PORT
+      - DB_DATABASE=$MYSQL_DATABASE
+      - DB_USERNAME=$MYSQL_USER
+      - DB_PASSWORD=$MYSQL_PASSWORD
+      - MAIL_DRIVER=$MAIL_DRIVER
+      - MAIL_FROM=$MAIL_FROM
+      - MAIL_FROM_NAME=$MAIL_FROM_NAME
+      - DOCKER_ROOT=$DOCKER_ROOT
+      - DOCKER_SOCKET=/var/run/docker.sock
     volumes:
       - $APPDATA/$STACK/$PTERO_PANEL:/data
     networks:
@@ -189,7 +193,7 @@ services:
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_RANDOM_ROOT_PASSWORD=$MYSQL_RANDOM_ROOT_PASSWORD
     ports:
-      - 3306:3306
+      - $PANEL_DB_PORT:3306
     volumes:
       - $APPDATA/$STACK/$PTERO_DB:/var/lib/mysql
     networks:
@@ -198,6 +202,9 @@ services:
   pterodactyl_cache:
     image: "redis:alpine"
     container_name: $STACK-$PTERO_CACHE
+    environment:
+    ports:
+      - $REDIS_PORT:6379
     volumes:
       - $APPDATA/$STACK/$PTERO_CACHE:/data
     networks:
