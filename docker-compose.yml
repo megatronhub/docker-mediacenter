@@ -199,7 +199,7 @@ services:
     image: "redis:alpine"
     container_name: $STACK-$PTERO_CACHE
     volumes:
-      - APPDATA/$STACK/$PTERO_CACHE:/data
+      - $APPDATA/$STACK/$PTERO_CACHE:/data
     networks:
       - net
 
