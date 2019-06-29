@@ -392,40 +392,6 @@ services:
     networks:
       - net
 
-# Self hosted gogs repository
-  gogs:
-    image: "gogs/gogs"
-    container_name: $STACK-$GOGS
-    restart: always
-    depends_on:
-      - traefik
-      - organizr
-      - postgres
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$GOGS.$DOMAIN" # Domain name for the app
-      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-      - "traefik.port=3000"
-    volumes:
-      - $APPDATA/$STACK/$GOGS:/data
-    networks:
-      - net
-
-  postgres:
-    image: "bitnami/postgresql:latest"
-    container_name: $STACK-$POSTGRES
-    restart: always
-    environment:
-      - POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD
-      - POSTGRESQL_DATABASE=$POSTGRESQL_DATABASE
-      - POSTGRESQL_USERNAME=$POSTGRESQL_USERNAME
-    ports:
-      - 5432:5432
-    volumes:
-      - $APPDATA/$STACK/$POSTGRES:/bitnami
-    networks:
-      - net
-
 networks:
   net:
     internal: false
