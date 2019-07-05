@@ -1,31 +1,10 @@
 version: '3.4'
 services:
-# Reverse proxy & Front end
-  traefik:
-    container_name: $STACK-$TRAEFIK
-    image: traefik
-    command: --api # Enables the web UI
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$TRAEFIK.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-      - "traefik.port=8080"
-    ports:
-      - "80:80" # The HTTP port
-      - "443:443" # The HTTPS port
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
-      - ./config/traefik.toml:/traefik.toml # Traefik configuration file
-      - $APPDATA/$STACK/$TRAEFIK/traefik-acme:/acme # Tell Traefik to save SSL certs here
-    networks:
-      - net
-
+# Organizr front end combines all apps into one website
   organizr:
     container_name: $STACK-$ORGANIZR
     image: organizrtools/organizr-v2
     restart: always
-    depends_on:
-      - traefik
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
@@ -38,7 +17,8 @@ services:
     volumes:
       - $APPDATA/$STACK/$ORGANIZR:/config
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Streaming & Compainion apps
   emby:
@@ -46,7 +26,6 @@ services:
     image: emby/embyserver
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -63,14 +42,14 @@ services:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
     networks:
-      - net
+      - int_net
+      - ext_net
 
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
   #   image: linuxserver/jellyfin
   #   restart: always
   #    depends_on:
-  #      - traefik
   #      - organizr
   #   ports:
   #     - 8097:8096
@@ -82,14 +61,14 @@ services:
   #     - $APPDATA/$STACK/$JELLYFIN:/config
   #     - $MEDIA:/data/media
   #   networks:
-  #     - net
+  #     - int_net
+  #     - ext_net
 
   airsonic:
     container_name: $STACK-$AIRSONIC
     image: linuxserver/airsonic
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -106,14 +85,14 @@ services:
       - $MEDIA/playlists:/data/playlists
       - $MEDIA/podcasts:/data/podcasts
     networks:
-      - net
+      - int_net
+      - ext_net
 
   ombi:
     container_name: $STACK-$OMBI
     image: linuxserver/ombi
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -127,7 +106,8 @@ services:
     volumes:
       - $APPDATA/$STACK/$OMBI:/config
     networks:
-      - net
+      - int_net
+      - ext_net
 
   omv:
     image: qoomon/docker-host
@@ -135,7 +115,6 @@ services:
     restart: always
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -145,7 +124,8 @@ services:
     expose:
       - "$HOSTPORT"
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Indexer apps
   sonarr:
@@ -153,7 +133,6 @@ services:
     image: linuxserver/sonarr:preview
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -173,14 +152,14 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - net
+      - int_net
+      - ext_net
 
   radarr:
     container_name: $STACK-$RADARR
     image: linuxserver/radarr:nightly
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -200,19 +179,15 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - net
+      - int_net
+      - ext_net
 
   radarr-collection:
     container_name: $STACK-$RADARRCOLLECTION
     image: si0972/radarr-collections
     restart: always
     depends_on:
-      - traefik
-    # labels:
-    #   - "traefik.enable=true" # Enable reverse-proxy for this service
-    #   - "traefik.frontend.rule=Host:$RADARRCOLLECTION.$DOMAIN" # Domain name for the app
-    #   - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-    #   - "traefik.port=7878"
+      - radarr
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
@@ -220,14 +195,13 @@ services:
     volumes:
       - $APPDATA/$STACK/$RADARRCOLLECTION:/config
     networks:
-      - net
+      - int_net
 
   lidarr:
     container_name: $STACK-$LIDARR
     image: linuxserver/lidarr
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -247,7 +221,8 @@ services:
       - $DOWNLOADS/usenet:/data/downloads/usenet
       - $MEDIA/music:/data/music
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Indexer source apps
   jackett:
@@ -255,7 +230,6 @@ services:
     image: linuxserver/jackett:development
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -273,7 +247,8 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Torrent download clients
   transmission:
@@ -286,7 +261,6 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -321,7 +295,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $DOWNLOADS/torrent:/data/downloads/torrent
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Usenet download clients
   nzbget:
@@ -329,7 +304,6 @@ services:
     container_name: $STACK-$NZBGET
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -346,7 +320,8 @@ services:
       - $APPDATA/$STACK/$NZBGET:/config
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - net
+      - int_net
+      - ext_net
 
 # Utility services
   ddclient:
@@ -360,14 +335,13 @@ services:
     volumes:
       - $APPDATA/$STACK/ddclient:/config
     networks:
-      - net
+      - int_net
 
   portainer:
     image: "portainer/portainer"
     container_name: $STACK-$PORTAINER
     restart: always
     depends_on:
-      - traefik
       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
@@ -378,20 +352,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
     networks:
-      - net
-
-# Monitoring & Analytic apps
-  # Container update manager
-  watchtower:
-    container_name: $STACK-watchtower
-    image: v2tec/watchtower
-    restart: unless-stopped
-    command: --schedule "0 0 4 * * *" --cleanup
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - net
+      - int_net
+      - ext_net
 
 networks:
-  net:
+  int_net:
     internal: false
+  ext_net:
+    external:
+      name: $EXT_NET
