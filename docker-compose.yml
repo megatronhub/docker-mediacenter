@@ -17,7 +17,6 @@ services:
     volumes:
       - $APPDATA/$STACK/$ORGANIZR:/config
     networks:
-      - int_net
       - ext_net
 
 # Streaming & Compainion apps
@@ -42,7 +41,6 @@ services:
       - $APPDATA/$STACK/$EMBY:/config
       - $MEDIA:/data/media
     networks:
-      - int_net
       - ext_net
 
   # jellyfin:
@@ -61,7 +59,6 @@ services:
   #     - $APPDATA/$STACK/$JELLYFIN:/config
   #     - $MEDIA:/data/media
   #   networks:
-  #     - int_net
   #     - ext_net
 
   airsonic:
@@ -85,7 +82,6 @@ services:
       - $MEDIA/playlists:/data/playlists
       - $MEDIA/podcasts:/data/podcasts
     networks:
-      - int_net
       - ext_net
 
   ombi:
@@ -106,7 +102,6 @@ services:
     volumes:
       - $APPDATA/$STACK/$OMBI:/config
     networks:
-      - int_net
       - ext_net
 
   omv:
@@ -124,7 +119,6 @@ services:
     expose:
       - "$HOSTPORT"
     networks:
-      - int_net
       - ext_net
 
 # Indexer apps
@@ -152,7 +146,6 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - int_net
       - ext_net
 
   radarr:
@@ -179,7 +172,6 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - int_net
       - ext_net
 
   radarr-collection:
@@ -195,7 +187,7 @@ services:
     volumes:
       - $APPDATA/$STACK/$RADARRCOLLECTION:/config
     networks:
-      - int_net
+      - ext_net
 
   lidarr:
     container_name: $STACK-$LIDARR
@@ -221,7 +213,6 @@ services:
       - $DOWNLOADS/usenet:/data/downloads/usenet
       - $MEDIA/music:/data/music
     networks:
-      - int_net
       - ext_net
 
 # Indexer source apps
@@ -247,7 +238,6 @@ services:
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - int_net
       - ext_net
 
 # Torrent download clients
@@ -295,7 +285,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $DOWNLOADS/torrent:/data/downloads/torrent
     networks:
-      - int_net
       - ext_net
 
 # Usenet download clients
@@ -320,7 +309,6 @@ services:
       - $APPDATA/$STACK/$NZBGET:/config
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
-      - int_net
       - ext_net
 
 # Utility services
@@ -335,7 +323,7 @@ services:
     volumes:
       - $APPDATA/$STACK/ddclient:/config
     networks:
-      - int_net
+      - ext_net
 
   portainer:
     image: "portainer/portainer"
@@ -352,12 +340,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
     networks:
-      - int_net
       - ext_net
 
 networks:
-  int_net:
-    internal: false
   ext_net:
     external:
       name: $EXT_NET
