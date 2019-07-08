@@ -54,6 +54,8 @@ services:
       - "traefik.frontend.rule=Host:$EMBYSTAT.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=5432"
+    ports:
+      - 5432:5432
     networks:
       - ext_net
 
