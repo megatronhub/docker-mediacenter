@@ -43,6 +43,20 @@ services:
     networks:
       - ext_net
 
+  embystat:
+    container_name: $STACK-$EMBYSTAT
+    image: uping/embystat:latest-linux
+    restart: always
+    depends_on:
+      - emby
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=5432"
+    networks:
+      - ext_net
+
   # jellyfin:
   #   container_name: $STACK-$JELLYFIN
   #   image: linuxserver/jellyfin
