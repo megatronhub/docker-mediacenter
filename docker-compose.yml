@@ -12,6 +12,7 @@ services:
     ports:
       - "8888:80"
     environment:
+      - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
