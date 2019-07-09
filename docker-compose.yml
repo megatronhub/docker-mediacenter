@@ -9,6 +9,7 @@ services:
       - "8888:80"
     environment:
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
+      - LETSENCRYPT_HOST=$ORGANIZR.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
@@ -27,6 +28,7 @@ services:
       -  "8096:8096"
     environment:
       - VIRTUAL_HOST=$EMBY.$DOMAIN
+      - LETSENCRYPT_HOST=$EMBY.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
       - GIDLIST=$GROUPID
@@ -71,6 +73,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
+      - LETSENCRYPT_HOST=$AIRSONIC.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -90,6 +93,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$OMBI.$DOMAIN
+      - LETSENCRYPT_HOST=$OMBI.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -107,6 +111,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
+      - LETSENCRYPT_HOST=$HOSTAPP.$DOMAIN
     expose:
       - "$HOSTPORT"
     networks:
@@ -123,6 +128,7 @@ services:
       - "8989:8989"
     environment:
       - VIRTUAL_HOST=$SONARR.$DOMAIN
+      - LETSENCRYPT_HOST=$SONARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -145,6 +151,7 @@ services:
       - "7878:7878"
     environment:
       - VIRTUAL_HOST=$RADARR.$DOMAIN
+      - LETSENCRYPT_HOST=$RADARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -182,6 +189,7 @@ services:
       - "8686:8686"
     environment:
       - VIRTUAL_HOST=$LIDARR.$DOMAIN
+      - LETSENCRYPT_HOST=$LIDARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -205,6 +213,7 @@ services:
       - "9117:9117"
     environment:
       - VIRTUAL_HOST=$JACKETT.$DOMAIN
+      - LETSENCRYPT_HOST=$JACKETT.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -231,6 +240,7 @@ services:
       - 9091:9091
     environment:
       - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
+      - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
       - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
@@ -269,6 +279,7 @@ services:
       - 6789:6789
     environment:
       - VIRTUAL_HOST=$NZBGET.$DOMAIN
+      - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
       - PUID=$USERID
       - PGID=$GROUPID
       - TZ=$TIMEZONE
@@ -300,6 +311,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$PORTAINER.$DOMAIN
+      - LETSENCRYPT_HOST=$PORTAINER.$DOMAIN
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
