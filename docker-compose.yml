@@ -26,6 +26,7 @@ services:
     ports:
       -  "8096:8096"
     environment:
+      - VIRTUAL_HOST=$EMBY.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
       - GIDLIST=$GROUPID
@@ -69,6 +70,7 @@ services:
     depends_on:
       - organizr
     environment:
+      - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -87,6 +89,7 @@ services:
     depends_on:
       - organizr
     environment:
+      - VIRTUAL_HOST=$OMBI.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -102,6 +105,8 @@ services:
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
     depends_on:
       - organizr
+    environment:
+      - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
     expose:
       - "$HOSTPORT"
     networks:
@@ -117,6 +122,7 @@ services:
     ports:
       - "8989:8989"
     environment:
+      - VIRTUAL_HOST=$SONARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -138,6 +144,7 @@ services:
     ports:
       - "7878:7878"
     environment:
+      - VIRTUAL_HOST=$RADARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -174,6 +181,7 @@ services:
     ports:
       - "8686:8686"
     environment:
+      - VIRTUAL_HOST=$LIDARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -196,6 +204,7 @@ services:
     ports:
       - "9117:9117"
     environment:
+      - VIRTUAL_HOST=$JACKETT.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -221,6 +230,7 @@ services:
     ports:
       - 9091:9091
     environment:
+      - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
       - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
@@ -258,6 +268,7 @@ services:
     ports:
       - 6789:6789
     environment:
+      - VIRTUAL_HOST=$NZBGET.$DOMAIN
       - PUID=$USERID
       - PGID=$GROUPID
       - TZ=$TIMEZONE
@@ -287,6 +298,8 @@ services:
     restart: always
     depends_on:
       - organizr
+    environment:
+      - VIRTUAL_HOST=$PORTAINER.$DOMAIN
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
