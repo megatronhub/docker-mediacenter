@@ -9,6 +9,7 @@ services:
       - "8888:80"
     environment:
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
+      - VIRTUAL_PORT=80
       - LETSENCRYPT_HOST=$ORGANIZR.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
@@ -28,6 +29,7 @@ services:
       -  "8096:8096"
     environment:
       - VIRTUAL_HOST=$EMBY.$DOMAIN
+      - VIRTUAL_PORT=8096
       - LETSENCRYPT_HOST=$EMBY.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
@@ -73,6 +75,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
+      - VIRTUAL_PORT=4040
       - LETSENCRYPT_HOST=$AIRSONIC.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -93,6 +96,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$OMBI.$DOMAIN
+      - VIRTUAL_PORT=3579
       - LETSENCRYPT_HOST=$OMBI.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -111,6 +115,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
+      - VIRTUAL_PORT=8443
       - LETSENCRYPT_HOST=$HOSTAPP.$DOMAIN
     expose:
       - "$HOSTPORT"
@@ -128,6 +133,7 @@ services:
       - "8989:8989"
     environment:
       - VIRTUAL_HOST=$SONARR.$DOMAIN
+      - VIRTUAL_PORT=8989
       - LETSENCRYPT_HOST=$SONARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -151,6 +157,7 @@ services:
       - "7878:7878"
     environment:
       - VIRTUAL_HOST=$RADARR.$DOMAIN
+      - VIRTUAL_PORT=7878
       - LETSENCRYPT_HOST=$RADARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -189,6 +196,7 @@ services:
       - "8686:8686"
     environment:
       - VIRTUAL_HOST=$LIDARR.$DOMAIN
+      - VIRTUAL_PORT=8686
       - LETSENCRYPT_HOST=$LIDARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -213,6 +221,7 @@ services:
       - "9117:9117"
     environment:
       - VIRTUAL_HOST=$JACKETT.$DOMAIN
+      - VIRTUAL_PORT=9117
       - LETSENCRYPT_HOST=$JACKETT.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$GROUPID
@@ -240,6 +249,7 @@ services:
       - 9091:9091
     environment:
       - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
+      - VIRTUAL_PORT=9091
       - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
       - PGID=$GROUPID
       - PUID=$USERID
@@ -279,6 +289,7 @@ services:
       - 6789:6789
     environment:
       - VIRTUAL_HOST=$NZBGET.$DOMAIN
+      - VIRTUAL_PORT=6789
       - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
       - PUID=$USERID
       - PGID=$GROUPID
@@ -311,6 +322,7 @@ services:
       - organizr
     environment:
       - VIRTUAL_HOST=$PORTAINER.$DOMAIN
+      - VIRTUAL_PORT=9000
       - LETSENCRYPT_HOST=$PORTAINER.$DOMAIN
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
