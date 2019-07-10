@@ -5,8 +5,6 @@ services:
     container_name: $STACK-$ORGANIZR
     image: organizrtools/organizr-v2
     restart: always
-    ports:
-      - "8888:80"
     environment:
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
       - VIRTUAL_PORT=80
