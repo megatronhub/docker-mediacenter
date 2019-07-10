@@ -5,6 +5,10 @@ services:
     container_name: $STACK-$ORGANIZR
     image: organizrtools/organizr-v2
     restart: always
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
+      - "traefik.port=80"
     environment:
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
       - VIRTUAL_PORT=80
@@ -21,6 +25,11 @@ services:
     container_name: $STACK-$EMBY
     image: emby/embyserver
     restart: always
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+      - "traefik.port=8096"
     ports:
       -  "8096:8096"
     environment:
@@ -69,6 +78,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$AIRSONIC.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=4"
+      - "traefik.port=4040"
     environment:
       - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
       - VIRTUAL_PORT=4040
@@ -90,6 +104,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+      - "traefik.port=3579"
     environment:
       - VIRTUAL_HOST=$OMBI.$DOMAIN
       - VIRTUAL_PORT=3579
@@ -109,6 +128,11 @@ services:
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$HOSTAPP.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=$HOSTPORT"
     environment:
       - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
       - VIRTUAL_PORT=8443
@@ -125,6 +149,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$SONARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=8989"
     ports:
       - "8989:8989"
     environment:
@@ -149,6 +178,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$RADARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=7878"
     ports:
       - "7878:7878"
     environment:
@@ -188,6 +222,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$LIDARR.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=8686"
     ports:
       - "8686:8686"
     environment:
@@ -213,6 +252,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$JACKETT.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=9117"
     ports:
       - "9117:9117"
     environment:
@@ -241,6 +285,11 @@ services:
       - 8.8.4.4
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$TRANSMISSION.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=9091"
     ports:
       - 9091:9091
     environment:
@@ -281,6 +330,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$NZBGET.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=6789"
     ports:
       - 6789:6789
     environment:
@@ -316,6 +370,11 @@ services:
     restart: always
     depends_on:
       - organizr
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+      - "traefik.port=9000"
     environment:
       - VIRTUAL_HOST=$PORTAINER.$DOMAIN
       - VIRTUAL_PORT=9000
