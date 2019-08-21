@@ -368,6 +368,21 @@ services:
     networks:
       - ext_net
 
+volumes:
+  organizr_config:
+  emby_config:
+  airsonic_config:
+  ombi_config:
+  sonarr_config:
+  radarr_config:
+  radarrcollection_config:
+  lidarr_config:
+  jackett_config:
+  nzbget_config:
+  ddclient_config:
+  portainer_config:
+  duplicati_config:
+
 networks:
   ext_net:
     external:
