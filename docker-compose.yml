@@ -82,7 +82,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$AIRSONIC:/config
+      - airsonic_config:/config
       - $MEDIA/music:/data/music
       - $MEDIA/playlists:/data/playlists
       - $MEDIA/podcasts:/data/podcasts
