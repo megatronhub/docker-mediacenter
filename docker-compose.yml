@@ -105,7 +105,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$OMBI:/config
+      - ombi_config:/config
     networks:
       - ext_net
 
