@@ -15,7 +15,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - organizr_config:/config
+      - $APPDATA/$STACK/$ORGANIZR:/config
     networks:
       - ext_net
 
