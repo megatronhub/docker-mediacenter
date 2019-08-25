@@ -10,8 +10,6 @@ services:
       - "traefik.frontend.rule=Host:$ORGANIZR.$DOMAIN" # Domain name for the app
       - "traefik.port=80"
     environment:
-      - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
-      - VIRTUAL_PORT=80
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
@@ -32,8 +30,6 @@ services:
     ports:
       -  "8096:8096"
     environment:
-      - VIRTUAL_HOST=$EMBY.$DOMAIN
-      - VIRTUAL_PORT=8096
       - PGID=$GROUPID
       - PUID=$USERID
       - GIDLIST=$GROUPID
@@ -82,8 +78,6 @@ services:
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=4"
       - "traefik.port=4040"
     environment:
-      - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
-      - VIRTUAL_PORT=4040
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -107,8 +101,6 @@ services:
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
       - "traefik.port=3579"
     environment:
-      - VIRTUAL_HOST=$OMBI.$DOMAIN
-      - VIRTUAL_PORT=3579
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -129,9 +121,6 @@ services:
       - "traefik.frontend.rule=Host:$HOSTAPP.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=$HOSTPORT"
-    environment:
-      - VIRTUAL_HOST=$HOSTAPP.$DOMAIN
-      - VIRTUAL_PORT=$HOSTPORT
     expose:
       - "$HOSTPORT"
     networks:
@@ -152,8 +141,6 @@ services:
     ports:
       - "8989:8989"
     environment:
-      - VIRTUAL_HOST=$SONARR.$DOMAIN
-      - VIRTUAL_PORT=8989
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -180,8 +167,6 @@ services:
     ports:
       - "7878:7878"
     environment:
-      - VIRTUAL_HOST=$RADARR.$DOMAIN
-      - VIRTUAL_PORT=7878
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -223,8 +208,6 @@ services:
     ports:
       - "8686:8686"
     environment:
-      - VIRTUAL_HOST=$LIDARR.$DOMAIN
-      - VIRTUAL_PORT=8686
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -252,8 +235,6 @@ services:
     ports:
       - "9117:9117"
     environment:
-      - VIRTUAL_HOST=$JACKETT.$DOMAIN
-      - VIRTUAL_PORT=9117
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
@@ -284,8 +265,6 @@ services:
     ports:
       - 9091:9091
     environment:
-      - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
-      - VIRTUAL_PORT=9091
       - PGID=$GROUPID
       - PUID=$USERID
       - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
@@ -328,8 +307,6 @@ services:
     ports:
       - 6789:6789
     environment:
-      - VIRTUAL_HOST=$NZBGET.$DOMAIN
-      - VIRTUAL_PORT=6789
       - PUID=$USERID
       - PGID=$GROUPID
       - TZ=$TIMEZONE
@@ -385,8 +362,6 @@ services:
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=8200"
     environment:
-      - VIRTUAL_HOST=$DUPLICATI.$DOMAIN
-      - VIRTUAL_PORT=8200
       - PUID=$USERID
       - PGID=$GROUPID
       - TZ=$TIMEZONE
