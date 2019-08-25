@@ -341,9 +341,6 @@ services:
       - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
       - "traefik.port=9000"
-    environment:
-      - VIRTUAL_HOST=$PORTAINER.$DOMAIN
-      - VIRTUAL_PORT=9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $APPDATA/$STACK/$PORTAINER:/data
