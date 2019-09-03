@@ -41,7 +41,7 @@ services:
 
   embystat:
     container_name: $STACK-$EMBYSTAT
-    image: uping/embystat:latest-linux
+    image: uping/embystat:nightly-ubuntu-x64
     restart: always
     depends_on:
       - emby
