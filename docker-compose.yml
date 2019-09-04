@@ -403,7 +403,8 @@ services:
       - traefik.frontend.headers.frameDeny=true
       - traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1
     ports:
-      - "53:53"
+      - "53:53/tcp"
+      - "53:53/udp"
       - "8183:80"
       - "8184:443"
     environment:
