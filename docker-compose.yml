@@ -418,6 +418,8 @@ volumes:
   ddclient_config:
   portainer_config:
   # duplicati_config:
+  pihole_config:
+  pihole_dnsmasq.d:
 
 networks:
   ext_net:
