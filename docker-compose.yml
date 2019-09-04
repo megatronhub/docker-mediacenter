@@ -195,7 +195,7 @@ services:
       - PUID=$USERID
       - args=$ARGS
     volumes:
-      - $APPDATA/$STACK/$RADARRCOLLECTION:/config
+      - radarrcollection_config:/config
     networks:
       - ext_net
 
