@@ -244,7 +244,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$JACKETT:/config
+      - jackett_config:/config
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
