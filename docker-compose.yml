@@ -217,7 +217,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$LIDARR:/config
+      - lidarr_config:/config
       - $MEDIA/temp:/data/temp
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
