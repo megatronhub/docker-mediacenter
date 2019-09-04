@@ -176,7 +176,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$RADARR:/config
+      - radarr_config:/config
       - $MEDIA/temp:/data/temp
       - $MEDIA/movies:/data/movies
       - $DOWNLOADS/torrent:/data/downloads/torrent
