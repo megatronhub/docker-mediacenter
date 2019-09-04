@@ -54,7 +54,7 @@ Shoutout to everyone envolved in making & maintaining these containers
 ### Todos
 
  - Finish this README.md
- - Switch to traefik reverse proxy
+ - ~~Switch to traefik reverse proxy~~
  - Find more apps to use
  - ~~Migrate /config mounts to docker volumes~~
 
