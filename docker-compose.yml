@@ -316,7 +316,7 @@ services:
       - PGID=$GROUPID
       - TZ=$TIMEZONE
     volumes:
-      - $APPDATA/$STACK/$NZBGET:/config
+      - nzbget_config:/config
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
       - ext_net
