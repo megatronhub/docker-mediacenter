@@ -34,7 +34,7 @@ services:
       - PUID=$USERID
       - GIDLIST=$GROUPID
     volumes:
-      - $APPDATA/$STACK/$EMBY:/config
+      - emby_config:/config
       - $MEDIA:/data/media
     networks:
       - ext_net
