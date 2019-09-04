@@ -337,7 +337,7 @@ services:
 
   portainer:
     image: "portainer/portainer"
-    container_name: $STACK-$PORTAINER
+    container_name: $STACK-portainer
     restart: always
     depends_on:
       - organizr
