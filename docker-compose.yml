@@ -348,7 +348,7 @@ services:
       - "traefik.port=9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - $APPDATA/$STACK/$PORTAINER:/data
+      - portainer_config:/data
     networks:
       - ext_net
 
