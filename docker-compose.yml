@@ -13,7 +13,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$ORGANIZR:/config
+      - organizr_config:/config
     networks:
       - ext_net
 
@@ -66,7 +66,7 @@ services:
   #     - PGID=$GROUPID
   #     - PUID=$USERID
   #   volumes:
-  #     - $APPDATA/$STACK/$JELLYFIN:/config
+  #     - jellyfin_config:/config
   #     - $MEDIA:/data/media
   #   networks:
   #     - ext_net
@@ -376,6 +376,7 @@ services:
 volumes:
   organizr_config:
   emby_config:
+  jellyfin_config:
   airsonic_config:
   ombi_config:
   sonarr_config:
