@@ -331,7 +331,7 @@ services:
       - PGID=$GROUPID
       - TZ=$TIMEZONE
     volumes:
-      - $APPDATA/$STACK/ddclient:/config
+      - ddclient_config:/config
     networks:
       - ext_net
 
