@@ -368,7 +368,7 @@ services:
       - PGID=$GROUPID
       - TZ=$TIMEZONE
     volumes:
-      - $APPDATA/$STACK/$DUPLICATI:/config
+      - duplicati_config:/config
       - $APPDATA/$STACK:/source
     networks:
       - ext_net
