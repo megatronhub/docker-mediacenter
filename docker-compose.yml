@@ -373,35 +373,47 @@ services:
   #   networks:
   #     - ext_net
 
-  # pihole:
-  #   image: "pihole/pihole:latest"
-  #   container_name: $STACK-pihole
-  #   restart: always
-  #   depends_on:
-  #     - organizr
-  #   # Recommended but not required (DHCP needs NET_ADMIN)
-  #   #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-  #   cap_add:
-  #     - NET_ADMIN
-  #   dns:
-  #     - 127.0.0.1
-  #     - 1.1.1.1
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-  #     - "traefik.port=80"
-  #   ports:
-  #     - "53:53"
-  #     - "67:67/udp"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     # WEBPASSWORD: 'set a secure password here or it will be random'
-  #   volumes:
-  #      - pihole_config:/etc/pihole/
-  #      - pihole_dnsmasq.d:/etc/dnsmasq.d/
-  #   networks:
-  #     - ext_net
+  pihole:
+    image: "pihole/pihole:latest"
+    container_name: $STACK-pihole
+    restart: always
+    depends_on:
+      - organizr
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    # cap_add:
+    #   - NET_ADMIN
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=pihole"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
+      - "traefik.frontend.priority=1"
+      - traefik.frontend.headers.SSLRedirect=true
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.browserXSSFilter=true
+      - traefik.frontend.headers.contentTypeNosniff=true
+      - traefik.frontend.headers.forceSTSHeader=true
+      - traefik.frontend.headers.SSLHost=$DOMAIN
+      - traefik.frontend.headers.STSIncludeSubdomains=true
+      - traefik.frontend.headers.STSPreload=true
+      - traefik.frontend.headers.frameDeny=true
+      - traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1
+    ports:
+      - "53:53"
+      - "8183:80"
+      - "8184:443"
+    environment:
+      - TZ=$TIMEZONE
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+    volumes:
+       - pihole_config:/etc/pihole/
+       - pihole_dnsmasq.d:/etc/dnsmasq.d/
+    networks:
+      - ext_net
 
 volumes:
   organizr_config:
