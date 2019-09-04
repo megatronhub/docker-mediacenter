@@ -386,7 +386,7 @@ volumes:
   nzbget_config:
   ddclient_config:
   portainer_config:
-  duplicati_config:
+  # duplicati_config:
 
 networks:
   ext_net:
