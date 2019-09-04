@@ -56,7 +56,7 @@ Shoutout to everyone envolved in making & maintaining these containers
  - Finish this README.md
  - Switch to traefik reverse proxy
  - Find more apps to use
- - Migrate /config mounts to docker volumes
+ - ~~ Migrate /config mounts to docker volumes ~~
 
 # Prerequisites
 - A computer with [openmediavault](https://www.openmediavault.org/) installed onto its own harddrive, preferrably a fresh install of omv (I do not care much if boot drive fails as I don't mind if there would be downtime to reinstall os as I have backups for omv config just install os and restore, if zero downtime is a necessity you likely dont need to use my repo.)
