@@ -145,7 +145,7 @@ services:
       - PGID=$GROUPID
       - PUID=$USERID
     volumes:
-      - $APPDATA/$STACK/$SONARR:/config
+      - sonarr_config:/config
       - $MEDIA/temp:/data/temp
       - $MEDIA/tvshows:/data/tv
       - $DOWNLOADS/torrent:/data/downloads/torrent
