@@ -2,7 +2,7 @@ version: '3.4'
 services:
 # Organizr front end combines all apps into one website
   organizr:
-    container_name: $STACK-$ORGANIZR
+    container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
     labels:
@@ -19,7 +19,7 @@ services:
 
 # Streaming & Compainion apps
   emby:
-    container_name: $STACK-$EMBY
+    container_name: $STACK-emby
     image: emby/embyserver
     restart: always
     labels:
@@ -40,7 +40,7 @@ services:
       - ext_net
 
   embystat:
-    container_name: $STACK-$EMBYSTAT
+    container_name: $STACK-emby_stat
     image: uping/embystat:nightly-ubuntu-x64
     restart: always
     depends_on:
@@ -54,7 +54,7 @@ services:
       - ext_net
 
   # jellyfin:
-  #   container_name: $STACK-$JELLYFIN
+  #   container_name: $STACK-jellyfin
   #   image: linuxserver/jellyfin
   #   restart: always
   #    depends_on:
@@ -72,7 +72,7 @@ services:
   #     - ext_net
 
   airsonic:
-    container_name: $STACK-$AIRSONIC
+    container_name: $STACK-airsonic
     image: linuxserver/airsonic
     restart: always
     depends_on:
@@ -95,7 +95,7 @@ services:
       - ext_net
 
   ombi:
-    container_name: $STACK-$OMBI
+    container_name: $STACK-ombi
     image: linuxserver/ombi
     restart: always
     depends_on:
@@ -116,7 +116,7 @@ services:
 
   omv:
     image: qoomon/docker-host
-    container_name: $STACK-$HOSTAPP
+    container_name: $STACK-omv
     restart: always
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
     depends_on:
@@ -133,7 +133,7 @@ services:
 
 # Indexer apps
   sonarr:
-    container_name: $STACK-$SONARR
+    container_name: $STACK-sonarr
     image: linuxserver/sonarr:preview
     restart: always
     depends_on:
@@ -159,7 +159,7 @@ services:
       - ext_net
 
   radarr:
-    container_name: $STACK-$RADARR
+    container_name: $STACK-radarr
     image: linuxserver/radarr:nightly
     restart: always
     depends_on:
@@ -185,7 +185,7 @@ services:
       - ext_net
 
   radarr-collection:
-    container_name: $STACK-$RADARRCOLLECTION
+    container_name: $STACK-radarr_collection
     image: si0972/radarr-collections
     restart: always
     depends_on:
@@ -200,7 +200,7 @@ services:
       - ext_net
 
   lidarr:
-    container_name: $STACK-$LIDARR
+    container_name: $STACK-lidarr
     image: linuxserver/lidarr
     restart: always
     depends_on:
@@ -227,7 +227,7 @@ services:
 
 # Indexer source apps
   jackett:
-    container_name: $STACK-$JACKETT
+    container_name: $STACK-jackett
     image: linuxserver/jackett:development
     restart: always
     depends_on:
@@ -252,7 +252,7 @@ services:
 
 # Torrent download clients
   transmission:
-    container_name: $STACK-$TRANSMISSION
+    container_name: $STACK-transmission
     image: haugene/transmission-openvpn
     restart: always
     cap_add:
@@ -300,7 +300,7 @@ services:
 # Usenet download clients
   nzbget:
     image: "linuxserver/nzbget:testing"
-    container_name: $STACK-$NZBGET
+    container_name: $STACK-nzbget
     restart: always
     depends_on:
       - organizr
@@ -354,7 +354,7 @@ services:
 
   # duplicati:
   #   image: "linuxserver/duplicati"
-  #   container_name: $STACK-$DUPLICATI
+  #   container_name: $STACK-duplicati
   #   restart: always
   #   depends_on:
   #     - organizr
