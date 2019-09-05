@@ -413,6 +413,7 @@ services:
     volumes:
        - pihole_config:/etc/pihole/
        - pihole_dnsmasq.d:/etc/dnsmasq.d/
+       - ./config/lighttpd_external.conf:/etc/lighttpd/external.conf
     networks:
       - ext_net
 
