@@ -379,7 +379,6 @@ services:
     restart: always
     depends_on:
       - organizr
-    privileged: true
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     # cap_add:
@@ -414,7 +413,6 @@ services:
     volumes:
        - pihole_config:/etc/pihole/
        - pihole_dnsmasq.d:/etc/dnsmasq.d/
-       - ./config/pihole.sh:/etc/cont-init.d/iframe.sh
     networks:
       - ext_net
 
