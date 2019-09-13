@@ -405,8 +405,8 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "8185:80"
-      - "8186:443"
+      - "8183:80"
+      - "8184:443"
     environment:
       - TZ=$TIMEZONE
       # WEBPASSWORD: 'set a secure password here or it will be random'
