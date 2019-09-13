@@ -413,7 +413,7 @@ services:
     volumes:
        - pihole_config:/etc/pihole/
        - pihole_dnsmasq.d:/etc/dnsmasq.d/
-       - ./config/allow-iframe.sh:/etc/cont-init.d/21-allow-iframe.sh
+      #  - ./config/allow-iframe.sh:/etc/cont-init.d/21-allow-iframe.sh
     networks:
       - ext_net
 
