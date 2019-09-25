@@ -388,9 +388,10 @@ services:
       - 1.1.1.1
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=pihole"
+#      - "traefik.backend=pihole"
       - "traefik.port=80"
-      - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
+      - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
+#      - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
       - "traefik.frontend.priority=1"
       - traefik.frontend.headers.SSLRedirect=true
       - traefik.frontend.headers.STSSeconds=315360000
