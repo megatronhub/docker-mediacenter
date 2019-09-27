@@ -369,7 +369,6 @@ services:
   #     - TZ=$TIMEZONE
   #   volumes:
   #     - duplicati_config:/config
-  #     - $APPDATA/$STACK:/source
   #   networks:
   #     - ext_net
 
