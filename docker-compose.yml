@@ -198,6 +198,7 @@ services:
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
+      - args=$ARGS
     volumes:
       - radarrcollection_config:/config
     networks:
