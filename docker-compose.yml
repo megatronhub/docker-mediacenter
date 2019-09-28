@@ -390,6 +390,10 @@ services:
     dns:
       - 127.0.0.1
       - 1.1.1.1
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
+      - "traefik.port=80"
     # labels:
     #   - "traefik.enable=true"
     #   - "traefik.backend=pihole"
