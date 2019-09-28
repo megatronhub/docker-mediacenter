@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 services:
 # Organizr front end combines all apps into one website
   organizr:
@@ -441,5 +441,4 @@ volumes:
 
 networks:
   ext_net:
-    external:
-      name: $EXT_NET
+    name: mediacenter_ext_net
