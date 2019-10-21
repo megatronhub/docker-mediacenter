@@ -158,7 +158,7 @@ services:
       - sonarr_config:/config
       - $MEDIA/temp:/data/temp
       - $MEDIA/tvshows:/data/tv
-      - $MEDIA/tvshows:/data/kids_tv
+      - $MEDIA/kids_tvshows:/data/kids_tv
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
@@ -185,7 +185,7 @@ services:
       - radarr_config:/config
       - $MEDIA/temp:/data/temp
       - $MEDIA/movies:/data/movies
-      - $MEDIA/tvshows:/data/kids_movies
+      - $MEDIA/kids_movies:/data/kids_movies
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
