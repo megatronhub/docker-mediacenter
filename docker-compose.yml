@@ -159,6 +159,7 @@ services:
       - $MEDIA/temp:/data/temp
       - $MEDIA/tvshows:/data/tv
       - $MEDIA/kids_tvshows:/data/kids_tv
+      - $MEDIA/anime_tv:/data/anime_tv
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
@@ -186,6 +187,7 @@ services:
       - $MEDIA/temp:/data/temp
       - $MEDIA/movies:/data/movies
       - $MEDIA/kids_movies:/data/kids_movies
+      - $MEDIA/anime_movies:/data/anime_movies
       - $DOWNLOADS/torrent:/data/downloads/torrent
       - $DOWNLOADS/usenet:/data/downloads/usenet
     networks:
