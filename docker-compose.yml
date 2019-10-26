@@ -57,8 +57,6 @@ services:
     container_name: $STACK-jellyfin
     image: linuxserver/jellyfin
     restart: always
-     depends_on:
-       - organizr
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
