@@ -17,24 +17,6 @@ services:
     networks:
       - ext_net
 
-# HTPC Manager front end combines all apps into one website
-  htpcmanager:
-    container_name: $STACK-htpcmanager
-    image: linuxserver/htpcmanager
-    restart: always
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$HTPCMANAGER.$DOMAIN" # Domain name for the app
-      - "traefik.port=8085"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - htpcmanager_config:/config
-    networks:
-      - ext_net
-
 # Streaming & Compainion apps
   emby:
     container_name: $STACK-emby
