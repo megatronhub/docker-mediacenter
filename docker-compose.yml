@@ -39,19 +39,19 @@ services:
     networks:
       - ext_net
 
-  embystat:
-    container_name: $STACK-emby_stat
-    image: uping/embystat:nightly-ubuntu-x64
-    restart: always
-    depends_on:
-      - emby
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$EMBYSTAT.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=6555"
-    networks:
-      - ext_net
+  # embystat:
+  #   container_name: $STACK-emby_stat
+  #   image: uping/embystat:nightly-ubuntu-x64
+  #   restart: always
+  #   depends_on:
+  #     - emby
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$EMBYSTAT.$DOMAIN" # Domain name for the app
+  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+  #     - "traefik.port=6555"
+  #   networks:
+  #     - ext_net
 
   jellyfin:
     container_name: $STACK-jellyfin
@@ -428,7 +428,6 @@ services:
 
 volumes:
   organizr_config:
-  htpcmanager_config:
   emby_config:
   jellyfin_config:
   airsonic_config:
