@@ -383,10 +383,7 @@ services:
     volumes:
       - nextcloud_config:/var/www/html
       - $NEXTCLOUD_DATA:/var/www/html/data
-      - $MEDIA:/data/media
-      - $DIR1:/data/dir1
-      - $DIR2:/data/dir2
-      - $DIR3:/data/dir3
+      - $DIR1:/data/local
     networks:
       - ext_net
 
