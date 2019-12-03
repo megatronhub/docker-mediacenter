@@ -368,9 +368,38 @@ services:
       - "traefik.port=80"
     volumes:
       - nextcloud_config:/var/www/html
+    networks:
+      - ext_net
+
+  nextcloud:
+    image: "nextcloud"
+    container_name: $STACK-nextcloud
+    restart: always
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+      - "traefik.port=80"
+    volumes:
+      - nextcloud_config:/var/www/html
       - $NEXTCLOUD_DATA:/var/www/html/data
     networks:
       - ext_net
+
+    # nextcloud_db:
+    #   image: "nextcloud"
+    #   container_name: $STACK-nextcloud
+    #   restart: always
+    #   labels:
+    #     - "traefik.enable=true" # Enable reverse-proxy for this service
+    #     - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
+    #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+    #     - "traefik.port=80"
+    #   volumes:
+    #     - nextcloud_config:/var/www/html
+    #     - $NEXTCLOUD_DATA:/var/www/html/data
+    #   networks:
+    #     - ext_net
 
   # duplicati:
   #   image: "linuxserver/duplicati"
