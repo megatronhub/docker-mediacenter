@@ -365,7 +365,7 @@ services:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
       - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=80"
+      - "traefik.port=443"
     environment:
       - PUID=$USERID
       - PGID=$GROUPID
