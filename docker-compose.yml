@@ -58,7 +58,7 @@ services:
     image: linuxserver/jellyfin
     restart: always
     devices:
-      - "/dev/dri:/dev/dri"
+      - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
     labels:
       - "traefik.enable=true" # Enable reverse-proxy for this service
       - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
