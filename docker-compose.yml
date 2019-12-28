@@ -74,6 +74,39 @@ services:
     networks:
       - ext_net
 
+  plex:
+    container_name: $STACK-$PLEX
+    image: plexinc/pms-docker
+    restart: always
+    hostname: "$PLEXHOSTNAME"
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$PLEX.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+      - "traefik.port=32400"
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    environment:
+      - ADVERTISE_IP="$ADVERTISEIP"
+      - PLEX_CLAIM="$PLEXCLAIM"
+      - PLEX_GID=$GROUPID
+      - PLEX_UID=$USERID
+      - TZ=$TIMEZONE
+    volumes:
+      - plex_config:/config
+      - $TRANSCODE:/transcode
+      - $MEDIA:/data/media
+    networks:
+      - ext_net
+
   airsonic:
     container_name: $STACK-airsonic
     image: linuxserver/airsonic
@@ -462,6 +495,7 @@ volumes:
   organizr_config:
   emby_config:
   jellyfin_config:
+  plex_config:
   airsonic_config:
   ombi_config:
   sonarr_config:
