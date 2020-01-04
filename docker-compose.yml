@@ -147,7 +147,7 @@ services:
     depends_on:
       - organizr
     ports:
-      - "$HOSTPORT:$HOSTPORT"
+      - "8443:8443"
     networks:
       - ext_net
 
@@ -267,7 +267,8 @@ services:
     depends_on:
       - organizr
     ports:
-      - 9091:9091
+      - "9091:9091"
+
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
