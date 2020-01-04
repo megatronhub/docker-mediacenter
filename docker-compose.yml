@@ -1,20 +1,20 @@
 version: '3.7'
 services:
 # Organizr front end combines all apps into one website
-  # organizr:
-  #   container_name: $STACK-organizr
-  #   image: organizrtools/organizr-v2
-  #   restart: always
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   environment:
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #   volumes:
-  #     - organizr_config:/config
-  #   networks:
-  #     - ext_net
+  organizr:
+    container_name: $STACK-organizr
+    image: organizrtools/organizr-v2
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - PGID=$GROUPID
+      - PUID=$USERID
+    volumes:
+      - organizr_config:/config
+    networks:
+      - ext_net
 
 # Streaming & Compainion apps
   emby:
