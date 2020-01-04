@@ -139,17 +139,17 @@ services:
     networks:
       - ext_net
 
-  omv:
-    image: qoomon/docker-host
-    container_name: $STACK-omv
-    restart: always
-    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
-    depends_on:
-      - organizr
-    ports:
-      - "8443:8443"
-    networks:
-      - ext_net
+  # omv:
+  #   image: qoomon/docker-host
+  #   container_name: $STACK-omv
+  #   restart: always
+  #   cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+  #   depends_on:
+  #     - organizr
+  #   ports:
+  #     - "8443:8443"
+  #   networks:
+  #     - ext_net
 
 # Indexer apps
   sonarr:
