@@ -1,20 +1,20 @@
 version: '3.7'
 services:
 # Organizr front end combines all apps into one website
-  organizr:
-    container_name: $STACK-organizr
-    image: organizrtools/organizr-v2
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - organizr_config:/config
-    networks:
-      - ext_net
+  # organizr:
+  #   container_name: $STACK-organizr
+  #   image: organizrtools/organizr-v2
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   environment:
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #   volumes:
+  #     - organizr_config:/config
+  #   networks:
+  #     - ext_net
 
 # Streaming & Compainion apps
   emby:
@@ -48,59 +48,59 @@ services:
   #   networks:
   #     - ext_net
 
-  jellyfin:
-    container_name: $STACK-jellyfin
-    image: linuxserver/jellyfin
-    restart: always
-    devices:
-      - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=8096"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - jellyfin_config:/config
-      - $MEDIA:/data/media
-    networks:
-      - ext_net
+  # jellyfin:
+  #   container_name: $STACK-jellyfin
+  #   image: linuxserver/jellyfin
+  #   restart: always
+  #   devices:
+  #     - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
+  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+  #     - "traefik.port=8096"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$GROUPID
+  #     - PUID=$USERID
+  #   volumes:
+  #     - jellyfin_config:/config
+  #     - $MEDIA:/data/media
+  #   networks:
+  #     - ext_net
 
-  plex:
-    container_name: $STACK-$PLEX
-    image: plexinc/pms-docker
-    restart: always
-    hostname: "$PLEXHOSTNAME"
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$PLEX.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=32400"
-    ports:
-      - "32400:32400/tcp"
-      - "3005:3005/tcp"
-      - "8324:8324/tcp"
-      - "32469:32469/tcp"
-      - "1900:1900/udp"
-      - "32410:32410/udp"
-      - "32412:32412/udp"
-      - "32413:32413/udp"
-      - "32414:32414/udp"
-    environment:
-      - ADVERTISE_IP="$ADVERTISEIP"
-      - PLEX_CLAIM="$PLEXCLAIM"
-      - PLEX_GID=$GROUPID
-      - PLEX_UID=$USERID
-      - TZ=$TIMEZONE
-    volumes:
-      - plex_config:/config
-      - $TRANSCODE:/transcode
-      - $MEDIA:/data/media
-    networks:
-      - ext_net
+  # plex:
+  #   container_name: $STACK-$PLEX
+  #   image: plexinc/pms-docker
+  #   restart: always
+  #   hostname: "$PLEXHOSTNAME"
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$PLEX.$DOMAIN" # Domain name for the app
+  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+  #     - "traefik.port=32400"
+  #   ports:
+  #     - "32400:32400/tcp"
+  #     - "3005:3005/tcp"
+  #     - "8324:8324/tcp"
+  #     - "32469:32469/tcp"
+  #     - "1900:1900/udp"
+  #     - "32410:32410/udp"
+  #     - "32412:32412/udp"
+  #     - "32413:32413/udp"
+  #     - "32414:32414/udp"
+  #   environment:
+  #     - ADVERTISE_IP="$ADVERTISEIP"
+  #     - PLEX_CLAIM="$PLEXCLAIM"
+  #     - PLEX_GID=$GROUPID
+  #     - PLEX_UID=$USERID
+  #     - TZ=$TIMEZONE
+  #   volumes:
+  #     - plex_config:/config
+  #     - $TRANSCODE:/transcode
+  #     - $MEDIA:/data/media
+  #   networks:
+  #     - ext_net
 
   airsonic:
     container_name: $STACK-airsonic
@@ -357,65 +357,49 @@ services:
       - ext_net
 
 # Utility services
-  ddclient:
-    image: "linuxserver/ddclient"
-    container_name: $STACK-ddclient
-    restart: always
-    environment:
-      - PUID=$USERID
-      - PGID=$GROUPID
-      - TZ=$TIMEZONE
-    volumes:
-      - ddclient_config:/config
-    networks:
-      - ext_net
+  # ddclient:
+  #   image: "linuxserver/ddclient"
+  #   container_name: $STACK-ddclient
+  #   restart: always
+  #   environment:
+  #     - PUID=$USERID
+  #     - PGID=$GROUPID
+  #     - TZ=$TIMEZONE
+  #   volumes:
+  #     - ddclient_config:/config
+  #   networks:
+  #     - ext_net
 
-  portainer:
-    image: "portainer/portainer"
-    container_name: $STACK-portainer
-    restart: always
-    depends_on:
-      - organizr
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-      - "traefik.port=9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_config:/data
-    networks:
-      - ext_net
+  # portainer:
+  #   image: "portainer/portainer"
+  #   container_name: $STACK-portainer
+  #   restart: always
+  #   depends_on:
+  #     - organizr
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
+  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
+  #     - "traefik.port=9000"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - portainer_config:/data
+  #   networks:
+  #     - ext_net
 
-  nextcloud:
-    image: "nextcloud"
-    container_name: $STACK-nextcloud
-    restart: always
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=80"
-    volumes:
-      - nextcloud_config:/var/www/html
-    networks:
-      - ext_net
-
-  nextcloud:
-    image: "nextcloud"
-    container_name: $STACK-nextcloud
-    restart: always
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
-      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=80"
-    volumes:
-      - nextcloud_config:/var/www/html
-      - $NEXTCLOUD_DATA:/var/www/html/data
-      - $NEXTCLOUD_LOCALDIR:/data/local
-    networks:
-      - ext_net
+  # nextcloud:
+  #   image: "nextcloud"
+  #   container_name: $STACK-nextcloud
+  #   restart: always
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
+  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+  #     - "traefik.port=80"
+  #   volumes:
+  #     - nextcloud_config:/var/www/html
+  #   networks:
+  #     - ext_net
 
   # duplicati:
   #   image: "linuxserver/duplicati"
@@ -437,54 +421,54 @@ services:
   #   networks:
   #     - ext_net
 
-  pihole:
-    image: "pihole/pihole:latest"
-    container_name: $STACK-pihole
-    restart: always
-    depends_on:
-      - organizr
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    # cap_add:
-    #   - NET_ADMIN
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
-      - "traefik.port=80"
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.backend=pihole"
-    #   - "traefik.port=80"
-    #   - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
-    #   - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
-    #   - "traefik.frontend.priority=1"
-    #   - traefik.frontend.headers.SSLRedirect=true
-    #   - traefik.frontend.headers.STSSeconds=315360000
-    #   - traefik.frontend.headers.browserXSSFilter=true
-    #   - traefik.frontend.headers.contentTypeNosniff=true
-    #   - traefik.frontend.headers.forceSTSHeader=true
-    #   - traefik.frontend.headers.SSLHost=$DOMAIN
-    #   - traefik.frontend.headers.STSIncludeSubdomains=true
-    #   - traefik.frontend.headers.STSPreload=true
-    #   - traefik.frontend.headers.frameDeny=true
-    #   - traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8183:80"
-      - "8184:443"
-    environment:
-      - TZ=$TIMEZONE
-      # WEBPASSWORD: 'set a secure password here or it will be random'
-    volumes:
-       - pihole_config:/etc/pihole/
-       - pihole_dnsmasq.d:/etc/dnsmasq.d/
-      #  - ./config/pihole/allow-iframe.sh:/etc/cont-init.d/21-allow-iframe.sh
-    networks:
-      - ext_net
+  # pihole:
+  #   image: "pihole/pihole:latest"
+  #   container_name: $STACK-pihole
+  #   restart: always
+  #   depends_on:
+  #     - organizr
+  #   # Recommended but not required (DHCP needs NET_ADMIN)
+  #   #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+  #   # cap_add:
+  #   #   - NET_ADMIN
+  #   dns:
+  #     - 127.0.0.1
+  #     - 1.1.1.1
+  #   labels:
+  #     - "traefik.enable=true" # Enable reverse-proxy for this service
+  #     - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
+  #     - "traefik.port=80"
+  #   # labels:
+  #   #   - "traefik.enable=true"
+  #   #   - "traefik.backend=pihole"
+  #   #   - "traefik.port=80"
+  #   #   - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
+  #   #   - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
+  #   #   - "traefik.frontend.priority=1"
+  #   #   - traefik.frontend.headers.SSLRedirect=true
+  #   #   - traefik.frontend.headers.STSSeconds=315360000
+  #   #   - traefik.frontend.headers.browserXSSFilter=true
+  #   #   - traefik.frontend.headers.contentTypeNosniff=true
+  #   #   - traefik.frontend.headers.forceSTSHeader=true
+  #   #   - traefik.frontend.headers.SSLHost=$DOMAIN
+  #   #   - traefik.frontend.headers.STSIncludeSubdomains=true
+  #   #   - traefik.frontend.headers.STSPreload=true
+  #   #   - traefik.frontend.headers.frameDeny=true
+  #   #   - traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1
+  #   ports:
+  #     - "53:53/tcp"
+  #     - "53:53/udp"
+  #     - "8183:80"
+  #     - "8184:443"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     # WEBPASSWORD: 'set a secure password here or it will be random'
+  #   volumes:
+  #      - pihole_config:/etc/pihole/
+  #      - pihole_dnsmasq.d:/etc/dnsmasq.d/
+  #     #  - ./config/pihole/allow-iframe.sh:/etc/cont-init.d/21-allow-iframe.sh
+  #   networks:
+  #     - ext_net
 
 volumes:
   organizr_config:
