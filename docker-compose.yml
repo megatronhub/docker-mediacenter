@@ -7,7 +7,6 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "443:443"
     environment:
       - PGID=$GROUPID
       - PUID=$USERID
@@ -114,6 +113,7 @@ services:
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
+      - CONTEXT_PATH=URL_BASE
     volumes:
       - airsonic_config:/config
       - $MEDIA/music:/data/music
