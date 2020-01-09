@@ -113,7 +113,6 @@ services:
       - TZ=$TIMEZONE
       - PGID=$GROUPID
       - PUID=$USERID
-      - CONTEXT_PATH=URL_BASE
     volumes:
       - airsonic_config:/config
       - $MEDIA/music:/data/music
