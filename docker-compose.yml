@@ -47,26 +47,26 @@ services:
   #   networks:
   #     - ext_net
 
-  # jellyfin:
-  #   container_name: $STACK-jellyfin
-  #   image: linuxserver/jellyfin
-  #   restart: always
-  #   devices:
-  #     - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-  #     - "traefik.port=8096"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$GROUPID
-  #     - PUID=$USERID
-  #   volumes:
-  #     - jellyfin_config:/config
-  #     - $MEDIA:/data/media
-  #   networks:
-  #     - ext_net
+  jellyfin:
+    container_name: $STACK-jellyfin
+    image: linuxserver/jellyfin
+    restart: always
+    devices:
+      - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
+    labels:
+      - "traefik.enable=true" # Enable reverse-proxy for this service
+      - "traefik.frontend.rule=Host:$JELLYFIN.$DOMAIN" # Domain name for the app
+      - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
+      - "traefik.port=8096"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$GROUPID
+      - PUID=$USERID
+    volumes:
+      - jellyfin_config:/config
+      - $MEDIA:/data/media
+    networks:
+      - ext_net
 
   # plex:
   #   container_name: $STACK-$PLEX
