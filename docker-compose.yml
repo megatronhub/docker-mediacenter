@@ -92,7 +92,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $appdata/ombi_config:/config
+      - $APPDATA/ombi_config:/config
     networks:
       - ext_net
 
