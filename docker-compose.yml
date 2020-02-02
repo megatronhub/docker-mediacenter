@@ -5,8 +5,8 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
-    # ports:
-    #   - "80:80"
+    ports:
+      - "80:80"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -20,11 +20,6 @@ services:
     container_name: $STACK-emby
     image: emby/embyserver
     restart: always
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$EMBY.$DOMAIN" # Domain name for the app
-      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=8096"
     ports:
       - "8096:8096"
     environment:
@@ -82,11 +77,8 @@ services:
     restart: always
     depends_on:
       - organizr
-    labels:
-      - "traefik.enable=true" # Enable reverse-proxy for this service
-      - "traefik.frontend.rule=Host:$OMBI.$DOMAIN" # Domain name for the app
-      # - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-      - "traefik.port=3579"
+    ports:
+      - "3579:3579"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
