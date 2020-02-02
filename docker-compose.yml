@@ -8,10 +8,10 @@ services:
     # ports:
     #   - "80:80"
     environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - organizr_config:/config
+      - $APPDATA/organizr_config:/config
     networks:
       - ext_net
 
@@ -28,77 +28,30 @@ services:
     ports:
       - "8096:8096"
     environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
-      - GIDLIST=$GROUPID
+      - PGID=$PGID
+      - PUID=$PUID
+      - GIDLIST=$PGID
     volumes:
-      - emby_config:/config
+      - $APPDATA/emby_config:/config
       - $MEDIA:/data/media
     networks:
       - ext_net
 
-  # embystat:
-  #   container_name: $STACK-emby_stat
-  #   image: uping/embystat:nightly-ubuntu-x64
+  # jellyfin:
+  #   container_name: $STACK-jellyfin
+  #   image: linuxserver/jellyfin
   #   restart: always
-  #   depends_on:
-  #     - emby
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$EMBYSTAT.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-  #     - "traefik.port=6555"
-  #   networks:
-  #     - ext_net
-
-  jellyfin:
-    container_name: $STACK-jellyfin
-    image: linuxserver/jellyfin
-    restart: always
-    devices:
-      - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
-    ports:
-      - "8100:8096"
-      - "8101:8097"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
-    volumes:
-      - jellyfin_config:/config
-      - $MEDIA:/data/media
-    networks:
-      - ext_net
-
-  # plex:
-  #   container_name: $STACK-$PLEX
-  #   image: plexinc/pms-docker
-  #   restart: always
-  #   hostname: "$PLEXHOSTNAME"
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$PLEX.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-  #     - "traefik.port=32400"
+  #   devices:
+  #     - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
   #   ports:
-  #     - "32400:32400/tcp"
-  #     - "3005:3005/tcp"
-  #     - "8324:8324/tcp"
-  #     - "32469:32469/tcp"
-  #     - "1900:1900/udp"
-  #     - "32410:32410/udp"
-  #     - "32412:32412/udp"
-  #     - "32413:32413/udp"
-  #     - "32414:32414/udp"
+  #     - "8100:8096"
+  #     - "8101:8097"
   #   environment:
-  #     - ADVERTISE_IP="$ADVERTISEIP"
-  #     - PLEX_CLAIM="$PLEXCLAIM"
-  #     - PLEX_GID=$GROUPID
-  #     - PLEX_UID=$USERID
   #     - TZ=$TIMEZONE
+  #     - PGID=$PGID
+  #     - PUID=$PUID
   #   volumes:
-  #     - plex_config:/config
-  #     - $TRANSCODE:/transcode
+  #     - $APPDATA/jellyfin_config:/config
   #     - $MEDIA:/data/media
   #   networks:
   #     - ext_net
@@ -113,13 +66,13 @@ services:
       - "4040:4040"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - airsonic_config:/config
+      - $APPDATA/airsonic_config:/config
       - $MEDIA/music:/data/music
-      - $MEDIA/playlists:/data/playlists
-      - $MEDIA/podcasts:/data/podcasts
+      - $MEDIA/music/playlists:/data/music/playlists
+      - $MEDIA/music/podcasts:/data/music/podcasts
     networks:
       - ext_net
 
@@ -136,10 +89,10 @@ services:
       - "traefik.port=3579"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - ombi_config:/config
+      - $appdata/ombi_config:/config
     networks:
       - ext_net
 
@@ -154,16 +107,16 @@ services:
       - "8989:8989"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - sonarr_config:/config
-      - $MEDIA/temp:/data/temp
-      - $MEDIA/tvshows:/data/tv
-      - $MEDIA/kids_tvshows:/data/kids_tv
-      - $MEDIA/anime_tv:/data/anime_tv
-      - $DOWNLOADS/torrent:/data/downloads/torrent
-      - $DOWNLOADS/usenet:/data/downloads/usenet
+      - $APPDATA/sonarr_config:/config
+      - $MEDIA/temp:/data/media/temp
+      - $MEDIA/tvshows:/data/media/tv
+      - $MEDIA/kids_tvshows:/data/media/kids_tv
+      - $MEDIA/anime_tv:/data/media/anime_tv
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
 
@@ -177,33 +130,33 @@ services:
       - "7878:7878"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - radarr_config:/config
-      - $MEDIA/temp:/data/temp
-      - $MEDIA/movies:/data/movies
-      - $MEDIA/kids_movies:/data/kids_movies
-      - $MEDIA/anime_movies:/data/anime_movies
-      - $DOWNLOADS/torrent:/data/downloads/torrent
-      - $DOWNLOADS/usenet:/data/downloads/usenet
+      - $APPDATA/radarr_config:/config
+      - $MEDIA/temp:/data/media/temp
+      - $MEDIA/movies:/data/media/movies
+      - $MEDIA/kids_movies:/data/media/kids_movies
+      - $MEDIA/anime_movies:/data/media/anime_movies
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
 
-  radarr-collection:
-    container_name: $STACK-radarr_collection
-    image: si0972/radarr-collections
-    restart: always
-    depends_on:
-      - radarr
-    environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
-      - args=$ARGS
-    volumes:
-      - radarrcollection_config:/config
-    networks:
-      - ext_net
+  # radarr-collection:
+  #   container_name: $STACK-radarr_collection
+  #   image: si0972/radarr-collections
+  #   restart: always
+  #   depends_on:
+  #     - radarr
+  #   environment:
+  #     - PGID=$PGID
+  #     - PUID=$PUID
+  #     - args=$ARGS
+  #   volumes:
+  #     - $APPDATA/radarrcollection_config:/config
+  #   networks:
+  #     - ext_net
 
   lidarr:
     container_name: $STACK-lidarr
@@ -215,14 +168,14 @@ services:
       - "8686:8686"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - lidarr_config:/config
-      - $MEDIA/temp:/data/temp
-      - $DOWNLOADS/torrent:/data/downloads/torrent
-      - $DOWNLOADS/usenet:/data/downloads/usenet
-      - $MEDIA/music:/data/music
+      - $APPDATA/lidarr_config:/config
+      - $MEDIA/temp:/data/media/temp
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+      - $MEDIA/music:/data/media/music
     networks:
       - ext_net
 
@@ -237,12 +190,12 @@ services:
       - "9117:9117"
     environment:
       - TZ=$TIMEZONE
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
     volumes:
-      - jackett_config:/config
-      - $DOWNLOADS/torrent:/data/downloads/torrent
-      - $DOWNLOADS/usenet:/data/downloads/usenet
+      - $APPDATA/jackett_config:/config
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
 
@@ -261,8 +214,8 @@ services:
     ports:
       - "9091:9091"
     environment:
-      - PGID=$GROUPID
-      - PUID=$USERID
+      - PGID=$PGID
+      - PUID=$PUID
       - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
       - OPENVPN_PROVIDER=$OPENVPN_PROVIDER
       - OPENVPN_CONFIG=$OPENVPN_CONFIG
@@ -284,7 +237,7 @@ services:
       - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $DOWNLOADS/torrent:/data/downloads/torrent
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
     networks:
       - ext_net
 
@@ -298,148 +251,28 @@ services:
     ports:
       - 6789:6789
     environment:
-      - PUID=$USERID
-      - PGID=$GROUPID
+      - PUID=$PUID
+      - PGID=$PGID
       - TZ=$TIMEZONE
     volumes:
-      - nzbget_config:/config
-      - $DOWNLOADS/usenet:/data/downloads/usenet
+      - $APPDATA/nzbget_config:/config
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
 
 # Utility services
-  ddclient:
-    image: "linuxserver/ddclient"
-    container_name: $STACK-ddclient
-    restart: always
-    environment:
-      - PUID=$USERID
-      - PGID=$GROUPID
-      - TZ=$TIMEZONE
-    volumes:
-      - ddclient_config:/config
-    networks:
-      - ext_net
-
-  # portainer:
-  #   image: "portainer/portainer"
-  #   container_name: $STACK-portainer
+  # ddclient:
+  #   image: "linuxserver/ddclient"
+  #   container_name: $STACK-ddclient
   #   restart: always
-  #   depends_on:
-  #     - organizr
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$PORTAINER.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-  #     - "traefik.port=9000"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - portainer_config:/data
-  #   networks:
-  #     - ext_net
-
-  # nextcloud:
-  #   image: "nextcloud"
-  #   container_name: $STACK-nextcloud
-  #   restart: always
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$NEXTCLOUD.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=999"
-  #     - "traefik.port=80"
-  #   volumes:
-  #     - nextcloud_config:/var/www/html
-  #   networks:
-  #     - ext_net
-
-  # duplicati:
-  #   image: "linuxserver/duplicati"
-  #   container_name: $STACK-duplicati
-  #   restart: always
-  #   depends_on:
-  #     - organizr
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$DUPLICATI.$DOMAIN" # Domain name for the app
-  #     - "traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1"
-  #     - "traefik.port=8200"
   #   environment:
-  #     - PUID=$USERID
-  #     - PGID=$GROUPID
+  #     - PUID=$PUID
+  #     - PGID=$PGID
   #     - TZ=$TIMEZONE
   #   volumes:
-  #     - duplicati_config:/config
+  #     - $APPDATA/ddclient_config:/config
   #   networks:
   #     - ext_net
-
-  # pihole:
-  #   image: "pihole/pihole:latest"
-  #   container_name: $STACK-pihole
-  #   restart: always
-  #   depends_on:
-  #     - organizr
-  #   # Recommended but not required (DHCP needs NET_ADMIN)
-  #   #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-  #   # cap_add:
-  #   #   - NET_ADMIN
-  #   dns:
-  #     - 127.0.0.1
-  #     - 1.1.1.1
-  #   labels:
-  #     - "traefik.enable=true" # Enable reverse-proxy for this service
-  #     - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
-  #     - "traefik.port=80"
-  #   # labels:
-  #   #   - "traefik.enable=true"
-  #   #   - "traefik.backend=pihole"
-  #   #   - "traefik.port=80"
-  #   #   - "traefik.frontend.rule=Host:$PIHOLE.$DOMAIN" # Domain name for the app
-  #   #   - "traefik.frontend.rule=HostRegexp:$PIHOLE.$DOMAIN,{catchall:.*}"
-  #   #   - "traefik.frontend.priority=1"
-  #   #   - traefik.frontend.headers.SSLRedirect=true
-  #   #   - traefik.frontend.headers.STSSeconds=315360000
-  #   #   - traefik.frontend.headers.browserXSSFilter=true
-  #   #   - traefik.frontend.headers.contentTypeNosniff=true
-  #   #   - traefik.frontend.headers.forceSTSHeader=true
-  #   #   - traefik.frontend.headers.SSLHost=$DOMAIN
-  #   #   - traefik.frontend.headers.STSIncludeSubdomains=true
-  #   #   - traefik.frontend.headers.STSPreload=true
-  #   #   - traefik.frontend.headers.frameDeny=true
-  #   #   - traefik.frontend.auth.forward.address=http://organizr/api/?v1/auth&group=1
-  #   ports:
-  #     - "53:53/tcp"
-  #     - "53:53/udp"
-  #     - "8183:80"
-  #     - "8184:443"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     # WEBPASSWORD: 'set a secure password here or it will be random'
-  #   volumes:
-  #      - pihole_config:/etc/pihole/
-  #      - pihole_dnsmasq.d:/etc/dnsmasq.d/
-  #     #  - ./config/pihole/allow-iframe.sh:/etc/cont-init.d/21-allow-iframe.sh
-  #   networks:
-  #     - ext_net
-
-volumes:
-  organizr_config:
-  emby_config:
-  jellyfin_config:
-  plex_config:
-  airsonic_config:
-  ombi_config:
-  sonarr_config:
-  radarr_config:
-  radarrcollection_config:
-  lidarr_config:
-  jackett_config:
-  nzbget_config:
-  ddclient_config:
-  portainer_config:
-  nextcloud_config:
-  # duplicati_config:
-  pihole_config:
-  pihole_dnsmasq.d:
 
 networks:
   ext_net:
