@@ -73,7 +73,7 @@ services:
 
   subsonic:
     container_name: $STACK-subsonic
-    image: caseywebb/subsonic
+    image: caseywebb/docker-subsonic
     restart: always
     depends_on:
       - organizr
