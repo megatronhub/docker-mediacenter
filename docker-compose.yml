@@ -71,26 +71,6 @@ services:
   #   networks:
   #     - ext_net
 
-  subsonic:
-    container_name: $STACK-subsonic
-    image: caseywebb/docker-subsonic
-    restart: always
-    depends_on:
-      - organizr
-    ports:
-      - "4040:4040"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$PGID
-      - PUID=$PUID
-    volumes:
-      - $APPDATA/subsonic_config:/config
-      - $MEDIA/music:/data/music
-      - $MEDIA/music/playlists:/data/music/playlists
-      - $MEDIA/music/podcasts:/data/music/podcasts
-    networks:
-      - ext_net
-
   ombi:
     container_name: $STACK-ombi
     image: linuxserver/ombi
