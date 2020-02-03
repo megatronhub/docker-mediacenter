@@ -51,9 +51,29 @@ services:
   #   networks:
   #     - ext_net
 
-  airsonic:
-    container_name: $STACK-airsonic
-    image: linuxserver/airsonic
+  # airsonic:
+  #   container_name: $STACK-airsonic
+  #   image: linuxserver/airsonic
+  #   restart: always
+  #   depends_on:
+  #     - organizr
+  #   ports:
+  #     - "4040:4040"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$PGID
+  #     - PUID=$PUID
+  #   volumes:
+  #     - $APPDATA/airsonic_config:/config
+  #     - $MEDIA/music:/data/music
+  #     - $MEDIA/music/playlists:/data/music/playlists
+  #     - $MEDIA/music/podcasts:/data/music/podcasts
+  #   networks:
+  #     - ext_net
+
+  subsonic:
+    container_name: $STACK-subsonic
+    image: caseywebb/subsonic
     restart: always
     depends_on:
       - organizr
@@ -64,7 +84,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/airsonic_config:/config
+      - $APPDATA/subsonic_config:/config
       - $MEDIA/music:/data/music
       - $MEDIA/music/playlists:/data/music/playlists
       - $MEDIA/music/podcasts:/data/music/podcasts
