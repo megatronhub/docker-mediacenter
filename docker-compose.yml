@@ -40,8 +40,6 @@ services:
   #   container_name: $STACK-airsonic
   #   image: linuxserver/airsonic
   #   restart: always
-  #   depends_on:
-  #     - organizr
   #   ports:
   #     - "4040:4040"
   #   environment:
@@ -60,8 +58,6 @@ services:
     container_name: $STACK-ombi
     image: linuxserver/ombi
     restart: always
-    depends_on:
-      - organizr
     ports:
       - "3579:3579"
     environment:
@@ -78,8 +74,6 @@ services:
     container_name: $STACK-sonarr
     image: linuxserver/sonarr:preview
     restart: always
-    depends_on:
-      - organizr
     ports:
       - "8989:8989"
     environment:
@@ -101,8 +95,6 @@ services:
     container_name: $STACK-radarr
     image: linuxserver/radarr:nightly
     restart: always
-    depends_on:
-      - organizr
     ports:
       - "7878:7878"
     environment:
@@ -139,8 +131,6 @@ services:
     container_name: $STACK-lidarr
     image: linuxserver/lidarr
     restart: always
-    depends_on:
-      - organizr
     ports:
       - "8686:8686"
     environment:
@@ -161,8 +151,6 @@ services:
     container_name: $STACK-jackett
     image: linuxserver/jackett:development
     restart: always
-    depends_on:
-      - organizr
     ports:
       - "9117:9117"
     environment:
@@ -186,8 +174,6 @@ services:
     dns:
       - 8.8.8.8
       - 8.8.4.4
-    depends_on:
-      - organizr
     ports:
       - "9091:9091"
     environment:
@@ -223,8 +209,6 @@ services:
     image: "linuxserver/nzbget:testing"
     container_name: $STACK-nzbget
     restart: always
-    depends_on:
-      - organizr
     ports:
       - 6789:6789
     environment:
