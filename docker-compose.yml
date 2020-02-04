@@ -13,7 +13,7 @@ services:
     volumes:
       - $APPDATA/organizr_config:/config
     networks:
-      - ext_net
+      - net
 
 # Streaming & Compainion apps
   emby:
@@ -30,7 +30,7 @@ services:
       - $APPDATA/emby_config:/config
       - $MEDIA:/data/media
     networks:
-      - ext_net
+      - net
 
   # jellyfin:
   #   container_name: $STACK-jellyfin
@@ -49,7 +49,7 @@ services:
   #     - $APPDATA/jellyfin_config:/config
   #     - $MEDIA:/data/media
   #   networks:
-  #     - ext_net
+  #     - net
 
   # airsonic:
   #   container_name: $STACK-airsonic
@@ -69,7 +69,7 @@ services:
   #     - $MEDIA/music/playlists:/data/music/playlists
   #     - $MEDIA/music/podcasts:/data/music/podcasts
   #   networks:
-  #     - ext_net
+  #     - net
 
   ombi:
     container_name: $STACK-ombi
@@ -86,7 +86,7 @@ services:
     volumes:
       - $APPDATA/ombi_config:/config
     networks:
-      - ext_net
+      - net
 
 # Indexer apps
   sonarr:
@@ -110,7 +110,7 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - ext_net
+      - net
 
   radarr:
     container_name: $STACK-radarr
@@ -133,7 +133,7 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - ext_net
+      - net
 
   # radarr-collection:
   #   container_name: $STACK-radarr_collection
@@ -148,7 +148,7 @@ services:
   #   volumes:
   #     - $APPDATA/radarrcollection_config:/config
   #   networks:
-  #     - ext_net
+  #     - net
 
   lidarr:
     container_name: $STACK-lidarr
@@ -169,7 +169,7 @@ services:
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
       - $MEDIA/music:/data/media/music
     networks:
-      - ext_net
+      - net
 
 # Indexer source apps
   jackett:
@@ -189,7 +189,7 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - ext_net
+      - net
 
 # Torrent download clients
   transmission:
@@ -231,7 +231,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
     networks:
-      - ext_net
+      - net
 
 # Usenet download clients
   nzbget:
@@ -250,7 +250,7 @@ services:
       - $APPDATA/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - ext_net
+      - net
 
 # Utility services
   # ddclient:
@@ -264,8 +264,8 @@ services:
   #   volumes:
   #     - $APPDATA/ddclient_config:/config
   #   networks:
-  #     - ext_net
+  #     - net
 
 networks:
-  ext_net:
-    name: mediacenter_ext_net
+  net:
+    name: mediacenter_net
