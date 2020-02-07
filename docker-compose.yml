@@ -17,24 +17,24 @@ services:
     networks:
       - net
 
-  # jellyfin:
-  #   container_name: $STACK-jellyfin
-  #   image: linuxserver/jellyfin
-  #   restart: always
-  #   devices:
-  #     - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
-  #   ports:
-  #     - "8100:8096"
-  #     - "8101:8097"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$PGID
-  #     - PUID=$PUID
-  #   volumes:
-  #     - $APPDATA/$STACK/jellyfin_config:/config
-  #     - $MEDIA:/data/media
-  #   networks:
-  #     - net
+  jellyfin:
+    container_name: $STACK-jellyfin
+    image: linuxserver/jellyfin
+    restart: always
+    # devices:
+    #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
+    ports:
+      - "8097:8096"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/jellyfin_config:/config
+      - $TRANSCODE:/transcode
+      - $MEDIA:/data/media
+    networks:
+      - net
 
   # airsonic:
   #   container_name: $STACK-airsonic
