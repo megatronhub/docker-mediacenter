@@ -1,5 +1,19 @@
 version: '3.7'
 services:
+# Organizr front end combines all apps into one website
+  organizr:
+    container_name: $STACK-organizr
+    image: organizrtools/organizr-v2
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/organizr_config:/config
+    networks:
+      - ext_net
 # Streaming & Compainion apps
   emby:
     container_name: $STACK-emby
