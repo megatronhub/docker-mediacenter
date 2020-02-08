@@ -210,7 +210,7 @@ services:
     container_name: $STACK-nzbget
     restart: always
     ports:
-      - 6789:6789
+      - 6798:6789
     environment:
       - PUID=$PUID
       - PGID=$PGID
