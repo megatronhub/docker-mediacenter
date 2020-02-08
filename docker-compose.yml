@@ -221,50 +221,6 @@ services:
     networks:
       - net
 
-# Utility services
-  guacd:
-    image: "linuxserver/guacd"
-    container_name: $STACK-guacd
-    restart: always
-    ports:
-      - 4822:4822
-    networks:
-      - net
-
-  # ddclient:
-  #   image: "linuxserver/ddclient"
-  #   container_name: $STACK-ddclient
-  #   restart: always
-  #   environment:
-  #     - PUID=$PUID
-  #     - PGID=$PGID
-  #     - TZ=$TIMEZONE
-  #   volumes:
-  #     - $APPDATA/$STACK/ddclient_config:/config
-  #   networks:
-  #     - net
-
-  # unifi:
-  #   image: "linuxserver/unifi-controller"
-  #   container_name: $STACK-unifi
-  #   restart: always
-  #   ports:
-  #     - 3478:3478/udp
-  #     - 10001:10001/udp
-  #     - 8080:8080
-  #     - 8081:8081
-  #     - 8443:8443
-  #     - 8843:8843
-  #     - 8880:8880
-  #     - 6789:6789
-  #   environment:
-  #     - PUID=$PUID
-  #     - PGID=$PGID
-  #   volumes:
-  #     - $APPDATA/$STACK/unifi_config:/config
-  #   networks:
-  #     - net
-
 networks:
   net:
     name: mediacenter_net
