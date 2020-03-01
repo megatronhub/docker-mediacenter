@@ -3,12 +3,11 @@ services:
 # Organizr front end combines all apps into one website
   organizr:
     container_name: $STACK-organizr
-    image: linuxserver/organizr
+    image: organizrtools/organizr-v2
     restart: always
     ports:
       - "8888:80"
     environment:
-      - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
     volumes:
