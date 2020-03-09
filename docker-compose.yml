@@ -29,6 +29,7 @@ services:
     volumes:
       - $APPDATA/$STACK/emby_config:/config
       - $MEDIA:/data/media
+      - $GMEDIA:/data/gcrypt/media
     networks:
       - net
 
@@ -46,8 +47,9 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/jellyfin_config:/config
-      - $TRANSCODE:/transcode
+      - $MEDIA/transcode:/transcode
       - $MEDIA:/data/media
+      - $GMEDIA:/data/gcrypt/media
     networks:
       - net
 
@@ -97,6 +99,10 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/sonarr_config:/config
+      - $GMEDIA/temp:/data/gcrypt/media/temp
+      - $GMEDIA/tvshows:/data/gcrypt/media/tv
+      - $GMEDIA/kids_tvshows:/data/gcrypt/media/kids_tv
+      - $GMEDIA/anime_tv:/data/gcrypt/media/anime_tv
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/tvshows:/data/media/tv
       - $MEDIA/kids_tvshows:/data/media/kids_tv
@@ -118,6 +124,10 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/radarr_config:/config
+      - $GMEDIA/temp:/data/gcrypt/media/temp
+      - $GMEDIA/movies:/data/gcrypt/media/movies
+      - $GMEDIA/kids_movies:/data/gcrypt/media/kids_movies
+      - $GMEDIA/anime_movies:/data/gcrypt/media/anime_movies
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
       - $MEDIA/kids_movies:/data/media/kids_movies
@@ -157,6 +167,7 @@ services:
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+      - $GMEDIA/music:/data/gcrypt/media/music
       - $MEDIA/music:/data/media/music
     networks:
       - net
@@ -233,23 +244,6 @@ services:
     volumes:
       - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
-    networks:
-      - net
-
-# Utilitie containers
-# Rclone for google drive mount
-  rclone:
-    image: "sapk/plugin-rclone"
-    container_name: $STACK-rclone
-    cap_add: 
-      - MKNOD
-      - SYS_ADMIN
-    devices:
-      - "/dev/fuse:/dev/fuse"
-    restart: always
-    volumes:
-      - /var/lib/docker-volumes/rclone:/var/lib/docker-volumes/rclone:shared
-      - /run/docker/plugins:/run/docker/plugins
     networks:
       - net
 
