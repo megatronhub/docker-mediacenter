@@ -236,6 +236,17 @@ services:
     networks:
       - net
 
+# Utilitie containers
+# Rclone for google drive mount
+  rclone:
+    image: "rclone/rclone:latest"
+    container_name: $STACK-rclone
+    restart: always
+    volumes:
+      - $APPDATA/$STACK/rclone_config:/config/rclone
+    networks:
+      - net
+
 networks:
   net:
     name: mediacenter_net
