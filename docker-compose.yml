@@ -239,7 +239,7 @@ services:
 # Utilitie containers
 # Rclone for google drive mount
   rclone:
-    image: "sapk/docker-volume-rclone"
+    image: "sapk/plugin-rclone"
     container_name: $STACK-rclone
     cap_add: 
       - MKNOD
