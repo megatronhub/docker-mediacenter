@@ -239,11 +239,17 @@ services:
 # Utilitie containers
 # Rclone for google drive mount
   rclone:
-    image: "rclone/rclone:latest"
+    image: "sapk/docker-volume-rclone"
     container_name: $STACK-rclone
+    cap_add: 
+      - MKNOD
+      - SYS_ADMIN
+    devices:
+      - "/dev/fuse:/dev/fuse"
     restart: always
     volumes:
-      - $APPDATA/$STACK/rclone_config:/config/rclone
+      - /var/lib/docker-volumes/rclone:/var/lib/docker-volumes/rclone:shared
+      - /run/docker/plugins:/run/docker/plugins
     networks:
       - net
 

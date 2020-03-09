@@ -2,4 +2,4 @@
 ssh.*
 *.p12
 docker
-config/traefik.toml
+config/rclone/rclone.conf
