@@ -33,25 +33,25 @@ services:
     networks:
       - net
 
-  jellyfin:
-    container_name: $STACK-jellyfin
-    image: linuxserver/jellyfin
-    restart: always
-    # devices:
-    #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
-    ports:
-      - "8097:8096"
-    environment:
-      - TZ=$TIMEZONE
-      - PGID=$PGID
-      - PUID=$PUID
-    volumes:
-      - $APPDATA/$STACK/jellyfin_config:/config
-      - $MEDIA/transcode:/transcode
-      - $MEDIA:/data/media
-      - $GMEDIA:/data/gcrypt/media
-    networks:
-      - net
+  # jellyfin:
+  #   container_name: $STACK-jellyfin
+  #   image: linuxserver/jellyfin
+  #   restart: always
+  #   # devices:
+  #   #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
+  #   ports:
+  #     - "8097:8096"
+  #   environment:
+  #     - TZ=$TIMEZONE
+  #     - PGID=$PGID
+  #     - PUID=$PUID
+  #   volumes:
+  #     - $APPDATA/$STACK/jellyfin_config:/config
+  #     - $MEDIA/transcode:/transcode
+  #     - $MEDIA:/data/media
+  #     - $GMEDIA:/data/gcrypt/media
+  #   networks:
+  #     - net
 
   # airsonic:
   #   container_name: $STACK-airsonic
@@ -99,14 +99,9 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/sonarr_config:/config
-      - $GMEDIA/temp:/data/gcrypt/media/temp
       - $GMEDIA/tvshows:/data/gcrypt/media/tv
-      - $GMEDIA/kids_tvshows:/data/gcrypt/media/kids_tv
-      - $GMEDIA/anime_tv:/data/gcrypt/media/anime_tv
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/tvshows:/data/media/tv
-      - $MEDIA/kids_tvshows:/data/media/kids_tv
-      - $MEDIA/anime_tv:/data/media/anime_tv
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
@@ -124,14 +119,9 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/radarr_config:/config
-      - $GMEDIA/temp:/data/gcrypt/media/temp
       - $GMEDIA/movies:/data/gcrypt/media/movies
-      - $GMEDIA/kids_movies:/data/gcrypt/media/kids_movies
-      - $GMEDIA/anime_movies:/data/gcrypt/media/anime_movies
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
-      - $MEDIA/kids_movies:/data/media/kids_movies
-      - $MEDIA/anime_movies:/data/media/anime_movies
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
@@ -180,6 +170,7 @@ services:
     ports:
       - "9117:9117"
     environment:
+      - NGINX_PROXY_SUBDIRECTORY:/jackett
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
