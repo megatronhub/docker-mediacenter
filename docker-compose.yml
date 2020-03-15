@@ -127,6 +127,26 @@ services:
     networks:
       - net
 
+  radarr4k:
+    container_name: $STACK-radarr4k
+    image: linuxserver/radarr:nightly
+    restart: always
+    ports:
+      - "7887:7878"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/radarr4k_config:/config
+      - $GMEDIA/movies:/data/gcrypt/media/movies
+      - $MEDIA/temp:/data/media/temp
+      - $MEDIA/movies:/data/media/movies
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+    networks:
+      - net
+
   # radarr-collection:
   #   container_name: $STACK-radarr_collection
   #   image: si0972/radarr-collections
