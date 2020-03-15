@@ -10,6 +10,8 @@ services:
     environment:
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
+      - LETSENCRYPT_HOST=$ORGANIZR.$DOMAIN
     volumes:
       - $APPDATA/$STACK/organizr_config:/config
     networks:
@@ -26,6 +28,8 @@ services:
       - PGID=$PGID
       - PUID=$PUID
       - GIDLIST=$PGID
+      - VIRTUAL_HOST=$EMBY.$DOMAIN
+      - LETSENCRYPT_HOST=$EMBY.$DOMAIN
     volumes:
       - $APPDATA/$STACK/emby_config:/config
       - $MEDIA:/data/media
@@ -45,6 +49,8 @@ services:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
+  #     - VIRTUAL_HOST=$JELLYFIN.$DOMAIN
+  #     - LETSENCRYPT_HOST=$JELLYFIN.$DOMAIN
   #   volumes:
   #     - $APPDATA/$STACK/jellyfin_config:/config
   #     - $MEDIA/transcode:/transcode
@@ -63,6 +69,8 @@ services:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
+  #     - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
+  #     - LETSENCRYPT_HOST=$AIRSONIC.$DOMAIN
   #   volumes:
   #     - $APPDATA/$STACK/airsonic_config:/config
   #     - $MEDIA/music:/data/music
@@ -81,6 +89,8 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$OMBI.$DOMAIN
+      - LETSENCRYPT_HOST=$OMBI.$DOMAIN
     volumes:
       - $APPDATA/$STACK/ombi_config:/config
     networks:
@@ -97,6 +107,8 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$SONARR.$DOMAIN
+      - LETSENCRYPT_HOST=$SONARR.$DOMAIN
     volumes:
       - $APPDATA/$STACK/sonarr_config:/config
       - $GMEDIA/tvshows:/data/gcrypt/media/tv
@@ -117,6 +129,8 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$RADARR.$DOMAIN
+      - LETSENCRYPT_HOST=$RADARR.$DOMAIN
     volumes:
       - $APPDATA/$STACK/radarr_config:/config
       - $GMEDIA/movies:/data/gcrypt/media/movies
@@ -137,6 +151,8 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$RADARR4K.$DOMAIN
+      - LETSENCRYPT_HOST=$RADARR4K.$DOMAIN
     volumes:
       - $APPDATA/$STACK/radarr4k_config:/config
       - $GMEDIA/movies:/data/gcrypt/media/movies
@@ -172,6 +188,8 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$LIDARR.$DOMAIN
+      - LETSENCRYPT_HOST=$LIDARR.$DOMAIN
     volumes:
       - $APPDATA/$STACK/lidarr_config:/config
       - $MEDIA/temp:/data/media/temp
@@ -190,10 +208,11 @@ services:
     ports:
       - "9117:9117"
     environment:
-      - NGINX_PROXY_SUBDIRECTORY:/jackett
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
+      - VIRTUAL_HOST=$JACKETT.$DOMAIN
+      - LETSENCRYPT_HOST=$JACKETT.$DOMAIN
     volumes:
       - $APPDATA/$STACK/jackett_config:/config
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -235,6 +254,8 @@ services:
       - TRANSMISSION_DOWNLOAD_QUEUE_ENABLED=$TRANSMISSION_DOWNLOAD_QUEUE_ENABLED
       - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=$TRANSMISSION_DOWNLOAD_QUEUE_SIZE
       - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
+      - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
+      - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -252,6 +273,8 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TIMEZONE
+      - VIRTUAL_HOST=$NZBGET.$DOMAIN
+      - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
     volumes:
       - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
