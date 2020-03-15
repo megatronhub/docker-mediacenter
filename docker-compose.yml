@@ -12,6 +12,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
       - LETSENCRYPT_HOST=$ORGANIZR.$DOMAIN
+      - VIRTUAL_PORT=8888
     volumes:
       - $APPDATA/$STACK/organizr_config:/config
     networks:
@@ -30,6 +31,7 @@ services:
       - GIDLIST=$PGID
       - VIRTUAL_HOST=$EMBY.$DOMAIN
       - LETSENCRYPT_HOST=$EMBY.$DOMAIN
+      - VIRTUAL_PORT=8096
     volumes:
       - $APPDATA/$STACK/emby_config:/config
       - $MEDIA:/data/media
@@ -51,6 +53,7 @@ services:
   #     - PUID=$PUID
   #     - VIRTUAL_HOST=$JELLYFIN.$DOMAIN
   #     - LETSENCRYPT_HOST=$JELLYFIN.$DOMAIN
+  #     - VIRTUAL_PORT=8097
   #   volumes:
   #     - $APPDATA/$STACK/jellyfin_config:/config
   #     - $MEDIA/transcode:/transcode
@@ -71,6 +74,7 @@ services:
   #     - PUID=$PUID
   #     - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
   #     - LETSENCRYPT_HOST=$AIRSONIC.$DOMAIN
+  #     - VIRTUAL_PORT=4040
   #   volumes:
   #     - $APPDATA/$STACK/airsonic_config:/config
   #     - $MEDIA/music:/data/music
@@ -91,6 +95,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$OMBI.$DOMAIN
       - LETSENCRYPT_HOST=$OMBI.$DOMAIN
+      - VIRTUAL_PORT=3579
     volumes:
       - $APPDATA/$STACK/ombi_config:/config
     networks:
@@ -109,6 +114,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$SONARR.$DOMAIN
       - LETSENCRYPT_HOST=$SONARR.$DOMAIN
+      - VIRTUAL_PORT=8989
     volumes:
       - $APPDATA/$STACK/sonarr_config:/config
       - $GMEDIA/tvshows:/data/gcrypt/media/tv
@@ -131,6 +137,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$RADARR.$DOMAIN
       - LETSENCRYPT_HOST=$RADARR.$DOMAIN
+      - VIRTUAL_PORT=7878
     volumes:
       - $APPDATA/$STACK/radarr_config:/config
       - $GMEDIA/movies:/data/gcrypt/media/movies
@@ -153,6 +160,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$RADARR4K.$DOMAIN
       - LETSENCRYPT_HOST=$RADARR4K.$DOMAIN
+      - VIRTUAL_PORT=7887
     volumes:
       - $APPDATA/$STACK/radarr4k_config:/config
       - $GMEDIA/movies:/data/gcrypt/media/movies
@@ -190,6 +198,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$LIDARR.$DOMAIN
       - LETSENCRYPT_HOST=$LIDARR.$DOMAIN
+      - VIRTUAL_PORT=8686
     volumes:
       - $APPDATA/$STACK/lidarr_config:/config
       - $MEDIA/temp:/data/media/temp
@@ -213,6 +222,7 @@ services:
       - PUID=$PUID
       - VIRTUAL_HOST=$JACKETT.$DOMAIN
       - LETSENCRYPT_HOST=$JACKETT.$DOMAIN
+      - VIRTUAL_PORT=9117
     volumes:
       - $APPDATA/$STACK/jackett_config:/config
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -256,6 +266,7 @@ services:
       - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
       - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
       - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
+      - VIRTUAL_PORT=9091
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -275,6 +286,7 @@ services:
       - TZ=$TIMEZONE
       - VIRTUAL_HOST=$NZBGET.$DOMAIN
       - LETSENCRYPT_HOST=$NZBGET.$DOMAIN
+      - VIRTUAL_PORT=6798
     volumes:
       - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
