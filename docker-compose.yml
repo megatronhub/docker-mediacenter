@@ -5,8 +5,6 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -25,8 +23,6 @@ services:
     restart: always
     ports:
       - "8096:8096"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -49,8 +45,6 @@ services:
   #   #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
   #   ports:
   #     - "8097:8096"
-  #   labels:
-  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -72,8 +66,6 @@ services:
   #   restart: always
   #   ports:
   #     - "4040:4040"
-  #   labels:
-  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -95,8 +87,6 @@ services:
     restart: always
     ports:
       - "3579:3579"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -116,8 +106,6 @@ services:
     restart: always
     ports:
       - "8989:8989"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -141,8 +129,6 @@ services:
     restart: always
     ports:
       - "7878:7878"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -166,8 +152,6 @@ services:
   #   restart: always
   #   ports:
   #     - "7887:7878"
-  #   labels:
-  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -206,8 +190,6 @@ services:
     restart: always
     ports:
       - "8686:8686"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -232,8 +214,6 @@ services:
     restart: always
     ports:
       - "9117:9117"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -260,8 +240,6 @@ services:
   #     - 8.8.4.4
   #   ports:
   #     - "9091:9091"
-  #   labels:
-  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -300,8 +278,6 @@ services:
     restart: always
     ports:
       - 6798:6789
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PUID=$PUID
       - PGID=$PGID
@@ -312,6 +288,17 @@ services:
     volumes:
       - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+    networks:
+      - net
+
+# Utility containers
+# Watchtower auto update
+  watchtower:
+    image: "v2tec/watchtower"
+    container_name: $STACK-watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
 
