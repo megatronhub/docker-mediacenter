@@ -5,10 +5,6 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
-    labels:
-      - traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)
-      - traefik.http.services.$STACK-organizr.loadbalancer.server.port=80
-      - traefik.http.services.$STACK-organizr.loadbalancer.server.scheme=http
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -27,9 +23,6 @@ services:
     restart: always
     ports:
       - "8096:8096"
-    labels:
-      - traefik.http.routers.$STACK-emby.rule=Host(`$EMBY.$DOMAIN`)
-      - traefik.http.services.$STACK-emby.loadbalancer.server.port=8096
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -52,9 +45,6 @@ services:
   #   #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
   #   ports:
   #     - "8097:8096"
-  #   labels:
-  #     - traefik.http.routers.$STACK-jellyfin.rule=Host(`$JELLYFIN.$DOMAIN`)
-  #     - traefik.http.services.$STACK-jellyfin.loadbalancer.server.port=8096
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -76,9 +66,6 @@ services:
   #   restart: always
   #   ports:
   #     - "4040:4040"
-  #   labels:
-  #     - traefik.http.routers.$STACK-airsonic.rule=Host(`$AIRSONIC.$DOMAIN`)
-  #     - traefik.http.services.$STACK-airsonic.loadbalancer.server.port=4040
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -100,9 +87,6 @@ services:
     restart: always
     ports:
       - "3579:3579"
-    labels:
-      - traefik.http.routers.$STACK-ombi.rule=Host(`$OMBI.$DOMAIN`)
-      - traefik.http.services.$STACK-ombi.loadbalancer.server.port=3579
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -122,9 +106,6 @@ services:
     restart: always
     ports:
       - "8989:8989"
-    labels:
-      - traefik.http.routers.$STACK-sonarr.rule=Host(`$SONARR.$DOMAIN`)
-      - traefik.http.services.$STACK-sonarr.loadbalancer.server.port=8989
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -148,9 +129,6 @@ services:
     restart: always
     ports:
       - "7878:7878"
-    labels:
-      - traefik.http.routers.$STACK-radarr.rule=Host(`$RADARR.$DOMAIN`)
-      - traefik.http.services.$STACK-radarr.loadbalancer.server.port=7878
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -174,9 +152,6 @@ services:
   #   restart: always
   #   ports:
   #     - "7887:7878"
-  #   labels:
-  #     - traefik.http.routers.$STACK-radarr4k.rule=Host(`$RADARR4K.$DOMAIN`)
-  #     - traefik.http.services.$STACK-radarr4k.loadbalancer.server.port=7878
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -215,9 +190,6 @@ services:
     restart: always
     ports:
       - "8686:8686"
-    labels:
-      - traefik.http.routers.$STACK-lidarr.rule=Host(`$LIDARR.$DOMAIN`)
-      - traefik.http.services.$STACK-lidarr.loadbalancer.server.port=8686
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -242,9 +214,6 @@ services:
     restart: always
     ports:
       - "9117:9117"
-    labels:
-      - traefik.http.routers.$STACK-jackett.rule=Host(`$JACKETT.$DOMAIN`)
-      - traefik.http.services.$STACK-jackett.loadbalancer.server.port=9117
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -271,9 +240,6 @@ services:
   #     - 8.8.4.4
   #   ports:
   #     - "9091:9091"
-  #   labels:
-  #     - traefik.http.routers.$STACK-transmission.rule=Host(`$TRANSMISSION.$DOMAIN`)
-  #     - traefik.http.services.$STACK-transmission.loadbalancer.server.port=9091
   #   environment:
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -314,12 +280,6 @@ services:
       - 6798:6789
     depends_on:
       - organizr
-    labels:
-      - traefik.http.routers.$STACK-nzbget.service
-      - traefik.http.routers.$STACK-nzbget.rule=Host(`$NZBGET.$DOMAIN`)
-      - traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6789
-      # - traefik.http.routers.nzbget.middlewares=auth
-      # - traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1
     environment:
       - PUID=$PUID
       - PGID=$PGID
