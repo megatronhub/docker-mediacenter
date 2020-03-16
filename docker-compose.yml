@@ -315,11 +315,8 @@ services:
     depends_on:
       - organizr
     labels:
-      # - traefik.http.routers.$STACK-nzbget.service
       - traefik.http.routers.$STACK-nzbget.rule=Host(`$NZBGET.$DOMAIN`)
       - traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6798
-      - traefik.http.routers.nzbget.middlewares=auth
-      - traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1
     environment:
       - PUID=$PUID
       - PGID=$PGID
