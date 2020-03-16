@@ -2,4 +2,3 @@
 ssh.*
 *.p12
 docker
-config/rclone
