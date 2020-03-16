@@ -8,7 +8,7 @@ services:
     labels:
       - traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)
       - traefik.http.services.$STACK-organizr.loadbalancer.server.port=80
-      # - traefik.http.services.$STACK-organizr.loadbalancer.server.scheme=http
+      - traefik.http.services.$STACK-organizr.loadbalancer.server.scheme=http
     environment:
       - PGID=$PGID
       - PUID=$PUID
