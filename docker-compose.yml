@@ -321,7 +321,7 @@ services:
       - "traefik.http.routers.$STACK-nzbget.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6789"
       - "traefik.http.routers.$STACK-nzbget.middlewares=auth"
-      - "traefik.http.middlewares.auth.forwardauth.address=http://$ORGANIZR.$DOMAIN/api/?v1/auth&group=1"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr.$DOMAIN/api/?v1/auth&group=1"
     depends_on:
       - organizr
     environment:
