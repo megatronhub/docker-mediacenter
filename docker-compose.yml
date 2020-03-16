@@ -88,8 +88,8 @@ services:
     ports:
       - "3579:3579"
     labels:
-      - traefik.http.routers.ombi.rule=Host(`$OMBI.$DOMAIN`)
-      - traefik.http.services.ombi.loadbalancer.server.port=3579
+      - traefik.http.routers.$STACK-ombi.rule=Host(`$OMBI.$DOMAIN`)
+      - traefik.http.services.$STACK-ombi.loadbalancer.server.port=3579
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
