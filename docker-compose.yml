@@ -5,13 +5,13 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
-    ports:
-      - "8888:80"
+    # ports:
+    #   - "8888:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`$ORGANIZR.$DOMAIN`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
     environment:
       - PGID=$PGID
       - PUID=$PUID
