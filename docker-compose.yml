@@ -5,6 +5,8 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -23,6 +25,8 @@ services:
     restart: always
     ports:
       - "8096:8096"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -45,6 +49,8 @@ services:
   #   #   - "/dev/dri:/dev/dri" # This is specific to my setup as my cpu supports intel quick sync
   #   ports:
   #     - "8097:8096"
+  #   labels:
+  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -66,6 +72,8 @@ services:
   #   restart: always
   #   ports:
   #     - "4040:4040"
+  #   labels:
+  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -87,6 +95,8 @@ services:
     restart: always
     ports:
       - "3579:3579"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -106,6 +116,8 @@ services:
     restart: always
     ports:
       - "8989:8989"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -129,6 +141,8 @@ services:
     restart: always
     ports:
       - "7878:7878"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -152,6 +166,8 @@ services:
   #   restart: always
   #   ports:
   #     - "7887:7878"
+  #   labels:
+  #     com.centurylinklabs.watchtower.enable: "true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -190,6 +206,8 @@ services:
     restart: always
     ports:
       - "8686:8686"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -214,6 +232,8 @@ services:
     restart: always
     ports:
       - "9117:9117"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -229,47 +249,49 @@ services:
       - net
 
 # Torrent download clients
-  transmission:
-    container_name: $STACK-transmission
-    image: haugene/transmission-openvpn
-    restart: always
-    cap_add:
-      - NET_ADMIN
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
-    ports:
-      - "9091:9091"
-    environment:
-      - PGID=$PGID
-      - PUID=$PUID
-      - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
-      - OPENVPN_PROVIDER=$OPENVPN_PROVIDER
-      - OPENVPN_CONFIG=$OPENVPN_CONFIG
-      - OPENVPN_USERNAME=$OPENVPN_USERNAME
-      - OPENVPN_PASSWORD=$OPENVPN_PASSWORD
-      - OPENVPN_OPTS=$OPENVPN_OPTS
-      - NORDVPN_PROTOCOL=$NORDVPN_PROTOCOL
-      - NORDVPN_CATEGORY=$NORDVPN_CATEGORY
-      - WEBPROXY_ENABLED=false
-      - LOCAL_NETWORK=$LOCAL_NETWORK
-      - TRANSMISSION_DOWNLOAD_DIR=$TRANSMISSION_DOWNLOAD_DIR
-      - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
-      - TRANSMISSION_RATIO_LIMIT_ENABLED=$TRANSMISSION_RATIO_LIMIT_ENABLED
-      - TRANSMISSION_RATIO_LIMIT=$TRANSMISSION_RATIO_LIMIT
-      - TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=$TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED
-      - TRANSMISSION_IDLE_SEEDING_LIMIT=$TRANSMISSION_IDLE_SEEDING_LIMIT
-      - TRANSMISSION_DOWNLOAD_QUEUE_ENABLED=$TRANSMISSION_DOWNLOAD_QUEUE_ENABLED
-      - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=$TRANSMISSION_DOWNLOAD_QUEUE_SIZE
-      - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
-      - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
-      - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
-      - VIRTUAL_PORT=9091
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
-    networks:
-      - net
+  # transmission:
+  #   container_name: $STACK-transmission
+  #   image: haugene/transmission-openvpn
+  #   restart: always
+  #   cap_add:
+  #     - NET_ADMIN
+  #   dns:
+  #     - 8.8.8.8
+  #     - 8.8.4.4
+  #   ports:
+  #     - "9091:9091"
+  #   labels:
+  #     com.centurylinklabs.watchtower.enable: "true"
+  #   environment:
+  #     - PGID=$PGID
+  #     - PUID=$PUID
+  #     - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
+  #     - OPENVPN_PROVIDER=$OPENVPN_PROVIDER
+  #     - OPENVPN_CONFIG=$OPENVPN_CONFIG
+  #     - OPENVPN_USERNAME=$OPENVPN_USERNAME
+  #     - OPENVPN_PASSWORD=$OPENVPN_PASSWORD
+  #     - OPENVPN_OPTS=$OPENVPN_OPTS
+  #     - NORDVPN_PROTOCOL=$NORDVPN_PROTOCOL
+  #     - NORDVPN_CATEGORY=$NORDVPN_CATEGORY
+  #     - WEBPROXY_ENABLED=false
+  #     - LOCAL_NETWORK=$LOCAL_NETWORK
+  #     - TRANSMISSION_DOWNLOAD_DIR=$TRANSMISSION_DOWNLOAD_DIR
+  #     - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
+  #     - TRANSMISSION_RATIO_LIMIT_ENABLED=$TRANSMISSION_RATIO_LIMIT_ENABLED
+  #     - TRANSMISSION_RATIO_LIMIT=$TRANSMISSION_RATIO_LIMIT
+  #     - TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=$TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED
+  #     - TRANSMISSION_IDLE_SEEDING_LIMIT=$TRANSMISSION_IDLE_SEEDING_LIMIT
+  #     - TRANSMISSION_DOWNLOAD_QUEUE_ENABLED=$TRANSMISSION_DOWNLOAD_QUEUE_ENABLED
+  #     - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=$TRANSMISSION_DOWNLOAD_QUEUE_SIZE
+  #     - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
+  #     - VIRTUAL_HOST=$TRANSMISSION.$DOMAIN
+  #     - LETSENCRYPT_HOST=$TRANSMISSION.$DOMAIN
+  #     - VIRTUAL_PORT=9091
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+  #   networks:
+  #     - net
 
 # Usenet download clients
   nzbget:
@@ -278,6 +300,8 @@ services:
     restart: always
     ports:
       - 6798:6789
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     environment:
       - PUID=$PUID
       - PGID=$PGID
