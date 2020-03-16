@@ -109,8 +109,8 @@ services:
       - "traefik.http.routers.$STACK-ombi.entrypoints=websecure"
       - "traefik.http.routers.$STACK-ombi.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-ombi.loadbalancer.server.port=3579"
-      - "traefik.http.routers.$STACK-ombi.middlewares=$STACK-organizr-auth"
-      - "traefik.http.middlewares.$STACK-organizr-auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
+      - "traefik.http.routers.$STACK-ombi.middlewares=$STACK-organizr-auth-loggedinuser"
+      - "traefik.http.middlewares.$STACK-organizr-auth-loggedinuser.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
