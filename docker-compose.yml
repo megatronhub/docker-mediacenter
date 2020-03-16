@@ -5,6 +5,8 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
+    ports:
+      - "8888:80"
     environment:
       - PGID=$PGID
       - PUID=$PUID
