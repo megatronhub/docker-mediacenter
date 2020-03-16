@@ -250,6 +250,8 @@ services:
       - "traefik.http.routers.$STACK-jackett.entrypoints=websecure"
       - "traefik.http.routers.$STACK-jackett.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-jackett.loadbalancer.server.port=9117"
+      - "traefik.http.routers.$STACK-jackett.middlewares=auth"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
