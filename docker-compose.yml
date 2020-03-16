@@ -13,6 +13,7 @@ services:
       - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-organizr.loadbalancer.server.port=80"
+      - "traefik.http.services.organizr.loadbalancer.server.scheme=http"
     environment:
       - PGID=$PGID
       - PUID=$PUID
