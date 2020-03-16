@@ -9,8 +9,6 @@ services:
       - traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)
       - traefik.http.services.$STACK-organizr.loadbalancer.server.port=80
       - traefik.http.services.$STACK-organizr.loadbalancer.server.scheme=http
-      - traefik.http.routers.$STACK-organizr.tls.certresolver=le
-      - traefik.http.routers.$STACK-organizr.entrypoints=websecure
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -320,6 +318,8 @@ services:
       - traefik.http.routers.$STACK-nzbget.service
       - traefik.http.routers.$STACK-nzbget.rule=Host(`$NZBGET.$DOMAIN`)
       - traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6789
+      - traefik.http.routers.$STACK-nzbget.tls.certresolver=le
+      - traefik.http.routers.$STACK-nzbget.entrypoints=websecure
       # - traefik.http.routers.nzbget.middlewares=auth
       # - traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1
     environment:
