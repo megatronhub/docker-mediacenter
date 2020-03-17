@@ -26,8 +26,8 @@ services:
     container_name: $STACK-emby
     image: emby/embyserver
     restart: always
-    # ports:
-    #   - "8096:8096"
+    ports:
+      - "8096:8096"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-emby.rule=Host(`$EMBY.$DOMAIN`)"
@@ -125,8 +125,8 @@ services:
     container_name: $STACK-sonarr
     image: linuxserver/sonarr:preview
     restart: always
-    # ports:
-    #   - "8989:8989"
+    ports:
+      - "8989:8989"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-sonarr.rule=Host(`$SONARR.$DOMAIN`)"
@@ -153,8 +153,8 @@ services:
     container_name: $STACK-radarr
     image: linuxserver/radarr:nightly
     restart: always
-    # ports:
-    #   - "7878:7878"
+    ports:
+      - "7878:7878"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-radarr.rule=Host(`$RADARR.$DOMAIN`)"
@@ -224,8 +224,8 @@ services:
     container_name: $STACK-lidarr
     image: linuxserver/lidarr
     restart: always
-    # ports:
-    #   - "8686:8686"
+    ports:
+      - "8686:8686"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-lidarr.rule=Host(`$LIDARR.$DOMAIN`)"
@@ -253,8 +253,8 @@ services:
     container_name: $STACK-jackett
     image: linuxserver/jackett:development
     restart: always
-    # ports:
-    #   - "9117:9117"
+    ports:
+      - "9117:9117"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-jackett.rule=Host(`$JACKETT.$DOMAIN`)"
@@ -327,8 +327,8 @@ services:
     image: "linuxserver/nzbget:testing"
     container_name: $STACK-nzbget
     restart: always
-    # ports:
-    #   - 6789:6789
+    ports:
+      - 6789:6789
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.$STACK-nzbget.rule=Host(`$NZBGET.$DOMAIN`)"
