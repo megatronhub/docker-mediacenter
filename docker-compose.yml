@@ -34,10 +34,6 @@ services:
       - "traefik.http.routers.$STACK-emby.entrypoints=websecure"
       - "traefik.http.routers.$STACK-emby.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-emby.loadbalancer.server.port=8096"
-      - "traefik.http.routers.$STACK-embyapp.rule=Host(`$DOMAIN`)"
-      - "traefik.http.routers.$STACK-embyapp.entrypoints=websecure"
-      - "traefik.http.routers.$STACK-embyapp.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-embyapp.loadbalancer.server.port=8096"
     environment:
       - PGID=$PGID
       - PUID=$PUID
