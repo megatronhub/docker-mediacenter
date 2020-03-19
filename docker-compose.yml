@@ -9,6 +9,7 @@ services:
     #   - "8888:80"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
@@ -19,7 +20,8 @@ services:
     volumes:
       - $APPDATA/$STACK/organizr_config:/config
     networks:
-      - net
+      - ext_net
+      - int_net
 
 # Streaming & Compainion apps
   emby:
@@ -30,6 +32,7 @@ services:
       - "8096:8096"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-emby.rule=Host(`$EMBY.$DOMAIN`)"
       - "traefik.http.routers.$STACK-emby.entrypoints=websecure"
       - "traefik.http.routers.$STACK-emby.tls.certresolver=mytlschallenge"
@@ -43,7 +46,8 @@ services:
       - $MEDIA:/data/media
       - $GMEDIA:/data/gcrypt/media
     networks:
-      - net
+      - ext_net
+      - int_net
 
   # jellyfin:
   #   container_name: $STACK-jellyfin
@@ -55,6 +59,7 @@ services:
   #     - "8097:8096"
   #   labels:
   #     - "traefik.enable=true"
+  #     - "traefik.docker.network=$TRAEFIK_NET"
   #     - "traefik.http.routers.$STACK-jellyfin.rule=Host(`$JELLYFIN.$DOMAIN`)"
   #     - "traefik.http.routers.$STACK-jellyfin.entrypoints=websecure"
   #     - "traefik.http.routers.$STACK-jellyfin.tls.certresolver=mytlschallenge"
@@ -69,7 +74,8 @@ services:
   #     - $MEDIA:/data/media
   #     - $GMEDIA:/data/gcrypt/media
   #   networks:
-  #     - net
+  #     - ext_net
+  #     - int_net
 
   # airsonic:
   #   container_name: $STACK-airsonic
@@ -79,6 +85,7 @@ services:
   #   #   - "4040:4040"
   #   labels:
   #     - "traefik.enable=true"
+  #     - "traefik.docker.network=$TRAEFIK_NET"
   #     - "traefik.http.routers.$STACK-airsonic.rule=Host(`$AIRSONIC.$DOMAIN`)"
   #     - "traefik.http.routers.$STACK-airsonic.entrypoints=websecure"
   #     - "traefik.http.routers.$STACK-airsonic.tls.certresolver=mytlschallenge"
@@ -95,7 +102,8 @@ services:
   #     - $MEDIA/music/playlists:/data/music/playlists
   #     - $MEDIA/music/podcasts:/data/music/podcasts
   #   networks:
-  #     - net
+  #     - ext_net
+  #     - int_net
 
   ombi:
     container_name: $STACK-ombi
@@ -105,6 +113,7 @@ services:
     #   - "3579:3579"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-ombi.rule=Host(`$OMBI.$DOMAIN`)"
       - "traefik.http.routers.$STACK-ombi.entrypoints=websecure"
       - "traefik.http.routers.$STACK-ombi.tls.certresolver=mytlschallenge"
@@ -118,7 +127,8 @@ services:
     volumes:
       - $APPDATA/$STACK/ombi_config:/config
     networks:
-      - net
+      - ext_net
+      - int_net
 
 # Indexer apps
   sonarr:
@@ -129,6 +139,7 @@ services:
       - "8989:8989"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-sonarr.rule=Host(`$SONARR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-sonarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-sonarr.tls.certresolver=mytlschallenge"
@@ -147,7 +158,8 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - net
+      - ext_net
+      - int_net
 
   radarr:
     container_name: $STACK-radarr
@@ -157,6 +169,7 @@ services:
       - "7878:7878"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-radarr.rule=Host(`$RADARR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-radarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-radarr.tls.certresolver=mytlschallenge"
@@ -175,7 +188,8 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - net
+      - ext_net
+      - int_net
 
   # radarr4k:
   #   container_name: $STACK-radarr4k
@@ -185,6 +199,7 @@ services:
   #   #   - "7887:7878"
   #   labels:
   #     - "traefik.enable=true"
+  #     - "traefik.docker.network=$TRAEFIK_NET"
   #     - "traefik.http.routers.$STACK-radarr4k.rule=Host(`$RADARR4K.$DOMAIN`)"
   #     - "traefik.http.routers.$STACK-radarr4k.entrypoints=websecure"
   #     - "traefik.http.routers.$STACK-radarr4k.tls.certresolver=mytlschallenge"
@@ -203,7 +218,8 @@ services:
   #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
   #     - $MEDIA/downloads/usenet:/data/media/downloads/usenet
   #   networks:
-  #     - net
+  #     - ext_net
+  #     - int_net
 
   # radarr-collection:
   #   container_name: $STACK-radarr_collection
@@ -218,7 +234,8 @@ services:
   #   volumes:
   #     - $APPDATA/$STACK/radarrcollection_config:/config
   #   networks:
-  #     - net
+  #     - ext_net
+  #     - int_net
 
   lidarr:
     container_name: $STACK-lidarr
@@ -228,6 +245,7 @@ services:
       - "8686:8686"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-lidarr.rule=Host(`$LIDARR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-lidarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-lidarr.tls.certresolver=mytlschallenge"
@@ -246,7 +264,8 @@ services:
       - $GMEDIA/music:/data/gcrypt/media/music
       - $MEDIA/music:/data/media/music
     networks:
-      - net
+      - ext_net
+      - int_net
 
 # Indexer source apps
   jackett:
@@ -257,6 +276,7 @@ services:
       - "9117:9117"
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-jackett.rule=Host(`$JACKETT.$DOMAIN`)"
       - "traefik.http.routers.$STACK-jackett.entrypoints=websecure"
       - "traefik.http.routers.$STACK-jackett.tls.certresolver=mytlschallenge"
@@ -272,7 +292,8 @@ services:
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - net
+      - ext_net
+      - int_net
 
 # Torrent download clients
   # transmission:
@@ -288,6 +309,7 @@ services:
   #     - "9091:9091"
   #   labels:
   #     - "traefik.enable=true"
+  #     - "traefik.docker.network=$TRAEFIK_NET"
   #     - "traefik.http.routers.$STACK-transmission.rule=Host(`$TRANSMISSION.$DOMAIN`)"
   #     - "traefik.http.routers.$STACK-transmission.entrypoints=websecure"
   #     - "traefik.http.routers.$STACK-transmission.tls.certresolver=mytlschallenge"
@@ -320,7 +342,8 @@ services:
   #     - /etc/localtime:/etc/localtime:ro
   #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
   #   networks:
-  #     - net
+  #     - ext_net
+  #     - int_net
 
 # Usenet download clients
   nzbget:
@@ -331,6 +354,7 @@ services:
       - 6789:6789
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-nzbget.rule=Host(`$NZBGET.$DOMAIN`)"
       - "traefik.http.routers.$STACK-nzbget.entrypoints=websecure"
       - "traefik.http.routers.$STACK-nzbget.tls.certresolver=mytlschallenge"
@@ -347,7 +371,8 @@ services:
       - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
-      - net
+      - ext_net
+      - int_net
 
 # Utility containers
 # Watchtower auto update
@@ -358,8 +383,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - net
+      - int_net
 
 networks:
-  net:
+  int_net:
     name: mediacenter_net
+  ext_net:
+    external:
+      name: $TRAEFIK_NET
