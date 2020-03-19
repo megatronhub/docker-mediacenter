@@ -14,6 +14,7 @@ services:
       - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-organizr.loadbalancer.server.port=80"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -37,6 +38,7 @@ services:
       - "traefik.http.routers.$STACK-emby.entrypoints=websecure"
       - "traefik.http.routers.$STACK-emby.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-emby.loadbalancer.server.port=8096"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -64,6 +66,7 @@ services:
   #     - "traefik.http.routers.$STACK-jellyfin.entrypoints=websecure"
   #     - "traefik.http.routers.$STACK-jellyfin.tls.certresolver=mytlschallenge"
   #     - "traefik.http.services.$STACK-jellyfin.loadbalancer.server.port=8096"
+  #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -92,6 +95,7 @@ services:
   #     - "traefik.http.services.$STACK-airsonic.loadbalancer.server.port=4040"
   #     - "traefik.http.routers.$STACK-airsonic.middlewares=auth"
   #     - "traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
+  #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -120,6 +124,7 @@ services:
       - "traefik.http.services.$STACK-ombi.loadbalancer.server.port=3579"
       - "traefik.http.routers.$STACK-ombi.middlewares=auth-loggedinuser"
       - "traefik.http.middlewares.auth-loggedinuser.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -146,6 +151,7 @@ services:
       - "traefik.http.services.$STACK-sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.$STACK-sonarr.middlewares=auth-admin"
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -176,6 +182,7 @@ services:
       - "traefik.http.services.$STACK-radarr.loadbalancer.server.port=7878"
       - "traefik.http.routers.$STACK-radarr.middlewares=auth-admin"
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -206,6 +213,7 @@ services:
   #     - "traefik.http.services.$STACK-radarr4k.loadbalancer.server.port=7878"
   #     - "traefik.http.routers.$STACK-radarr4k.middlewares=auth-admin"
   #     - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+  #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
@@ -227,6 +235,8 @@ services:
   #   restart: always
   #   depends_on:
   #     - radarr
+  #   labels:
+  #     - "com.centurylinklabs.watchtower.enable=true""
   #   environment:
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -252,6 +262,7 @@ services:
       - "traefik.http.services.$STACK-lidarr.loadbalancer.server.port=8686"
       - "traefik.http.routers.$STACK-lidarr.middlewares=auth-admin"
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -283,6 +294,7 @@ services:
       - "traefik.http.services.$STACK-jackett.loadbalancer.server.port=9117"
       - "traefik.http.routers.$STACK-jackett.middlewares=auth-admin"
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
       - PGID=$PGID
@@ -316,6 +328,7 @@ services:
   #     - "traefik.http.services.$STACK-transmission.loadbalancer.server.port=9091"
   #     - "traefik.http.routers.$STACK-transmission.middlewares=auth-admin"
   #     - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+  #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -361,6 +374,7 @@ services:
       - "traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6789"
       - "traefik.http.routers.$STACK-nzbget.middlewares=auth-admin"
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - organizr
     environment:
@@ -372,17 +386,6 @@ services:
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
-      - int_net
-
-# Utility containers
-# Watchtower auto update
-  watchtower:
-    image: "v2tec/watchtower"
-    container_name: $STACK-watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
       - int_net
 
 networks:
