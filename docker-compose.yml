@@ -51,6 +51,32 @@ services:
       - ext_net
       - int_net
 
+  plex:
+    container_name: $STACK-plex
+    image: linuxserver/plex
+    restart: always
+    # ports:
+    #   - "32400:32400"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-plex.rule=Host(`$PLEX.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-plex.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-plex.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-plex.loadbalancer.server.port=32400"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - VERSION=docker
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/plex_config:/config
+      - $MEDIA:/data/media
+      - $GMEDIA:/data/gcrypt/media
+    networks:
+      - ext_net
+      - int_net
+
   # jellyfin:
   #   container_name: $STACK-jellyfin
   #   image: linuxserver/jellyfin
