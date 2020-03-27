@@ -431,15 +431,28 @@ services:
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+    command: 
+      - "--vfs-cache-mode writes"
+      - "--use-mmap"
+      - "--daemon-timeout=10m"
+      - "--vfs-read-chunk-size 64M"
+      - "--vfs-read-chunk-size-limit 10G"
+      - "--cache-dir /data/rclone/vfs_cache"
+      - "--allow-other"
+      - "--dir-cache-time 48h"
+      - "--drive-chunk-size 128M"
+      - "--log-level DEBUG"
+      - "--log-file /data/rclone/logs/rclone.log"
+      - "--timeout 1h"
+      - "--umask 002"
+      - "--rc"
+      - "--rc-addr=127.0.0.1:5572"
     environment:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TIMEZONE
     volumes:
       - ./config/rclone:/config/rclone
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
-      - ~/data:/data:shared
     networks:
       - int_net
 
