@@ -51,31 +51,40 @@ services:
       - ext_net
       - int_net
 
-  # plex:
-  #   container_name: $STACK-plex
-  #   image: linuxserver/plex
-  #   restart: always
-  #   ports:
-  #     - "32400:32400"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.docker.network=$TRAEFIK_NET"
-  #     - "traefik.http.routers.$STACK-plex.rule=Host(`$PLEX.$DOMAIN`)"
-  #     - "traefik.http.routers.$STACK-plex.entrypoints=websecure"
-  #     - "traefik.http.routers.$STACK-plex.tls.certresolver=mytlschallenge"
-  #     - "traefik.http.services.$STACK-plex.loadbalancer.server.port=32400"
-  #     - "com.centurylinklabs.watchtower.enable=true"
-  #   environment:
-  #     - VERSION=docker
-  #     - PGID=$PGID
-  #     - PUID=$PUID
-  #   volumes:
-  #     - $APPDATA/$STACK/plex_config:/config
-  #     - $MEDIA:/data/media
-  #     - $GMEDIA:/data/gcrypt/media
-  #   networks:
-  #     - ext_net
-  #     - int_net
+  plex:
+    container_name: $STACK-plex
+    image: plexinc/pms-docker
+    restart: always
+    ports:
+      - "32400:32400/tcp"
+      - "3055:3055/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-plex.rule=Host(`$PLEX.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-plex.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-plex.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-plex.loadbalancer.server.port=32400"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+      - ADVERTISE_IP="http://$ADVERTISE_IP:32400"
+    volumes:
+      - $APPDATA/$STACK/plex_config:/config
+      - $MEDIA:/data/media
+      - $GMEDIA:/data/gcrypt/media
+    networks:
+      - ext_net
+      - int_net
 
   # jellyfin:
   #   container_name: $STACK-jellyfin
