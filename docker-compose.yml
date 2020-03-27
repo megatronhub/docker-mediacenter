@@ -423,6 +423,26 @@ services:
       - ext_net
       - int_net
 
+# Utility apps
+  # Rclone for google drive mount
+  rclone:
+    image: "rclone/rclone:latest"
+    container_name: $STACK-rclone
+    restart: always
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TIMEZONE
+    volumes:
+      - ./config/rclone:/config/rclone
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - ~/data:/data:shared
+    networks:
+      - int_net
+
 networks:
   int_net:
     name: mediacenter_net
