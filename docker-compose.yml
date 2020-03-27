@@ -55,8 +55,8 @@ services:
     container_name: $STACK-plex
     image: linuxserver/plex
     restart: always
-    # ports:
-    #   - "32400:32400"
+    ports:
+      - "32400:32400"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
