@@ -8,7 +8,7 @@ if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then exit; fi
 
 # Move older local files to the cloud
 /usr/bin/rclone move /data/local_media/ gcrypt: \
---log-file /data/rclone/logs/upload.log \
+--log-file /data/rclone/logs/upload.$(date +%F_%R).log \
 -v \
 --exclude-from /data/rclone/scripts/excludes \
 --delete-empty-src-dirs \
