@@ -5,8 +5,6 @@ services:
     container_name: $STACK-organizr
     image: organizrtools/organizr-v2
     restart: always
-    ports:
-      - "8888:80"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
@@ -19,7 +17,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/organizr_config:/config
+      - organizr_config:/config
     networks:
       - ext_net
       - int_net
@@ -455,6 +453,11 @@ services:
   #     - ./config/rclone:/config/rclone
   #   networks:
   #     - int_net
+
+volumes:
+  organizr_config:
+      name: $STACK-organizr_config # Real ending name
+      external: false
 
 networks:
   int_net:
