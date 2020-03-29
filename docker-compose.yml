@@ -77,7 +77,7 @@ services:
   #     - PUID=$PUID
   #     - ADVERTISE_IP="http://$ADVERTISE_IP:32400"
   #   volumes:
-  #     - $APPDATA/$STACK/plex_config:/config
+  #     - plex_config:/config
   #     - $MEDIA:/data/media
   #     - $GMEDIA:/data/gcrypt/media
   #   networks:
@@ -105,7 +105,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - $APPDATA/$STACK/jellyfin_config:/config
+  #     - jellyfin_config:/config
   #     - $MEDIA/transcode:/transcode
   #     - $MEDIA:/data/media
   #     - $GMEDIA:/data/gcrypt/media
@@ -134,7 +134,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - $APPDATA/$STACK/airsonic_config:/config
+  #     - airsonic_config:/config
   #     - $MEDIA/music:/data/music
   #     - $MEDIA/music/playlists:/data/music/playlists
   #     - $MEDIA/music/podcasts:/data/music/podcasts
@@ -252,7 +252,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - $APPDATA/$STACK/radarr4k_config:/config
+  #     - radarr4k_config:/config
   #     - $GMEDIA/movies:/data/gcrypt/media/movies
   #     - $MEDIA/temp:/data/media/temp
   #     - $MEDIA/movies:/data/media/movies
@@ -275,7 +275,7 @@ services:
   #     - PUID=$PUID
   #     - args=$ARGS
   #   volumes:
-  #     - $APPDATA/$STACK/radarrcollection_config:/config
+  #     - radarrcollection_config:/config
   #   networks:
   #     - ext_net
   #     - int_net
@@ -420,39 +420,6 @@ services:
     networks:
       - ext_net
       - int_net
-
-# Utility apps
-  # Rclone for google drive mount
-  # rclone:
-  #   image: "rclone/rclone:latest"
-  #   container_name: $STACK-rclone
-  #   restart: always
-  #   labels:
-  #     - "com.centurylinklabs.watchtower.enable=true"
-  #   command: 
-  #     - "--vfs-cache-mode writes"
-  #     - "--use-mmap"
-  #     - "--daemon-timeout=10m"
-  #     - "--vfs-read-chunk-size 64M"
-  #     - "--vfs-read-chunk-size-limit 10G"
-  #     - "--cache-dir /data/rclone/vfs_cache"
-  #     - "--allow-other"
-  #     - "--dir-cache-time 48h"
-  #     - "--drive-chunk-size 128M"
-  #     - "--log-level DEBUG"
-  #     - "--log-file /data/rclone/logs/rclone.log"
-  #     - "--timeout 1h"
-  #     - "--umask 002"
-  #     - "--rc"
-  #     - "--rc-addr=127.0.0.1:5572"
-  #   environment:
-  #     - PUID=$PUID
-  #     - PGID=$PGID
-  #     - TZ=$TIMEZONE
-  #   volumes:
-  #     - ./config/rclone:/config/rclone
-  #   networks:
-  #     - int_net
 
 volumes:
   organizr_config:
