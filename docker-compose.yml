@@ -44,7 +44,6 @@ services:
     volumes:
       - $APPDATA/$STACK/emby_config:/config
       - $MEDIA:/data/media
-      - $GMEDIA:/data/gcrypt/media
     networks:
       - ext_net
       - int_net
@@ -191,7 +190,6 @@ services:
       - PUID=$PUID
     volumes:
       - sonarr_config:/config
-      - $GMEDIA/tvshows:/data/gcrypt/media/tv
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/tvshows:/data/media/tv
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -222,7 +220,6 @@ services:
       - PUID=$PUID
     volumes:
       - radarr_config:/config
-      - $GMEDIA/movies:/data/gcrypt/media/movies
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -253,7 +250,6 @@ services:
   #     - PUID=$PUID
   #   volumes:
   #     - radarr4k_config:/config
-  #     - $GMEDIA/movies:/data/gcrypt/media/movies
   #     - $MEDIA/temp:/data/media/temp
   #     - $MEDIA/movies:/data/media/movies
   #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -305,7 +301,6 @@ services:
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
-      - $GMEDIA/music:/data/gcrypt/media/music
       - $MEDIA/music:/data/media/music
     networks:
       - ext_net
