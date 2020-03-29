@@ -333,7 +333,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/jackett_config:/config
+      - jackett_config:/config
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
@@ -457,6 +457,33 @@ services:
 volumes:
   organizr_config:
       name: $STACK-organizr_config # Real ending name
+      external: false
+  emby_config:
+    name: $STACK-emby_config # Real ending name
+    external: false
+  airsonic_config:
+    name: $STACK-airsonic_config # Real ending name
+    external: false
+  ombi_config:
+    name: $STACK-ombi_config # Real ending name
+    external: false
+  sonarr_config:
+      name: $STACK-sonarr_config # Real ending name
+      external: false
+  radarr_config:
+      name: $STACK-radarr_config # Real ending name
+      external: false
+  lidarr_config:
+      name: $STACK-lidarr_config # Real ending name
+      external: false
+  jackett_config:
+      name: $STACK-jackett_config # Real ending name
+      external: false
+  transmission_config:
+      name: $STACK-transmission_config # Real ending name
+      external: false
+  nzbget_config:
+      name: $STACK-nzbget_config # Real ending name
       external: false
 
 networks:
