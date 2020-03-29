@@ -157,8 +157,8 @@ services:
       - "traefik.http.routers.$STACK-ombi.entrypoints=websecure"
       - "traefik.http.routers.$STACK-ombi.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-ombi.loadbalancer.server.port=3579"
-      - "traefik.http.routers.$STACK-ombi.middlewares=auth-loggedinuser"
-      - "traefik.http.middlewares.auth-loggedinuser.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
+      # - "traefik.http.routers.$STACK-ombi.middlewares=auth-loggedinuser"
+      # - "traefik.http.middlewares.auth-loggedinuser.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
@@ -184,8 +184,8 @@ services:
       - "traefik.http.routers.$STACK-sonarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-sonarr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-sonarr.loadbalancer.server.port=8989"
-      - "traefik.http.routers.$STACK-sonarr.middlewares=auth-admin"
-      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      # - "traefik.http.routers.$STACK-sonarr.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
@@ -215,8 +215,8 @@ services:
       - "traefik.http.routers.$STACK-radarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-radarr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-radarr.loadbalancer.server.port=7878"
-      - "traefik.http.routers.$STACK-radarr.middlewares=auth-admin"
-      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      # - "traefik.http.routers.$STACK-radarr.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
@@ -295,8 +295,8 @@ services:
       - "traefik.http.routers.$STACK-lidarr.entrypoints=websecure"
       - "traefik.http.routers.$STACK-lidarr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-lidarr.loadbalancer.server.port=8686"
-      - "traefik.http.routers.$STACK-lidarr.middlewares=auth-admin"
-      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      # - "traefik.http.routers.$STACK-lidarr.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
@@ -327,8 +327,8 @@ services:
       - "traefik.http.routers.$STACK-jackett.entrypoints=websecure"
       - "traefik.http.routers.$STACK-jackett.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-jackett.loadbalancer.server.port=9117"
-      - "traefik.http.routers.$STACK-jackett.middlewares=auth-admin"
-      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      # - "traefik.http.routers.$STACK-jackett.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - TZ=$TIMEZONE
@@ -407,8 +407,8 @@ services:
       - "traefik.http.routers.$STACK-nzbget.entrypoints=websecure"
       - "traefik.http.routers.$STACK-nzbget.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-nzbget.loadbalancer.server.port=6789"
-      - "traefik.http.routers.$STACK-nzbget.middlewares=auth-admin"
-      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      # - "traefik.http.routers.$STACK-nzbget.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - organizr
