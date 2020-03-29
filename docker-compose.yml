@@ -415,7 +415,7 @@ services:
       - PGID=$PGID
       - TZ=$TIMEZONE
     volumes:
-      - $APPDATA/$STACK/nzbget_config:/config
+      - nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
