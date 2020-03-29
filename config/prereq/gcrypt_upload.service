@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily task to upload local media to gcrypt ie: /data/local_media to /data/gcrypt_media
+
+[Timer]
+OnCalender=Sun..Sat 02:00
+Persistent=true
+
+[Service]
+ExecStart=/data/rclone/scripts/gcrypt_upload.sh
+
+[Install]
+WantedBy=timers.target
