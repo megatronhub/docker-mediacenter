@@ -1,0 +1,18 @@
+[Unit]
+Description=media mergerfs mount for /data/media
+Requires=gcrypt_media.service
+Requires=data-local_media.mount
+After=gcrypt_media.service
+After=data-local_media.mount
+RequiresMountFor=/data/local_media
+RequiresMountFor=/data/gcrypt_media
+
+[Service]
+Type=forking
+User=root
+Group=root
+ExecStart=/usr/local/bin/mergerfs /data/local_media:/data/gcrypt_media /data/media -o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=parti$KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

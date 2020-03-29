@@ -1,0 +1,37 @@
+[Unit]
+Description=RClone gcrypt media mount
+Requires=data-local_media.mount
+After=network-online.target
+After=data-local_media.mount
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=root
+Group=root
+Environment=RCLONE_CONFIG=/data/rclone/rclone.conf
+ExecStartPre=/bin/mkdir -p /data/gcrypt_media
+ExecStartPre=/bin/mkdir -p /local_media/vfs_cache
+ExecStart=/usr/bin/rclone mount gcrypt: /data/gcrypt_media \
+--vfs-cache-mode writes \
+--use-mmap \
+--daemon-timeout=10m \
+--vfs-read-chunk-size 100M \
+--vfs-read-chunk-size-limit 0 \
+--cache-dir /data/local_media/vfs_cache \
+--allow-other \
+--dir-cache-time 15m \
+--drive-chunk-size 128M \
+--timeout 1h \
+--buffer-size 0M \
+--umask 002 \
+--rc \
+--max-read-ahead 512k \
+--log-file /data/rclone/logs/rclone.log \
+--log-level INFO
+ExecStop=/bin/fusermount -uz /data/gcrypt_media
+ExecStop=/bin/rmdir /data/gcrypt_media
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
