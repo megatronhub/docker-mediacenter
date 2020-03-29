@@ -163,42 +163,42 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/ombi_config:/config
+      - ombi_config:/config
     networks:
       - ext_net
       - int_net
 
 # Indexer apps
-  # sonarr:
-  #   container_name: $STACK-sonarr
-  #   image: linuxserver/sonarr:preview
-  #   restart: always
-  #   ports:
-  #     - "8989:8989"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.docker.network=$TRAEFIK_NET"
-  #     - "traefik.http.routers.$STACK-sonarr.rule=Host(`$SONARR.$DOMAIN`)"
-  #     - "traefik.http.routers.$STACK-sonarr.entrypoints=websecure"
-  #     - "traefik.http.routers.$STACK-sonarr.tls.certresolver=mytlschallenge"
-  #     - "traefik.http.services.$STACK-sonarr.loadbalancer.server.port=8989"
-  #     # - "traefik.http.routers.$STACK-sonarr.middlewares=auth-admin"
-  #     # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
-  #     - "com.centurylinklabs.watchtower.enable=true"
-  #   environment:
-  #     - TZ=$TIMEZONE
-  #     - PGID=$PGID
-  #     - PUID=$PUID
-  #   volumes:
-  #     - $APPDATA/$STACK/sonarr_config:/config
-  #     - $GMEDIA/tvshows:/data/gcrypt/media/tv
-  #     - $MEDIA/temp:/data/media/temp
-  #     - $MEDIA/tvshows:/data/media/tv
-  #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
-  #     - $MEDIA/downloads/usenet:/data/media/downloads/usenet
-  #   networks:
-  #     - ext_net
-  #     - int_net
+  sonarr:
+    container_name: $STACK-sonarr
+    image: linuxserver/sonarr:preview
+    restart: always
+    ports:
+      - "8989:8989"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-sonarr.rule=Host(`$SONARR.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-sonarr.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-sonarr.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-sonarr.loadbalancer.server.port=8989"
+      # - "traefik.http.routers.$STACK-sonarr.middlewares=auth-admin"
+      # - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - sonarr_config:/config
+      - $GMEDIA/tvshows:/data/gcrypt/media/tv
+      - $MEDIA/temp:/data/media/temp
+      - $MEDIA/tvshows:/data/media/tv
+      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+    networks:
+      - ext_net
+      - int_net
 
   radarr:
     container_name: $STACK-radarr
@@ -221,7 +221,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/radarr_config:/config
+      - radarr_config:/config
       - $GMEDIA/movies:/data/gcrypt/media/movies
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
@@ -301,7 +301,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/lidarr_config:/config
+      - lidarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
