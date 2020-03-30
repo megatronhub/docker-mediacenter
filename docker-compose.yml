@@ -336,6 +336,34 @@ services:
       - ext_net
       - int_net
 
+  hydra2:
+    container_name: $STACK-hydra2
+    image: linuxserver/hydra2
+    restart: always
+    ports:
+      - "5076:5076"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-hydra2.rule=Host(`$HYDRA2.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-hydra2.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-hydra2.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-hydra2.loadbalancer.server.port=5076"
+      - "traefik.http.routers.$STACK-hydra2.middlewares=auth-admin"
+      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/jackett_config:/config
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+    networks:
+      - ext_net
+      - int_net
+
 # Torrent download clients
   delugevpn:
     image: "binhex/arch-delugevpn"
