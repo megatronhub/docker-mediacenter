@@ -382,7 +382,7 @@ services:
       - $MEDIA/downloads/deluge:/data/media/downloads/deluge
     networks:
       - ext_net
-      - int_net
+      # - int_net
 
   # transmission:
   #   container_name: $STACK-transmission
