@@ -337,6 +337,50 @@ services:
       - int_net
 
 # Torrent download clients
+  delugevpn:
+    image: "binhex/arch-delugevpn"
+    container_name: $STACK-deluge
+    restart: always
+    ports:
+      # - 8112:8112
+      - 58846:58846
+      - 58946:58946
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-deluge.rule=Host(`$DELUGE.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-deluge.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-deluge.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-deluge.loadbalancer.server.port=8112"
+      - "traefik.http.routers.$STACK-deluge.middlewares=auth-admin"
+      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - organizr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - VPN_ENABLED=$VPN_ENABLED
+      - VPN_USER=$VPN_USER
+      - VPN_PASS=$VPN_PASS
+      - VPN_PROV=$VPN_PROV
+      - VPN_OPTIONS=$VPN_OPTIONS
+      - STRICT_PORT_FORWARD=$STRICT_PORT_FORWARD
+      - ENABLE_PRIVOXY=$ENABLE_PRIVOXY
+      - LAN_NETWORK=$LAN_NETWORK
+      - NAME_SERVERS=$NAME_SERVERS
+      - DELUGE_DAEMON_LOG_LEVEL=$DELUGE_DAEMON_LOG_LEVEL
+      - DELUGE_WEB_LOG_LEVEL=$DELUGE_WEB_LOG_LEVEL
+      - DEBUG=$DEBUG
+      - UMASK=$UMASK
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $APPDATA/$STACK/deluge_config:/config
+      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+    networks:
+      - ext_net
+      - int_net
+
   # transmission:
   #   container_name: $STACK-transmission
   #   image: haugene/transmission-openvpn
