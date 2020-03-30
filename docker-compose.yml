@@ -307,6 +307,34 @@ services:
       - ext_net
       - int_net
 
+  bazarr:
+    container_name: $STACK-bazarr
+    image: linuxserver/bazarr
+    restart: always
+    ports:
+      - "6767:6767"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-bazarr.rule=Host(`$BAZARR.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-bazarr.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-bazarr.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-bazarr.loadbalancer.server.port=6767"
+      - "traefik.http.routers.$STACK-bazarr.middlewares=auth-admin"
+      - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+    volumes:
+      - $APPDATA/$STACK/bazarr_config:/config
+      - $MEDIA/movies:/data/media/movies
+      - $MEDIA/tvshows:/data/media/tv
+    networks:
+      - ext_net
+      - int_net
+
 # Indexer source apps
   jackett:
     container_name: $STACK-jackett
