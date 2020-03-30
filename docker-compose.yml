@@ -342,7 +342,7 @@ services:
     container_name: $STACK-deluge
     restart: always
     ports:
-      # - 8112:8112
+      - 8112:8112
       - 58846:58846
       - 58946:58946
     labels:
