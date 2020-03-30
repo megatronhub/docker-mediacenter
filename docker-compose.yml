@@ -193,7 +193,7 @@ services:
       - $APPDATA/$STACK/sonarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/tvshows:/data/media/tv
-      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
@@ -223,7 +223,7 @@ services:
       - $APPDATA/$STACK/radarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
-      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
@@ -253,7 +253,7 @@ services:
   #     - $APPDATA/$STACK/radarr4k_config:/config
   #     - $MEDIA/temp:/data/media/temp
   #     - $MEDIA/movies:/data/media/movies
-  #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+  #     - $MEDIA/downloads/deluge:/data/media/downloads/deluge
   #     - $MEDIA/downloads/usenet:/data/media/downloads/usenet
   #   networks:
   #     - ext_net
@@ -300,7 +300,7 @@ services:
     volumes:
       - $APPDATA/$STACK/lidarr_config:/config
       - $MEDIA/temp:/data/media/temp
-      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
       - $MEDIA/music:/data/media/music
     networks:
@@ -330,7 +330,7 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/jackett_config:/config
-      - $MEDIA/downloads/torrent:/data/media/downloads/torrent
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
