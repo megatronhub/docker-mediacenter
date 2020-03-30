@@ -17,7 +17,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - organizr_config:/config
+      - $APPDATA/$STACK/organizr_config:/config
     networks:
       - ext_net
       - int_net
@@ -77,7 +77,7 @@ services:
   #     - PUID=$PUID
   #     - ADVERTISE_IP="http://$ADVERTISE_IP:32400"
   #   volumes:
-  #     - plex_config:/config
+  #     - $APPDATA/$STACK/plex_config:/config
   #     - $MEDIA:/data/media
   #     - $GMEDIA:/data/gcrypt/media
   #   networks:
@@ -105,7 +105,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - jellyfin_config:/config
+  #     - $APPDATA/$STACK/jellyfin_config:/config
   #     - $MEDIA/transcode:/transcode
   #     - $MEDIA:/data/media
   #     - $GMEDIA:/data/gcrypt/media
@@ -134,7 +134,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - airsonic_config:/config
+  #     - $APPDATA/$STACK/airsonic_config:/config
   #     - $MEDIA/music:/data/music
   #     - $MEDIA/music/playlists:/data/music/playlists
   #     - $MEDIA/music/podcasts:/data/music/podcasts
@@ -163,7 +163,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - ombi_config:/config
+      - $APPDATA/$STACK/ombi_config:/config
     networks:
       - ext_net
       - int_net
@@ -190,7 +190,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - sonarr_config:/config
+      - $APPDATA/$STACK/sonarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/tvshows:/data/media/tv
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -220,7 +220,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - radarr_config:/config
+      - $APPDATA/$STACK/radarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/movies:/data/media/movies
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -250,7 +250,7 @@ services:
   #     - PGID=$PGID
   #     - PUID=$PUID
   #   volumes:
-  #     - radarr4k_config:/config
+  #     - $APPDATA/$STACK/radarr4k_config:/config
   #     - $MEDIA/temp:/data/media/temp
   #     - $MEDIA/movies:/data/media/movies
   #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
@@ -272,7 +272,7 @@ services:
   #     - PUID=$PUID
   #     - args=$ARGS
   #   volumes:
-  #     - radarrcollection_config:/config
+  #     - $APPDATA/$STACK/radarrcollection_config:/config
   #   networks:
   #     - ext_net
   #     - int_net
@@ -298,7 +298,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - lidarr_config:/config
+      - $APPDATA/$STACK/lidarr_config:/config
       - $MEDIA/temp:/data/media/temp
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
@@ -329,7 +329,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - jackett_config:/config
+      - $APPDATA/$STACK/jackett_config:/config
       - $MEDIA/downloads/torrent:/data/media/downloads/torrent
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
@@ -411,43 +411,11 @@ services:
       - PGID=$PGID
       - TZ=$TIMEZONE
     volumes:
-      - nzbget_config:/config
+      - $APPDATA/$STACK/nzbget_config:/config
       - $MEDIA/downloads/usenet:/data/media/downloads/usenet
     networks:
       - ext_net
       - int_net
-
-volumes:
-  organizr_config:
-      name: $STACK-organizr_config # Real ending name
-      external: false
-  emby_config:
-    name: $STACK-emby_config # Real ending name
-    external: false
-  airsonic_config:
-    name: $STACK-airsonic_config # Real ending name
-    external: false
-  ombi_config:
-    name: $STACK-ombi_config # Real ending name
-    external: false
-  sonarr_config:
-      name: $STACK-sonarr_config # Real ending name
-      external: false
-  radarr_config:
-      name: $STACK-radarr_config # Real ending name
-      external: false
-  lidarr_config:
-      name: $STACK-lidarr_config # Real ending name
-      external: false
-  jackett_config:
-      name: $STACK-jackett_config # Real ending name
-      external: false
-  transmission_config:
-      name: $STACK-transmission_config # Real ending name
-      external: false
-  nzbget_config:
-      name: $STACK-nzbget_config # Real ending name
-      external: false
 
 networks:
   int_net:
