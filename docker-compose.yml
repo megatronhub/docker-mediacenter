@@ -10,6 +10,8 @@ services:
       - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
+      - "traefik.http.routers.code.middlewares: redirect"
+      - "traefik.http.middlewares.redirect.redirectscheme.scheme: websecure"
       - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-organizr.loadbalancer.server.port=80"
       - "com.centurylinklabs.watchtower.enable=true"
