@@ -378,6 +378,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $APPDATA/$STACK/deluge_config:/config
+      - ./config/ovpn/pia:/config/openvpn
       - $MEDIA/downloads/deluge:/data/media/downloads/deluge
     networks:
       - ext_net
