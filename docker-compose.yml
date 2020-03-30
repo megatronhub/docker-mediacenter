@@ -25,7 +25,7 @@ services:
 # Streaming & Compainion apps
   emby:
     container_name: $STACK-emby
-    image: emby/embyserver
+    image: linuxserver/emby
     restart: always
     ports:
       - "8096:8096"
@@ -38,11 +38,12 @@ services:
       - "traefik.http.services.$STACK-emby.loadbalancer.server.port=8096"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
-      - GIDLIST=$PGID
     volumes:
       - $APPDATA/$STACK/emby_config:/config
+      - $MEDIA/transcode
       - $MEDIA:/data/media
     networks:
       - ext_net
