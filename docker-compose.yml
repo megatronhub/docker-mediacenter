@@ -376,7 +376,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $APPDATA/$STACK/deluge_config:/config
-      - $MEDIA/downloads/usenet:/data/media/downloads/usenet
+      - $MEDIA/downloads/deluge:/data/media/downloads/deluge
     networks:
       - ext_net
       - int_net
