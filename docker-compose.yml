@@ -458,56 +458,6 @@ services:
       # This is a temp fix until binhex figures out iptables issue with multiple docker networks
       # - int_net
 
-  # transmission:
-  #   container_name: $STACK-transmission
-  #   image: haugene/transmission-openvpn
-  #   restart: always
-  #   cap_add:
-  #     - NET_ADMIN
-  #   dns:
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   # ports:
-  #     - "9091:9091"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.docker.network=$TRAEFIK_NET"
-  #     - "traefik.http.routers.$STACK-transmission.rule=Host(`$TRANSMISSION.$DOMAIN`)"
-  #     - "traefik.http.routers.$STACK-transmission.entrypoints=websecure"
-  #     - "traefik.http.routers.$STACK-transmission.tls.certresolver=mytlschallenge"
-  #     - "traefik.http.services.$STACK-transmission.loadbalancer.server.port=9091"
-  #     - "traefik.http.routers.$STACK-transmission.middlewares=auth-admin"
-  #     - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
-  #     - "com.centurylinklabs.watchtower.enable=true"
-  #   environment:
-  #     - PGID=$PGID
-  #     - PUID=$PUID
-  #     - CREATE_TUN_DEVICE=$CREATE_TUN_DEVICE
-  #     - OPENVPN_PROVIDER=$OPENVPN_PROVIDER
-  #     - OPENVPN_CONFIG=$OPENVPN_CONFIG
-  #     - OPENVPN_USERNAME=$OPENVPN_USERNAME
-  #     - OPENVPN_PASSWORD=$OPENVPN_PASSWORD
-  #     - OPENVPN_OPTS=$OPENVPN_OPTS
-  #     - NORDVPN_PROTOCOL=$NORDVPN_PROTOCOL
-  #     - NORDVPN_CATEGORY=$NORDVPN_CATEGORY
-  #     - WEBPROXY_ENABLED=false
-  #     - LOCAL_NETWORK=$LOCAL_NETWORK
-  #     - TRANSMISSION_DOWNLOAD_DIR=$TRANSMISSION_DOWNLOAD_DIR
-  #     - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
-  #     - TRANSMISSION_RATIO_LIMIT_ENABLED=$TRANSMISSION_RATIO_LIMIT_ENABLED
-  #     - TRANSMISSION_RATIO_LIMIT=$TRANSMISSION_RATIO_LIMIT
-  #     - TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=$TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED
-  #     - TRANSMISSION_IDLE_SEEDING_LIMIT=$TRANSMISSION_IDLE_SEEDING_LIMIT
-  #     - TRANSMISSION_DOWNLOAD_QUEUE_ENABLED=$TRANSMISSION_DOWNLOAD_QUEUE_ENABLED
-  #     - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=$TRANSMISSION_DOWNLOAD_QUEUE_SIZE
-  #     - TRANSMISSION_PORT_FORWARDING_ENABLED=$TRANSMISSION_PORT_FORWARDING_ENABLED
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - $MEDIA/downloads/torrent:/data/media/downloads/torrent
-  #   networks:
-  #     - ext_net
-  #     - int_net
-
 # Usenet download clients
   nzbget:
     image: "linuxserver/nzbget:testing"
