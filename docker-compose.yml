@@ -268,23 +268,23 @@ services:
       - ext_net
       - int_net
 
-  # radarr-collection:
-  #   container_name: $STACK-radarr_collection
-  #   image: si0972/radarr-collections
-  #   restart: always
-  #   depends_on:
-  #     - radarr
-  #   labels:
-  #     - "com.centurylinklabs.watchtower.enable=true""
-  #   environment:
-  #     - PGID=$PGID
-  #     - PUID=$PUID
-  #     - args=$ARGS
-  #   volumes:
-  #     - $APPDATA/$STACK/radarrcollection_config:/config
-  #   networks:
-  #     - ext_net
-  #     - int_net
+  radarr-collection:
+    container_name: $STACK-radarr_collection
+    image: si0972/radarr-collections
+    restart: always
+    depends_on:
+      - radarr
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - args=$ARGS
+    volumes:
+      - $APPDATA/$STACK/radarrcollection_config:/config
+    networks:
+      - ext_net
+      - int_net
 
   lidarr:
     container_name: $STACK-lidarr
