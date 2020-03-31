@@ -14,6 +14,7 @@ services:
       - "traefik.http.services.$STACK-organizr.loadbalancer.server.port=80"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
       - PGID=$PGID
       - PUID=$PUID
     volumes:
@@ -38,6 +39,7 @@ services:
       - "traefik.http.services.$STACK-emby.loadbalancer.server.port=8096"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$EMBY.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -72,6 +74,7 @@ services:
   #     - "traefik.http.services.$STACK-plex.loadbalancer.server.port=32400"
   #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
+  #     - VIRTUAL_HOST=$PLEX.$DOMAIN
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -101,6 +104,7 @@ services:
   #     - "traefik.http.services.$STACK-jellyfin.loadbalancer.server.port=8096"
   #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
+  #     - VIRTUAL_HOST=$JELLYFIN.$DOMAIN
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -130,6 +134,7 @@ services:
   #     - "traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
   #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
+  #     - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -159,6 +164,7 @@ services:
       - "traefik.http.middlewares.auth-loggedinuser.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$OMBI.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -186,6 +192,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$SONARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -216,6 +223,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$RADARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -246,6 +254,7 @@ services:
   #     - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
   #     - "com.centurylinklabs.watchtower.enable=true"
   #   environment:
+  #     - VIRTUAL_HOST=$RADARR4K.$DOMAIN
   #     - TZ=$TIMEZONE
   #     - PGID=$PGID
   #     - PUID=$PUID
@@ -294,6 +303,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$LIDARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -325,6 +335,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$BAZARR.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -354,6 +365,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$JACKETT.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -383,6 +395,7 @@ services:
       - "traefik.http.middlewares.auth-admin.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=1"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
+      - VIRTUAL_HOST=$HYDRA2.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
@@ -419,6 +432,7 @@ services:
     depends_on:
       - organizr
     environment:
+      - VIRTUAL_HOST=$DELUGE.$DOMAIN
       - PUID=$PUID
       - PGID=$PGID
       - VPN_ENABLED=$VPN_ENABLED
@@ -514,6 +528,7 @@ services:
     depends_on:
       - organizr
     environment:
+      - VIRTUAL_HOST=$NZBGET.$DOMAIN
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TIMEZONE
