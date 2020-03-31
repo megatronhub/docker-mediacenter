@@ -241,8 +241,8 @@ services:
     container_name: $STACK-radarr4k
     image: linuxserver/radarr:nightly
     restart: always
-    # ports:
-    #   - "7887:7878"
+    ports:
+      - "7879:7878"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
