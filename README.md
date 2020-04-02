@@ -1,3 +1,4 @@
+#### THIS README IS EXTREMELY OUTDATED ####
 # Docker powered NAS/Mediacenter
 
 [![N|OMV](https://img.shields.io/badge/OpenMediaVault-4.1.21--1-blue.svg)](https://www.openmediavault.org/)
