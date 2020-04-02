@@ -11,7 +11,6 @@ services:
       - "traefik.http.routers.$STACK-organizr-http.rule=Host(`$ORGANIZR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-organizr-http.entrypoints=web"
       - "traefik.http.routers.$STACK-organizr-http.middlewares: https_redirect"
-      - "traefik.http.services.$STACK-organizr-http.loadbalancer.server.port=80"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme: https"
       - "traefik.http.middlewares.https_redirect.redirectscheme.permanent: true"
       - "traefik.http.routers.$STACK-organizr-https.rule=Host(`$ORGANIZR.$DOMAIN`)"
