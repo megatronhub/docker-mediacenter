@@ -8,10 +8,15 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-organizr.rule=Host(`$ORGANIZR.$DOMAIN`)"
-      - "traefik.http.routers.$STACK-organizr.entrypoints=websecure"
-      - "traefik.http.routers.$STACK-organizr.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-organizr.loadbalancer.server.port=80"
+      - "traefik.http.routers.$STACK-organizr-http.rule=Host(`$ORGANIZR.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-organizr-http.entrypoints=web"
+      - "traefik.http.routers.$STACK-organizr-http.middlewares: https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme: https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent: true"
+      - "traefik.http.routers.$STACK-organizr-https.rule=Host(`$ORGANIZR.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-organizr-https.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-organizr-https.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-organizr-https.loadbalancer.server.port=80"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - VIRTUAL_HOST=$ORGANIZR.$DOMAIN
