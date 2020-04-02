@@ -8,12 +8,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-organizr-http.rule=Host(`$ORGANIZR.$DOMAIN`)"
-      - "traefik.http.routers.$STACK-organizr-http.entrypoints=web"
-      - "traefik.http.routers.https_redirect.middlewares: https_redirect"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme: https"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent: true"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.port=443"
       - "traefik.http.routers.$STACK-organizr-https.rule=Host(`$ORGANIZR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-organizr-https.entrypoints=websecure"
       - "traefik.http.routers.$STACK-organizr-https.tls.certresolver=mytlschallenge"
