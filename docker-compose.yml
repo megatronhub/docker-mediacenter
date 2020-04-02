@@ -10,7 +10,7 @@ services:
       - "traefik.docker.network=$TRAEFIK_NET"
       - "traefik.http.routers.$STACK-organizr-http.rule=Host(`$ORGANIZR.$DOMAIN`)"
       - "traefik.http.routers.$STACK-organizr-http.entrypoints=web"
-      - "traefik.http.routers.$STACK-organizr-http.middlewares: https_redirect"
+      - "traefik.http.routers.https_redirect.middlewares: https_redirect"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme: https"
       - "traefik.http.middlewares.https_redirect.redirectscheme.permanent: true"
       - "traefik.http.middlewares.https_redirect.redirectscheme.port=443"
