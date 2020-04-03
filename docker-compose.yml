@@ -151,8 +151,6 @@ services:
     container_name: $STACK-funkwhale
     image: thetarkus/funkwhale
     restart: always
-    ports: 
-      - 3030:80
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
