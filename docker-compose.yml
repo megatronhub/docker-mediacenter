@@ -130,8 +130,6 @@ services:
       - "traefik.http.routers.$STACK-airsonic.entrypoints=websecure"
       - "traefik.http.routers.$STACK-airsonic.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-airsonic.loadbalancer.server.port=4040"
-      - "traefik.http.routers.$STACK-airsonic.middlewares=auth"
-      - "traefik.http.middlewares.auth.forwardauth.address=http://$STACK-organizr/api/?v1/auth&group=998"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - VIRTUAL_HOST=$AIRSONIC.$DOMAIN
