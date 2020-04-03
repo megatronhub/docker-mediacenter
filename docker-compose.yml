@@ -140,7 +140,7 @@ services:
       - PUID=$PUID
     volumes:
       - $APPDATA/$STACK/airsonic_config:/config
-      - $MEDIA/music:/data/music
+      - $MEDIA/music:/data/media/music
     networks:
       - ext_net
       - int_net
