@@ -144,36 +144,6 @@ services:
       - ext_net
       - int_net
 
-  koel:
-    container_name: $STACK-koel
-    image: binhex/arch-koel
-    restart: always
-    ports:
-      - "8050:8050"
-      - "8060:8060"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-koel.rule=Host(`$KOEL.$DOMAIN`)"
-      - "traefik.http.routers.$STACK-koel.entrypoints=websecure"
-      - "traefik.http.routers.$STACK-koel.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-koel.loadbalancer.server.port=8060"
-      - "com.centurylinklabs.watchtower.enable=true"
-    environment:
-      - VIRTUAL_HOST=$KOEL.$DOMAIN
-      - PGID=$PGID
-      - PUID=$PUID
-      - UMASK=002
-      - FASTCGI_READ_TIMEOUT=$FASTCGI_READ_TIMEOUT
-      - PHP_MEMORY_LIMIT=$PHP_MEMORY_LIMIT
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - $APPDATA/$STACK/koel_config:/config
-      - $MEDIA/music:/media
-    networks:
-      - ext_net
-      - int_net
-
   ombi:
     container_name: $STACK-ombi
     image: linuxserver/ombi
