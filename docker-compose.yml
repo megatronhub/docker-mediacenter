@@ -163,8 +163,7 @@ services:
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
-      - USER=$USER
-      - PASSWORD=$PASSWORD
+      - USE_JSON=true
     volumes:
       - $APPDATA/$STACK/mstream_config:/config
       - $MEDIA/music:/data/media/music
