@@ -167,7 +167,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $APPDATA/$STACK/koel_config:/config
-      - $MEDIA/music:/data/media/music
+      - $MEDIA/music:/media
     networks:
       - ext_net
       - int_net
