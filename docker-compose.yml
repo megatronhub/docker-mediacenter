@@ -144,28 +144,29 @@ services:
       - ext_net
       - int_net
 
-  mstream:
-    container_name: $STACK-mstream
-    image: linuxserver/mstream
+  koel:
+    container_name: $STACK-koel
+    image: binhex/arch-koel
     restart: always
     # ports:
     #   - "4040:4040"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-mstream.rule=Host(`$MSTREAM.$DOMAIN`)"
-      - "traefik.http.routers.$STACK-mstream.entrypoints=websecure"
-      - "traefik.http.routers.$STACK-mstream.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-mstream.loadbalancer.server.port=3000"
+      - "traefik.http.routers.$STACK-koel.rule=Host(`$KOEL.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-koel.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-koel.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-koel.loadbalancer.server.port=8050"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
-      - VIRTUAL_HOST=$MSTREAM.$DOMAIN
+      - VIRTUAL_HOST=$KOEL.$DOMAIN
       - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
       - USE_JSON=true
     volumes:
-      - $APPDATA/$STACK/mstream_config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - $APPDATA/$STACK/koel_config:/config
       - $MEDIA/music:/data/media/music
     networks:
       - ext_net
