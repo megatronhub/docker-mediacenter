@@ -166,7 +166,7 @@ services:
       - FUNKWHALE_HOSTNAME:$FUNKWHALE.$DOMAIN
     volumes:
       - $APPDATA/$STACK/funkwhale_config:/data
-      - $MEDIA/music:/data/media/music
+      - $MEDIA/music:/music:ro
     networks:
       - ext_net
       - int_net
