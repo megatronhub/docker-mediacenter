@@ -144,6 +144,34 @@ services:
       - ext_net
       - int_net
 
+  mstream:
+    container_name: $STACK-mstream
+    image: linuxserver/mstream
+    restart: always
+    # ports:
+    #   - "4040:4040"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=$TRAEFIK_NET"
+      - "traefik.http.routers.$STACK-mstream.rule=Host(`$MSTREAM.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-mstream.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-mstream.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-mstream.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    environment:
+      - VIRTUAL_HOST=$MSTREAM.$DOMAIN
+      - TZ=$TIMEZONE
+      - PGID=$PGID
+      - PUID=$PUID
+      - USER=$USER
+      - PASSWORD=$PASSWORD
+    volumes:
+      - $APPDATA/$STACK/mstream_config:/config
+      - $MEDIA/music:/data/media/music
+    networks:
+      - ext_net
+      - int_net
+
   ombi:
     container_name: $STACK-ombi
     image: linuxserver/ombi
