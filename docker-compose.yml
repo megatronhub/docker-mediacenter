@@ -126,7 +126,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-airsonic.rule=Host(`$AIRSONIC.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-airsonic.rule=Host(`$AIRSONIC.$DOMAIN`) && Headers(`X-forwarded-Proto`, `https`)"
       - "traefik.http.routers.$STACK-airsonic.entrypoints=websecure"
       - "traefik.http.routers.$STACK-airsonic.tls.certresolver=mytlschallenge"
       - "traefik.http.services.$STACK-airsonic.loadbalancer.server.port=4040"
