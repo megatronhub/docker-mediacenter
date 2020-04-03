@@ -163,7 +163,7 @@ services:
       - VIRTUAL_HOST=$KOEL.$DOMAIN
       - PGID=$PGID
       - PUID=$PUID
-      - UMASK=000
+      - UMASK=002
       - FASTCGI_READ_TIMEOUT=$FASTCGI_READ_TIMEOUT
       - PHP_MEMORY_LIMIT=$PHP_MEMORY_LIMIT
     volumes:
