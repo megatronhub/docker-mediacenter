@@ -150,7 +150,7 @@ services:
     restart: always
     ports:
       - "8050:8050"
-      = "8060:8060"
+      - "8060:8060"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
