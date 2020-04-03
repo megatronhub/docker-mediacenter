@@ -161,10 +161,11 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - VIRTUAL_HOST=$KOEL.$DOMAIN
-      - TZ=$TIMEZONE
       - PGID=$PGID
       - PUID=$PUID
-      - USE_JSON=true
+      - UMASK=000
+      - FASTCGI_READ_TIMEOUT=$FASTCGI_READ_TIMEOUT
+      - PHP_MEMORY_LIMIT=$PHP_MEMORY_LIMIT
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $APPDATA/$STACK/koel_config:/config
