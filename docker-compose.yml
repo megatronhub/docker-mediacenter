@@ -121,8 +121,8 @@ services:
     container_name: $STACK-airsonic
     image: linuxserver/airsonic
     restart: always
-    # ports:
-    #   - "4040:4040"
+    ports:
+      - "4040:4040"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
