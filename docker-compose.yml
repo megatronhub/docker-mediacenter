@@ -156,7 +156,7 @@ services:
       - "traefik.http.routers.$STACK-koel.rule=Host(`$KOEL.$DOMAIN`)"
       - "traefik.http.routers.$STACK-koel.entrypoints=websecure"
       - "traefik.http.routers.$STACK-koel.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-koel.loadbalancer.server.port=8050"
+      - "traefik.http.services.$STACK-koel.loadbalancer.server.port=8060"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
       - VIRTUAL_HOST=$KOEL.$DOMAIN
