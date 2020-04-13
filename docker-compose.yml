@@ -24,28 +24,34 @@ services:
       - int_net
 
 # Streaming & Compainion apps
-  emby:
-    container_name: $STACK-emby
-    image: linuxserver/emby
+  plex:
+    container_name: $STACK-plex
+    image: linuxserver/plex
     restart: always
     ports:
-      - "8096:8096"
+      - "32400:32400"
+      - "32400:32400/udp"
+      - "32469:32469"
+      - "32469:32469/udp"
+      - "5353:5353/udp"
+      - "1900:1900/udp"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=$TRAEFIK_NET"
-      - "traefik.http.routers.$STACK-emby.rule=Host(`$EMBY.$DOMAIN`)"
-      - "traefik.http.routers.$STACK-emby.entrypoints=websecure"
-      - "traefik.http.routers.$STACK-emby.tls.certresolver=mytlschallenge"
-      - "traefik.http.services.$STACK-emby.loadbalancer.server.port=8096"
+      - "traefik.http.routers.$STACK-plex.rule=Host(`$PLEX.$DOMAIN`)"
+      - "traefik.http.routers.$STACK-plex.entrypoints=websecure"
+      - "traefik.http.routers.$STACK-plex.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.$STACK-plex.loadbalancer.server.port=8096"
       - "com.centurylinklabs.watchtower.enable=true"
     environment:
-      - VIRTUAL_HOST=$EMBY.$DOMAIN
-      - TZ=$TIMEZONE
+      - VIRTUAL_HOST=$PLEX.$DOMAIN
+      - VERSION=docker
+      - UMASK_SET=022
       - PGID=$PGID
       - PUID=$PUID
     volumes:
-      - $APPDATA/$STACK/emby_config:/config
-      - $MEDIA/transcode
+      - $APPDATA/$STACK/plex_config:/config
+      - /data/transcode:/config/transcode
       - $MEDIA:/data/media
     networks:
       - ext_net
