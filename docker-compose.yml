@@ -47,6 +47,7 @@ services:
       - VIRTUAL_HOST=$PLEX.$DOMAIN
       - VERSION=docker
       - UMASK_SET=022
+      - PLEX_CLAIM=$PLEX_CLAIM
       - PGID=$PGID
       - PUID=$PUID
     volumes:
